@@ -1,0 +1,18 @@
+{
+	"an_addon.glyph_desc.glyph_test": "This is my test!",
+	"an_addon.glyph_name.glyph_test": "Test",
+	"item.ars_trinkets.essence_lotus_3": "Silver Essence Lotus",
+	"item.ars_trinkets.essence_lotus_4": "Gold Essence Lotus",
+	"item.ars_trinkets.essence_lotus_5": "Purple Essence Lotus",
+	"item.ars_trinkets.essence_lotus_6": "Green Essence Eternal Lotus",
+	"item.ars_trinkets.essence_lotus_7": "Red Essence Eternal Lotus",
+	"item.ars_trinkets.essence_lotus_8": "White Essence Eternal Lotus",
+	"item.ars_trinkets.essence_lotus_9": "Yellow Essence Limitless Lotus",
+	"item.ars_trinkets.yellow_essence": "Yellow Essence",
+	"item.ars_trinkets.white_essence": "White Essence",
+	"item.ars_trinkets.red_essence": "Red Essence",
+	"item.ars_trinkets.green_essence": "Green Essence",
+	"item.ars_trinkets.purple_essence": "Purple Essence",
+	"item.ars_trinkets.gold_essence": "Gold Essence",
+	"item.ars_trinkets.silver_essence": "Silver Essence"
+}
