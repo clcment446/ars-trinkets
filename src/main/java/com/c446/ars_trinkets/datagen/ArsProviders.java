@@ -16,6 +16,7 @@ import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
+import com.hollingsworth.arsnouveau.setup.BlockRegistry;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
@@ -79,52 +80,58 @@ public class ArsProviders {
 
 // # TRINKETS RECIPES
             recipes.add(builder()
-                    .withSourceCost(100)
+                    .withSourceCost(1000)
                     .withPedestalItem(4, ModRegistry.SILVER_ESSENCE)
                     .withReagent(ItemsRegistry.AMULET_OF_MANA_REGEN)
                     .withResult(ModRegistry.ESSENCE_LOTUS_3)
                     .build()
             );
             recipes.add(builder()
-                    .withSourceCost(100)
+                    .withSourceCost(1500)
                     .withPedestalItem(4, ModRegistry.GOLD_ESSENCE)
                     .withReagent(ModRegistry.ESSENCE_LOTUS_3)
                     .withResult(ModRegistry.ESSENCE_LOTUS_4)
                     .build()
             );
             recipes.add(builder()
-                    .withSourceCost(100)
+                    .withSourceCost(2000)
                     .withPedestalItem(4, ModRegistry.PURPLE_ESSENCE)
                     .withReagent(ModRegistry.ESSENCE_LOTUS_4)
                     .withResult(ModRegistry.ESSENCE_LOTUS_5)
                     .build()
             );
             recipes.add(builder()
-                    .withSourceCost(100)
+                    .withSourceCost(2500)
                     .withPedestalItem(4, ModRegistry.GREEN_ESSENCE)
                     .withReagent(ModRegistry.ESSENCE_LOTUS_5)
                     .withResult(ModRegistry.ESSENCE_LOTUS_6)
                     .build()
             );
             recipes.add(builder()
-                    .withSourceCost(100)
+                    .withSourceCost(4000)
                     .withPedestalItem(4, ModRegistry.RED_ESSENCE)
                     .withReagent(ModRegistry.ESSENCE_LOTUS_6)
                     .withResult(ModRegistry.ESSENCE_LOTUS_7)
                     .build()
             );
             recipes.add(builder()
-                    .withSourceCost(100)
+                    .withSourceCost(6000)
                     .withPedestalItem(4, ModRegistry.WHITE_ESSENCE)
                     .withReagent(ModRegistry.ESSENCE_LOTUS_7)
                     .withResult(ModRegistry.ESSENCE_LOTUS_8)
                     .build()
             );
             recipes.add(builder()
-                    .withSourceCost(100)
+                    .withSourceCost(10000)
                     .withPedestalItem(4, ModRegistry.WHITE_ESSENCE)
                     .withReagent(ModRegistry.ESSENCE_LOTUS_8)
                     .withResult(ModRegistry.ESSENCE_LOTUS_9)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withPedestalItem(8, ModRegistry.YELLOW_ESSENCE)
+                    .withSourceCost(1000)
+                    .withResult(BlockRegistry.CREATIVE_SOURCE_JAR)
                     .build()
             );
 
@@ -156,10 +163,6 @@ public class ArsProviders {
 
         @Override
         public void run(CachedOutput cache) throws IOException {
-
-            recipes.add(new ImbuementRecipe("example_focus", Ingredient.of(Items.AMETHYST_SHARD), new ItemStack(ItemsRegistry.SUMMONING_FOCUS, 1), 5000)
-                    .withPedestalItem(ItemsRegistry.WILDEN_TRIBUTE)
-            );
             recipes.add(new ImbuementRecipe("essence_silver", Ingredient.of(Items.IRON_BLOCK), new ItemStack(ModRegistry.SILVER_ESSENCE.get()), 10)
                     .withPedestalItem(Items.IRON_INGOT)
             );
@@ -190,45 +193,11 @@ public class ArsProviders {
                     .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
                     .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
             );
-            /*----------------------------------------------------------------
-
-
-            recipes.add(builder()
-                    .withReagent(Items.DIAMOND_BLOCK)
-                    .withPedestalItem(4, ModRegistry.PURPLE_ESSENCE)
-                    .withSourceCost(50)
-                    .withResult(ModRegistry.GREEN_ESSENCE)
-                    .build()
-            );
-            recipes.add(builder()
-                    .withReagent(Items.NETHERITE_INGOT)
-                    .withPedestalItem(2, ModRegistry.GREEN_ESSENCE)
-                    .withSourceCost(75)
-                    .withResult(ModRegistry.RED_ESSENCE)
-                    .build()
-            );
-            recipes.add(builder()
-                    .withReagent(Items.NETHER_STAR)
-                    .withPedestalItem(2, ModRegistry.RED_ESSENCE)
-                    .withSourceCost(150)
-                    .withResult(ModRegistry.WHITE_ESSENCE)
-                    .build()
-            );
-            recipes.add(builder()
-                    .withReagent(Items.NETHERITE_BLOCK)
-                    .withPedestalItem(4, Items.DIAMOND)
-                    .withPedestalItem(2, ModRegistry.WHITE_ESSENCE)
-                    .withSourceCost(300)
-                    .withResult(ModRegistry.YELLOW_ESSENCE)
-                    .build()
-            );*/
-
             Path output = generator.getOutputFolder();
             for (ImbuementRecipe g : recipes) {
                 Path path = getRecipePath(output, g.getId().getPath());
                 DataProvider.saveStable(cache, g.asRecipe(), path);
             }
-
         }
 
         protected Path getRecipePath(Path pathIn, String str) {

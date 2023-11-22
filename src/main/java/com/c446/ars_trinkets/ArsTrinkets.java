@@ -2,7 +2,12 @@ package com.c446.ars_trinkets;
 
 import com.c446.ars_trinkets.registry.ModRegistry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
+import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -15,8 +20,7 @@ import org.apache.logging.log4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ArsTrinkets.MODID)
-public class ArsTrinkets
-{
+public class ArsTrinkets {
     public static final String MODID = "ars_trinkets";
 
     private static final Logger LOGGER = LogManager.getLogger();
@@ -30,12 +34,11 @@ public class ArsTrinkets
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public static ResourceLocation prefix(String path){
+    public static ResourceLocation prefix(String path) {
         return new ResourceLocation(MODID, path);
     }
 
-    private void setup(final FMLCommonSetupEvent event)
-    {
+    private void setup(final FMLCommonSetupEvent event) {
         ArsNouveauRegistry.registerSounds();
     }
 
@@ -50,4 +53,6 @@ public class ArsTrinkets
         LOGGER.info("HELLO from server starting");
     }
 
+
 }
+

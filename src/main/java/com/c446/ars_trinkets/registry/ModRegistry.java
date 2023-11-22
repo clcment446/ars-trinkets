@@ -9,27 +9,41 @@ import com.hollingsworth.arsnouveau.api.sound.SpellSound;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
 
 public class ModRegistry {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ArsTrinkets.MODID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ArsTrinkets.MODID);
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ArsTrinkets.MODID);
-
+    /*
+    * A
+    *
+    *
+    *
+    *
+    *
+    */
+    public static final HashMap<Integer, Player> MANA_CRYSTAL_MAP = new HashMap<Integer, Player>();
+//    public static final DeferredRegister<Attribute> MANA_CRYSTAL = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, ArsTrinkets.MODID);
 
     public static void registerRegistries(IEventBus bus) {
         BLOCKS.register(bus);
         ITEMS.register(bus);
         SOUNDS.register(bus);
+//        MANA_CRYSTAL.register(bus);
     }
 
     //    public static final RegistryObject<Item> EXAMPLE;
@@ -70,8 +84,6 @@ public class ModRegistry {
         RED_ESSENCE = ITEMS.register("red_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant()));
         WHITE_ESSENCE = ITEMS.register("white_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant()));
         YELLOW_ESSENCE = ITEMS.register("yellow_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant()));
-
-
     }
 
     static SoundEvent makeSound(String name) {
