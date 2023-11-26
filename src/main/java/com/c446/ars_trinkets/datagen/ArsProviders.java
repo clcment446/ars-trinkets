@@ -76,9 +76,7 @@ public class ArsProviders {
 
         @Override
         public void run(CachedOutput cache) throws IOException {
-// # ESSENCE RECIPES
-
-// # TRINKETS RECIPES
+            // # TRINKETS RECIPES
             recipes.add(builder()
                     .withSourceCost(1000)
                     .withPedestalItem(4, ModRegistry.SILVER_ESSENCE)
@@ -95,7 +93,7 @@ public class ArsProviders {
             );
             recipes.add(builder()
                     .withSourceCost(2000)
-                    .withPedestalItem(4, ModRegistry.PURPLE_ESSENCE)
+                    .withPedestalItem(4, ModRegistry.CRYSTAL_ESSENCE)
                     .withReagent(ModRegistry.ESSENCE_LOTUS_4)
                     .withResult(ModRegistry.ESSENCE_LOTUS_5)
                     .build()
@@ -123,9 +121,17 @@ public class ArsProviders {
             );
             recipes.add(builder()
                     .withSourceCost(10000)
-                    .withPedestalItem(4, ModRegistry.WHITE_ESSENCE)
+                    .withPedestalItem(4, ModRegistry.YELLOW_ESSENCE)
                     .withReagent(ModRegistry.ESSENCE_LOTUS_8)
                     .withResult(ModRegistry.ESSENCE_LOTUS_9)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10)
+                    .withPedestalItem(4, ModRegistry.ESSENCE_LOTUS_9)
+                    .withPedestalItem(4, ModRegistry.PURPLE_ESSENCE)
+                    .withReagent(ModRegistry.ESSENCE_LOTUS_3)
+                    .withResult(ModRegistry.ESSENCE_LOTUS_10)
                     .build()
             );
             recipes.add(builder()
@@ -165,33 +171,61 @@ public class ArsProviders {
         public void run(CachedOutput cache) throws IOException {
             recipes.add(new ImbuementRecipe("essence_silver", Ingredient.of(Items.IRON_BLOCK), new ItemStack(ModRegistry.SILVER_ESSENCE.get()), 10)
                     .withPedestalItem(Items.IRON_INGOT)
+                    .withPedestalItem(Items.IRON_INGOT)
             );
             recipes.add(new ImbuementRecipe("essence_gold", Ingredient.of(Items.GOLD_BLOCK), new ItemStack(ModRegistry.GOLD_ESSENCE.get()), 20)
                     .withPedestalItem(ModRegistry.SILVER_ESSENCE.get())
                     .withPedestalItem(ModRegistry.SILVER_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.SILVER_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.SILVER_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_purple", Ingredient.of(Items.LAPIS_BLOCK), new ItemStack(ModRegistry.PURPLE_ESSENCE.get()), 40)
+            recipes.add(new ImbuementRecipe("essence_crystal", Ingredient.of(Items.LAPIS_BLOCK), new ItemStack(ModRegistry.CRYSTAL_ESSENCE.get()), 40)
+                    .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
                     .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
                     .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
                     .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
             );
             recipes.add(new ImbuementRecipe("essence_green", Ingredient.of(Items.DIAMOND_BLOCK), new ItemStack(ModRegistry.GREEN_ESSENCE.get()), 100)
-                    .withPedestalItem(ModRegistry.PURPLE_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.PURPLE_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.PURPLE_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.PURPLE_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_red", Ingredient.of(Items.NETHERITE_INGOT), new ItemStack(ModRegistry.RED_ESSENCE.get()), 300)
+            recipes.add(new ImbuementRecipe("essence_red", Ingredient.of(Items.NETHERITE_SCRAP), new ItemStack(ModRegistry.RED_ESSENCE.get()), 300)
+                    .withPedestalItem(ModRegistry.GREEN_ESSENCE.get())
                     .withPedestalItem(ModRegistry.GREEN_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_white", Ingredient.of(ItemsRegistry.WILDEN_TRIBUTE), new ItemStack(ModRegistry.WHITE_ESSENCE.get()), 900)
+            recipes.add(new ImbuementRecipe("essence_white", Ingredient.of(Items.NETHERITE_INGOT), new ItemStack(ModRegistry.WHITE_ESSENCE.get()), 900)
+                    .withPedestalItem(ModRegistry.RED_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.RED_ESSENCE.get())
                     .withPedestalItem(ModRegistry.RED_ESSENCE.get())
                     .withPedestalItem(ModRegistry.RED_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_white", Ingredient.of(ItemsRegistry.WILDEN_TRIBUTE), new ItemStack(ModRegistry.WHITE_ESSENCE.get()), 3000)
+            recipes.add(new ImbuementRecipe("essence_yellow", Ingredient.of(Items.NETHERITE_BLOCK), new ItemStack(ModRegistry.YELLOW_ESSENCE.get()), 900)
                     .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
                     .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
                     .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
+            );
+            recipes.add(new ImbuementRecipe("essence_purple", Ingredient.of(Items.DIAMOND), new ItemStack(ModRegistry.PURPLE_ESSENCE.get()), 10)
+                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
+                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
+
+
             );
             Path output = generator.getOutputFolder();
             for (ImbuementRecipe g : recipes) {

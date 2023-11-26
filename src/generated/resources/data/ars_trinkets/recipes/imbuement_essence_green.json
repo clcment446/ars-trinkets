@@ -1,0 +1,51 @@
+{
+  "type": "ars_nouveau:imbuement",
+  "count": 1,
+  "input": {
+    "item": "minecraft:diamond_block"
+  },
+  "output": "ars_trinkets:green_essence",
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "ars_trinkets:crystal_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:crystal_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:crystal_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:crystal_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:crystal_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:crystal_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:crystal_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:crystal_essence"
+      }
+    }
+  ],
+  "source": 100
+}

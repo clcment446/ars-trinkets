@@ -1,10 +1,13 @@
 package com.c446.ars_trinkets;
 
+import com.c446.ars_trinkets.item.EssenceItem;
+import com.c446.ars_trinkets.item.ManaCrystal;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
@@ -18,12 +21,17 @@ import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 // The value here should match an entry in the META-INF/mods.toml file
 @Mod(ArsTrinkets.MODID)
 public class ArsTrinkets {
     public static final String MODID = "ars_trinkets";
 
     private static final Logger LOGGER = LogManager.getLogger();
+    public static final ArrayList<Item> ESSENCE_LIST = new ArrayList<Item>();
+    public static final HashMap<Item, Integer> ESSENCE_VALUE = new HashMap<Item, Integer>();
 
     public ArsTrinkets() {
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -51,6 +59,9 @@ public class ArsTrinkets {
     public void onServerStarting(ServerStartingEvent event) {
         // do something when the server starts
         LOGGER.info("HELLO from server starting");
+        EssenceItem.setEssenceLists();
+
+
     }
 
 

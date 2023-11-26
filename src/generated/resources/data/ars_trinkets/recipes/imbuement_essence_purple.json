@@ -1,0 +1,51 @@
+{
+  "type": "ars_nouveau:imbuement",
+  "count": 1,
+  "input": {
+    "item": "minecraft:diamond"
+  },
+  "output": "ars_trinkets:purple_essence",
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "ars_trinkets:yellow_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:yellow_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:yellow_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:yellow_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:yellow_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:yellow_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:yellow_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:yellow_essence"
+      }
+    }
+  ],
+  "source": 10
+}

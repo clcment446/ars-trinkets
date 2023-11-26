@@ -1,6 +1,5 @@
 package com.c446.ars_trinkets.manaStorage;
 
-import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.capabilities.*;
@@ -10,17 +9,17 @@ import net.minecraftforge.common.capabilities.CapabilityManager;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class PlayerManaProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-    public static Capability<PlayerMana> PLAYER_MANA = CapabilityManager.get(new CapabilityToken<PlayerMana>() {
+public class ManaStoneProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
+    public static Capability<ManaStone> PLAYER_MANA = CapabilityManager.get(new CapabilityToken<ManaStone>() {
     });
-    private PlayerMana playerMana = null;
-    private final LazyOptional<PlayerMana> optional = LazyOptional.of(this::createPlayerMana);
+    private ManaStone manaStone = null;
+    private final LazyOptional<ManaStone> optional = LazyOptional.of(this::createPlayerMana);
 
-    private PlayerMana createPlayerMana() {
-        if (this.playerMana == null) {
-            this.playerMana = new PlayerMana();
+    private ManaStone createPlayerMana() {
+        if (this.manaStone == null) {
+            this.manaStone = new ManaStone();
         }
-        return this.playerMana;
+        return this.manaStone;
     }
 
     @Override

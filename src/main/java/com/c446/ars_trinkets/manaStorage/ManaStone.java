@@ -2,9 +2,8 @@ package com.c446.ars_trinkets.manaStorage;
 
 import net.minecraft.nbt.CompoundTag;
 
-public class PlayerMana {
+public class ManaStone {
     private int CrystalMana;
-    private final int MINIMUM = 0;
 
     public int getCrystalMana() {
         return CrystalMana;
@@ -14,11 +13,15 @@ public class PlayerMana {
         this.CrystalMana = CrystalMana + Add;
     }
 
+    public static boolean isSubLegal(int Sub1, int Sub2) {
+        return Sub1 - Sub2 > 0;}
+
     public void subCrystalMana(int Sub) {
-        this.CrystalMana = Math.min(CrystalMana - Sub, this.MINIMUM);
+        int MINIMUM = 0;
+        this.CrystalMana = Math.min(CrystalMana - Sub, MINIMUM);
     }
 
-    public void CopyFrom(PlayerMana source) {
+    public void CopyFrom(ManaStone source) {
         this.CrystalMana = source.CrystalMana;
     }
 

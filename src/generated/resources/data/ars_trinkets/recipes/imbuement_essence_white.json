@@ -1,0 +1,31 @@
+{
+  "type": "ars_nouveau:imbuement",
+  "count": 1,
+  "input": {
+    "item": "minecraft:netherite_ingot"
+  },
+  "output": "ars_trinkets:white_essence",
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "ars_trinkets:red_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:red_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:red_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:red_essence"
+      }
+    }
+  ],
+  "source": 900
+}

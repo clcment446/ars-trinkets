@@ -1,0 +1,41 @@
+{
+  "type": "ars_nouveau:imbuement",
+  "count": 1,
+  "input": {
+    "item": "minecraft:lapis_block"
+  },
+  "output": "ars_trinkets:crystal_essence",
+  "pedestalItems": [
+    {
+      "item": {
+        "item": "ars_trinkets:gold_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:gold_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:gold_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:gold_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:gold_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:gold_essence"
+      }
+    }
+  ],
+  "source": 40
+}
