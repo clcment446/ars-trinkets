@@ -3,6 +3,8 @@ package com.c446.ars_trinkets.glyphs;
 import com.c446.ars_trinkets.ArsTrinkets;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
+import com.c446.ars_trinkets.util.Util;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,7 +15,10 @@ import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.Tags;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
 import java.util.Set;
+
+import static com.c446.ars_trinkets.util.Util.Vec1Vec2TraceGet;
 
 public class WaterBeam extends AbstractEffect {
 
@@ -35,23 +40,12 @@ public class WaterBeam extends AbstractEffect {
         if (entity instanceof LivingEntity) {
             Vec3 vecTar = entity.position();
             Vec3 vecOri = shooter.position();
-            int amp = (int) spellStats.getAmpMultiplier();
-            double aoe = spellStats.getAoeMultiplier();
-            if (!(vecTar.distanceTo(vecOri)>5*amp)){
-                /*
-                * desc:
-                * get difference between vecTar and vecOri
-                * using the difference, spawn particules using the difference. (posStart + incr * count
-                * summon particle at k
-                * increment k
-                * if k == length of vectar: stop
-                * else continue
-                * */
-
-            } else {
-                return;
+            double aoe= spellStats.getAoeMultiplier();
+            ArrayList<double[]> particles = Vec1Vec2TraceGet(vecOri, vecTar, (double)5*aoe,(double) 1, (int) (2.5*aoe));
+            for (int i = 0; i<particles.size(); i++) {
+                int[] position = particles.get(i);
+                //world.addParticle(particleoptions);
             }
-
 
         }
 
