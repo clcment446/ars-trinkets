@@ -51,9 +51,7 @@ minecraft {
             property 'mixin.env.remapRefMap', 'true'
             property 'mixin.env.refMapRemappingFile', "${projectDir}/build/createSrgToMcp/output.srg"
 
-            // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-
             mods {
                 ars_trinkets {
                     source sourceSets.main
