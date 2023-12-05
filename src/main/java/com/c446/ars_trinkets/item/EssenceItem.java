@@ -3,7 +3,6 @@ package com.c446.ars_trinkets.item;
 import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -43,12 +42,10 @@ public class EssenceItem extends RegularItems {
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
         if (!pLevel.isClientSide && pUsedHand == InteractionHand.OFF_HAND) {
-            ConsumeMana(pPlayer, Inventory.SLOT_OFFHAND, getManaValue(pPlayer.getOffhandItem().getItem()));
+            ConsumeMana(pPlayer, true, pPlayer.getMainHandItem());
         } else if (!pLevel.isClientSide) {
-            int k = 0;
             ItemStack held = pPlayer.getMainHandItem();
-            int slot = pPlayer.getInventory().findSlotMatchingItem(held);
-            ConsumeMana(pPlayer, slot, getManaValue(pPlayer.getMainHandItem().getItem()));
+            ConsumeMana(pPlayer, false, held);
         }
         return super.use(pLevel, pPlayer, pUsedHand);
     }
@@ -60,10 +57,19 @@ public class EssenceItem extends RegularItems {
         return 0;
     }
 
-    public void ConsumeMana(Player player, int slot, int FruitValue) {
+    public void ConsumeMana(Player player, boolean slot/* is off hand*/, ItemStack stack) {
         player.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(iManaCap -> {
-            iManaCap.addMana(FruitValue);
-            player.getInventory().removeItem(slot, 1);
+            iManaCap.addMana(getManaValue(stack.getItem()));
+            if (slot) {
+                player.getInventory().removeItem(Inventory.SLOT_OFFHAND, 1);
+            } else {
+                for (int i = 0; i < 35; i++) {
+                    if (player.getInventory().getItem(i) == stack) {
+                        player.getInventory().removeItem(i, 1);
+                    }
+                }
+                player.getInventory().removeItem(player.getMainHandItem());
+            }
         });
     }
 

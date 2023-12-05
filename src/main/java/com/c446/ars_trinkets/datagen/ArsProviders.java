@@ -2,7 +2,7 @@ package com.c446.ars_trinkets.datagen;
 
 import com.c446.ars_trinkets.ArsNouveauRegistry;
 import com.c446.ars_trinkets.ArsTrinkets;
-import com.c446.ars_trinkets.glyphs.TestEffect;
+import com.c446.ars_trinkets.glyphs.SacrificeHealth;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
@@ -49,7 +49,7 @@ public class ArsProviders {
 
             Path output = this.generator.getOutputFolder();
 
-            recipes.add(get(TestEffect.INSTANCE).withItem(Items.DIRT));
+            recipes.add(get(SacrificeHealth.INSTANCE).withItem(Items.DIRT));
 
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());

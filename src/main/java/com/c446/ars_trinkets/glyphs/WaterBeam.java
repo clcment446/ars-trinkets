@@ -43,7 +43,7 @@ public class WaterBeam extends AbstractEffect {
             double aoe= spellStats.getAoeMultiplier();
             ArrayList<double[]> particles = Vec1Vec2TraceGet(vecOri, vecTar, (double)5*aoe,(double) 1, (int) (2.5*aoe));
             for (int i = 0; i<particles.size(); i++) {
-                int[] position = particles.get(i);
+                double[] position = particles.get(i);
                 //world.addParticle(particleoptions);
             }
 
