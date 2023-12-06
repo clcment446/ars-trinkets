@@ -1,0 +1,16 @@
+{
+  "category": "ars_nouveau:glyphs_3",
+  "icon": "ars_trinkets:glyph_water_spear",
+  "name": "ars_trinkets.glyph_name.glyph_water_spear",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_trinkets.glyph_desc.glyph_water_spear"
+    },
+    {
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_trinkets:glyph_water_spear"
+    }
+  ],
+  "sortnum": 2
+}

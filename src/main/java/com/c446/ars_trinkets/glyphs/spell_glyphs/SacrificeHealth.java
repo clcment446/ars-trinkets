@@ -1,4 +1,4 @@
-package com.c446.ars_trinkets.glyphs;
+package com.c446.ars_trinkets.glyphs.spell_glyphs;
 
 import com.c446.ars_trinkets.ArsTrinkets;
 import com.hollingsworth.arsnouveau.api.spell.*;
@@ -16,9 +16,8 @@ import javax.annotation.Nonnull;
 
 import java.util.Set;
 
-public class SacrificeHealth extends AbstractEffect implements IDamageEffect{
-
-    public static SacrificeHealth INSTANCE = new SacrificeHealth(ArsTrinkets.prefix("glyph_sacrifice"), "Sacrifice Health");
+public class SacrificeHealth extends AbstractEffect implements IDamageEffect {
+    public static final SacrificeHealth INSTANCE = new SacrificeHealth(new ResourceLocation(ArsTrinkets.MODID, "glyph_sacrifice"), "Sacrifice Health");
 
     public SacrificeHealth(ResourceLocation tag, String description) {
         super(tag, description);
@@ -32,22 +31,29 @@ public class SacrificeHealth extends AbstractEffect implements IDamageEffect{
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Entity entity = rayTraceResult.getEntity();
-        if (entity instanceof LivingEntity){
+        if (entity instanceof LivingEntity) {
             LivingEntity living = (LivingEntity) entity;
             int amp = (int) spellStats.getAmpMultiplier();
-            living.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(iManaCap -> {iManaCap.addMana(living.getHealth()*100* amp);});
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, living, DamageSource.MAGIC.bypassArmor().bypassEnchantments().bypassInvul().bypassMagic(),  living.getHealth()*1/3);
+            living.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(iManaCap -> {
+                iManaCap.addMana(living.getHealth() * 100 * amp);
+            });
+            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, living, DamageSource.MAGIC.bypassArmor().bypassEnchantments().bypassMagic(), living.getHealth() * 1 / 3);
         }
-        super.onResolve(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
     }
-
+    @Override
+    public SpellTier defaultTier() {
+        return SpellTier.THREE;
+    }
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
         return augmentSetOf(AugmentAmplify.INSTANCE);
     }
+
     @Override
-    protected @NotNull Set<SpellSchool> getSchools(){
+    protected @NotNull Set<SpellSchool> getSchools() {
         return this.setOf(SpellSchools.ELEMENTAL_WATER, SpellSchools.MANIPULATION);
     }
+
+
 }

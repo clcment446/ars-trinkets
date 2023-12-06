@@ -1,6 +1,6 @@
 package com.c446.ars_trinkets.item;
 
-public class ManaStone extends MagicalItems implements ICurioItem, IManaEquipment {
+/*public class ManaStone extends MagicalItems implements ICurioItem, IManaEquipment {
     int boost;
     int regen;
 
@@ -8,4 +8,4 @@ public class ManaStone extends MagicalItems implements ICurioItem, IManaEquipmen
         this.boost = boost;
         this.regen = regen;
     }
-}
+}*/

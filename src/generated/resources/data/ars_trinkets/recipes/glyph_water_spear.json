@@ -1,0 +1,53 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 160,
+  "inputItems": [
+    {
+      "item": {
+        "item": "ars_nouveau:water_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:water_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:water_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:water_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:green_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:green_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:green_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:green_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:netherite_ingot"
+      }
+    }
+  ],
+  "output": "ars_trinkets:glyph_water_spear"
+}

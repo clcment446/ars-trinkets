@@ -1,2 +1,4 @@
-// 1.19.2	2023-11-25T11:21:47.8030789	Example Glyph Recipes
-aa6ec406a13a6fdb4c9ae44986552988c0c96692 data/ars_trinkets/recipes/glyph_test.json
+// 1.19.2	2023-12-06T18:42:40.6758859	Example Glyph Recipes
+083348ccab012e5753a2b1b23c35d6d1a06c155e data/ars_trinkets/recipes/glyph_sacrifice.json
+d3d71244b9844f8aef6e9867adee7b5883ba3d1c data/ars_trinkets/recipes/glyph_sword.json
+69c2b53e63992f4a71d3671cc98eff3d07b7576a data/ars_trinkets/recipes/glyph_water_spear.json

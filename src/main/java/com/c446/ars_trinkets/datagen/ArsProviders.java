@@ -2,7 +2,9 @@ package com.c446.ars_trinkets.datagen;
 
 import com.c446.ars_trinkets.ArsNouveauRegistry;
 import com.c446.ars_trinkets.ArsTrinkets;
-import com.c446.ars_trinkets.glyphs.SacrificeHealth;
+import com.c446.ars_trinkets.glyphs.spell_glyphs.AirSword;
+import com.c446.ars_trinkets.glyphs.spell_glyphs.SacrificeHealth;
+import com.c446.ars_trinkets.glyphs.spell_glyphs.WaterSpear;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
@@ -33,6 +35,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 import static com.hollingsworth.arsnouveau.api.RegistryHelper.getRegistryName;
+import static net.minecraft.world.item.Items.NETHERITE_INGOT;
 
 public class ArsProviders {
 
@@ -49,7 +52,9 @@ public class ArsProviders {
 
             Path output = this.generator.getOutputFolder();
 
-            recipes.add(get(SacrificeHealth.INSTANCE).withItem(Items.DIRT));
+            recipes.add(get(WaterSpear.INSTANCE).withItem(ItemsRegistry.WATER_ESSENCE, 4).withItem(ModRegistry.GREEN_ESSENCE.get(), 4).withItem(NETHERITE_INGOT,1));
+            recipes.add(get(AirSword.INSTANCE).withItem(ItemsRegistry.AIR_ESSENCE, 4).withItem(ModRegistry.GREEN_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
+            recipes.add(get(SacrificeHealth.INSTANCE).withItem(Items.DIAMOND_SWORD).withItem(ModRegistry.RED_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
 
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());
@@ -201,7 +206,7 @@ public class ArsProviders {
                     .withPedestalItem(ModRegistry.GREEN_ESSENCE.get())
                     .withPedestalItem(ModRegistry.GREEN_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_white", Ingredient.of(Items.NETHERITE_INGOT), new ItemStack(ModRegistry.WHITE_ESSENCE.get()), 900)
+            recipes.add(new ImbuementRecipe("essence_white", Ingredient.of(NETHERITE_INGOT), new ItemStack(ModRegistry.WHITE_ESSENCE.get()), 900)
                     .withPedestalItem(ModRegistry.RED_ESSENCE.get())
                     .withPedestalItem(ModRegistry.RED_ESSENCE.get())
                     .withPedestalItem(ModRegistry.RED_ESSENCE.get())

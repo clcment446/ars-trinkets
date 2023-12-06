@@ -1,0 +1,16 @@
+{
+  "category": "ars_nouveau:glyphs_3",
+  "icon": "ars_trinkets:glyph_sword",
+  "name": "ars_trinkets.glyph_name.glyph_sword",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_trinkets.glyph_desc.glyph_sword"
+    },
+    {
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_trinkets:glyph_sword"
+    }
+  ],
+  "sortnum": 2
+}

@@ -16,5 +16,15 @@
 	"item.ars_trinkets.purple_essence": "Purple Essence",
 	"item.ars_trinkets.gold_essence": "Gold Essence",
 	"item.ars_trinkets.silver_essence": "Silver Essence",
-	"item.ars_trinkets.crystal_essence": "Crystal Essence"
+	"item.ars_trinkets.crystal_essence": "Crystal Essence",
+	"ars_trinkets.glyph_desc.glyph_sacrifice": "Sacrifices a percentage of your health and converts it to overflow mana",
+	"ars_trinkets.glyph_name.glyph_sacrifice": "Sacrifice",
+	"ars_trinkets.glyph_desc.glyph_water_spear": "Summons a spear of water, piercine the enemy and dealing damage.",
+	"ars_trinkets.glyph_name.glyph_water_spear": "Water Spear",
+	"ars_trinkets.glyph_desc.glyph_rotate_90": "Rotates the targeted entity by 90 degrees. Can be increased with amplify and dampen.",
+	"ars_trinkets.glyph_name.glyph_rotate_90": "Advanced Rotate",
+	"ars_trinkets.glyph_desc.glyph_sword": "Summons a sword which ignores most defences.",
+	"ars_trinkets.glyph_name.glyph_sword": "Air Sword",
+	"ars_trinkets.glyph_desc.glyph_swap_position": "Swaps the position of the user and the target.",
+	"ars_trinkets.glyph_name.glyph_swap_position": "Swap Position"
 }

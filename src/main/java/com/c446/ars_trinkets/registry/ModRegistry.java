@@ -11,6 +11,8 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -28,7 +30,7 @@ public class ModRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ArsTrinkets.MODID);
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ArsTrinkets.MODID);
     /*
-     * A
+     *
      *
      *
      *
@@ -62,11 +64,9 @@ public class ModRegistry {
     public static final RegistryObject<Item> WHITE_ESSENCE;
     public static final RegistryObject<Item> YELLOW_ESSENCE;
     public static final RegistryObject<Item> PURPLE_ESSENCE;
+//    public static final RegistryObject<Item> BLOOD_ESSENCE;
 
 
-    //    public static final RegistryObject<Item> MANA_CRYSTAL;
-    //this is an example of how to register a sound. You also need to add the sound to the sound.json file, referencing your ogg files, and a texture for the button under textures/sounds.
-    //this example will use one of the existing sounds randomly
     public static RegistryObject<SoundEvent> EXAMPLE_FAMILY = SOUNDS.register("example_sound", () -> makeSound("example_sound"));
     public static SpellSound EXAMPLE_SPELL_SOUND;
 
@@ -89,9 +89,9 @@ public class ModRegistry {
         WHITE_ESSENCE = ITEMS.register("white_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.RARE),true));
         YELLOW_ESSENCE = ITEMS.register("yellow_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.EPIC),true));
         PURPLE_ESSENCE = ITEMS.register("purple_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.EPIC),true));
+
+//        BLOOD_ESSENCE = ITEMS.register("blood_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(60).rarity(Rarity.RARE)));
     }
-
-
 
     static SoundEvent makeSound(String name) {
         return new SoundEvent(new ResourceLocation(ArsTrinkets.MODID, name));
