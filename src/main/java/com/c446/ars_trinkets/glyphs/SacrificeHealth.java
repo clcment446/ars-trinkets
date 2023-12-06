@@ -36,14 +36,9 @@ public class SacrificeHealth extends AbstractEffect implements IDamageEffect{
             LivingEntity living = (LivingEntity) entity;
             int amp = (int) spellStats.getAmpMultiplier();
             living.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(iManaCap -> {iManaCap.addMana(living.getHealth()*100* amp);});
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, living, DamageSource.MAGIC,  living.getHealth()*1/3);
+            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, living, DamageSource.MAGIC.bypassArmor().bypassEnchantments().bypassInvul().bypassMagic(),  living.getHealth()*1/3);
         }
-
-
-
         super.onResolve(rayTraceResult, world, shooter, spellStats, spellContext, resolver);
-
-
     }
 
     @Nonnull
@@ -53,6 +48,6 @@ public class SacrificeHealth extends AbstractEffect implements IDamageEffect{
     }
     @Override
     protected @NotNull Set<SpellSchool> getSchools(){
-        return this.setOf(SpellSchools.ELEMENTAL_WATER);
+        return this.setOf(SpellSchools.ELEMENTAL_WATER, SpellSchools.MANIPULATION);
     }
 }
