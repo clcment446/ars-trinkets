@@ -28,7 +28,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 
-version = "1.19.2-0.3"
+version = "1.19.2-0.4"
 group = 'com.hollingsworth.ars_trinkets' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'ars_trinkets'
 
