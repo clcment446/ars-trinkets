@@ -64,7 +64,7 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
                 damageBonusTimes += Objects.requireNonNull(living.getEffect(ModPotions.SNARE_EFFECT.get())).getAmplifier();
             }
             damage = (this.DAMAGE.get() + (this.AMP_VALUE.get() * this.AMP_DAMAGE));
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic(), (float) ((float) damage*1.5));
+            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic(), (float) ((float) damage * 1.5));
             living.invulnerableTime = 0;
         }
     }
@@ -91,6 +91,7 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
     public int getDefaultManaCost() {
         return 6000;
     }
+
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
         return this.setOf(SpellSchools.ELEMENTAL_AIR);

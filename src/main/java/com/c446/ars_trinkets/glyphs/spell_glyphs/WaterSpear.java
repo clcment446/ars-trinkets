@@ -12,7 +12,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.alchemy.Potions;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -21,6 +20,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Set;
 
 import static com.c446.ars_trinkets.util.Util.Vec1Vec2TraceGet;
@@ -28,8 +28,7 @@ import static com.c446.ars_trinkets.util.Util.Vec1Vec2TraceGet;
 public class WaterSpear extends AbstractEffect implements IDamageEffect {
 
     double AMP_DAMAGE = 1.3D;
-        public static final WaterSpear INSTANCE = new WaterSpear(new ResourceLocation(ArsTrinkets.MODID, "glyph_water_spear"), "Water Spear");
-
+    public static final WaterSpear INSTANCE = new WaterSpear(new ResourceLocation(ArsTrinkets.MODID, "glyph_water_spear"), "Water Spear");
     public WaterSpear(ResourceLocation tag, String description) {
         super(tag, description);
     }
@@ -42,32 +41,35 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Entity entity = rayTraceResult.getEntity();
-        if (entity instanceof LivingEntity && world instanceof ServerLevel level) {
+        if (entity instanceof LivingEntity living && world instanceof ServerLevel level) {
             Vec3 vecTar = entity.position();
             Vec3 eyesPos = shooter.getEyePosition(1.0f);
-            LivingEntity living = (LivingEntity) entity;
-            float bonusDamage = 0;
+            float damage = (float)(this.DAMAGE.get() + this.AMP_DAMAGE * spellStats.getAmpMultiplier());
+            float bonusMul= 0;
+            int bonusAdd=0;
             if (living.hasEffect(ModPotions.FREEZING_EFFECT.get())) {
-                bonusDamage += living.getEffect(ModPotions.FREEZING_EFFECT.get()).getAmplifier() * 1.2;
+                bonusMul += Objects.requireNonNull(living.getEffect(ModPotions.FREEZING_EFFECT.get())).getAmplifier() * 1.2;
+                bonusAdd += 3;
             }
             if (living.hasEffect(ModPotions.SHOCKED_EFFECT.get())) {
-                bonusDamage += living.getEffect(ModPotions.SHOCKED_EFFECT.get()).getAmplifier() * 1.3;
+                bonusMul += Objects.requireNonNull(living.getEffect(ModPotions.SHOCKED_EFFECT.get())).getAmplifier() * 1.3;
+                bonusAdd+=4;
             }
             if (living.hasEffect(ModPotions.HEX_EFFECT.get())) {
-                bonusDamage += living.getEffect(ModPotions.HEX_EFFECT.get()).getAmplifier() * 1.1;
+                bonusMul += Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier() * 1.1;
+                bonusAdd +=2;
             }
             if (living.isOnFire()) {
-                bonusDamage *= 1.5;
+                bonusMul *= 1.5;
+                bonusAdd += 7;
             }
+            damage += bonusAdd * bonusMul;
 
-            float damage = (float) (this.DAMAGE.get() + (this.AMP_VALUE.get() * this.AMP_DAMAGE) * bonusDamage);
-            double amp = spellStats.getAmpMultiplier();
-            double aoe = spellStats.getAoeMultiplier();
-            ArrayList<double[]> particles = Vec1Vec2TraceGet(eyesPos, vecTar, (double) 5 * aoe, 1, (int) (this.AMP_DAMAGE * amp * aoe / 2));
+            ArrayList<double[]> particles = Vec1Vec2TraceGet(eyesPos, vecTar, (double) 5 * spellStats.getAoeMultiplier(), 1, (int) (this.AMP_DAMAGE * spellStats.getAmpMultiplier() * spellStats.getAoeMultiplier()/ 2));
             for (double[] position : particles) {
                 level.sendParticles(ParticleTypes.SPLASH, position[0], position[1], position[2], 3, 0, 0, 0, 1);
             }
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic().bypassArmor(), damage*5);
+            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic().bypassArmor(), damage * 5);
         }
     }
 
