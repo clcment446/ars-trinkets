@@ -44,32 +44,36 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
         if (entity instanceof LivingEntity living && world instanceof ServerLevel level) {
             Vec3 vecTar = entity.position();
             Vec3 eyesPos = shooter.getEyePosition(1.0f);
-            float damage = (float)(this.DAMAGE.get() + this.AMP_DAMAGE * spellStats.getAmpMultiplier());
-            float bonusMul= 0;
-            int bonusAdd=0;
+            double damageBonusTimes = 1;
+            float AMP_DAMAGE = 7f;
+            double DAMAGE = ((double) 40);
             if (living.hasEffect(ModPotions.FREEZING_EFFECT.get())) {
-                bonusMul += Objects.requireNonNull(living.getEffect(ModPotions.FREEZING_EFFECT.get())).getAmplifier() * 1.2;
-                bonusAdd += 3;
+                int s = (int) (Objects.requireNonNull(living.getEffect(ModPotions.FREEZING_EFFECT.get())).getAmplifier());
+                s*=1.2;
+                damageBonusTimes += s;
             }
             if (living.hasEffect(ModPotions.SHOCKED_EFFECT.get())) {
-                bonusMul += Objects.requireNonNull(living.getEffect(ModPotions.SHOCKED_EFFECT.get())).getAmplifier() * 1.3;
-                bonusAdd+=4;
+                int s =  Objects.requireNonNull(living.getEffect(ModPotions.SHOCKED_EFFECT.get())).getAmplifier();
+                s/=2;
+                damageBonusTimes += s;
             }
             if (living.hasEffect(ModPotions.HEX_EFFECT.get())) {
-                bonusMul += Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier() * 1.1;
-                bonusAdd +=2;
+                int s =  Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier();
+                s /= 8;
+                damageBonusTimes += s;
             }
             if (living.isOnFire()) {
-                bonusMul *= 1.5;
-                bonusAdd += 7;
+                damageBonusTimes *= 1.5;
             }
-            damage += bonusAdd * bonusMul;
+            DAMAGE += (spellStats.getAmpMultiplier() * AMP_DAMAGE);
+            DAMAGE *= damageBonusTimes;
 
-            ArrayList<double[]> particles = Vec1Vec2TraceGet(eyesPos, vecTar, (double) 5 * spellStats.getAoeMultiplier(), 1, (int) (this.AMP_DAMAGE * spellStats.getAmpMultiplier() * spellStats.getAoeMultiplier()/ 2));
+            ArrayList<double[]> particles = Vec1Vec2TraceGet(eyesPos, vecTar, (double) 5 * spellStats.getAoeMultiplier(), 1, (int) (AMP_DAMAGE * spellStats.getAmpMultiplier() * spellStats.getAoeMultiplier()/ 2));
             for (double[] position : particles) {
                 level.sendParticles(ParticleTypes.SPLASH, position[0], position[1], position[2], 3, 0, 0, 0, 1);
             }
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic().bypassArmor(), damage * 5);
+            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic().bypassArmor(), (float) ( DAMAGE * 5));
+            living.invulnerableTime = 3;
         }
     }
 

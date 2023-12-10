@@ -10,6 +10,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -20,6 +21,8 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.Set;
 
+import static net.minecraft.world.damagesource.DamageSource.MAGIC;
+
 public class AirSword extends AbstractEffect implements IDamageEffect {
     public AirSword(ResourceLocation tag, String description) {
         super(tag, description);
@@ -27,44 +30,55 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
 
     public static final AirSword INSTANCE = new AirSword(new ResourceLocation(ArsTrinkets.MODID, "glyph_sword"), "Air Sword");
 
-    double damage;
-    double damageBonusTimes;
-    float AMP_DAMAGE = 4f;
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Entity entity = rayTraceResult.getEntity();
-        if (entity instanceof LivingEntity && world instanceof ServerLevel level) {
+        if (entity instanceof LivingEntity living && world instanceof ServerLevel level) {
 
-            LivingEntity living = (LivingEntity) entity;
             Vec3 livingEyes = living.getEyePosition();
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, 0, 0, 0, 1);
+            double x = livingEyes.x;
+            double y = livingEyes.y;
+            double z = livingEyes.z;
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0, 0, 0, 1);
 
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, 0, 0, 0, 1);
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, -0.5, -0.5, 0, 1);
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, 0.5, -0.5, 0, 1);
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, 0.5, 0.5, 0, 1);
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, -0.5, 0.5, 0, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0, 0, 0, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, -0.5, 0, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, -0.5, 0, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, 0.5, 0, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, 0.5, 0, 1);
 
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, -0.5, -0.5, 0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, 0.5, -0.5, 0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, 0.5, 0.5, 0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, -0.5, 0.5, 0.5, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, -0.5, 0.5, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, -0.5, 0.5, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, 0.5, 0.5, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, 0.5, 0.5, 1);
 
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, -0.5, -0.5, -0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, 0.5, -0.5, -0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, 0.5, 0.5, -0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, livingEyes.x, livingEyes.y, livingEyes.z, 1, -0.5, 0.5, -0.5, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, -0.5, -0.5, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, -0.5, -0.5, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, 0.5, -0.5, 1);
+            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, 0.5, -0.5, 1);
 
-            level.sendParticles(ParticleTypes.SWEEP_ATTACK, livingEyes.x, livingEyes.y, livingEyes.z, 1, 0, 0, 0, 1);
+            level.sendParticles(ParticleTypes.SWEEP_ATTACK, x, y, z, 1, 0, 0, 0, 1);
+
+            double damageBonusTimes = 1;
+            float AMP_DAMAGE = 7f;
+            double DAMAGE = 10;
             if (living.hasEffect(ModPotions.HEX_EFFECT.get())) {
-                damageBonusTimes += Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier();
+                int multiplier = Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier();
+                damageBonusTimes += multiplier /8.0;
             }
             if (living.hasEffect(ModPotions.SNARE_EFFECT.get())) {
-                damageBonusTimes += Objects.requireNonNull(living.getEffect(ModPotions.SNARE_EFFECT.get())).getAmplifier();
+
+                int s = Objects.requireNonNull(living.getEffect(ModPotions.SNARE_EFFECT.get())).getAmplifier();
+                damageBonusTimes += s /12.0;
             }
-            damage = (this.DAMAGE.get() + (this.AMP_VALUE.get() * this.AMP_DAMAGE));
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic(), (float) ((float) damage * 1.5));
+            DAMAGE += (spellStats.getAmpMultiplier() * AMP_DAMAGE);
+            DAMAGE *= damageBonusTimes;
+            DamageSource source = DamageSource.MAGIC.bypassMagic();
+            if (shooter instanceof Player) {
+                source = DamageSource.playerAttack((Player) shooter).bypassMagic();
+            }
+            attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, source, (float) DAMAGE/2);
             living.invulnerableTime = 0;
         }
     }
