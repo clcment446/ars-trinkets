@@ -7,7 +7,7 @@ import java.util.ArrayList;
 public class Util {
     public static ArrayList<double[]> Vec1Vec2TraceGet(Vec3 start, Vec3 end, double maximum, double minimum, int divisors) {
         /**
-         * Gives a made of points between two points in space.
+         * Returns an Array made of a Double[] array, which represents a number of points divisors from start to end.
          * @param start: Vec3; the vector that represents the start of the line.
          * @param end: Vec3;  the vector that represents the end of the line.
          * @param maximum: double; the maximum distance between two points.
