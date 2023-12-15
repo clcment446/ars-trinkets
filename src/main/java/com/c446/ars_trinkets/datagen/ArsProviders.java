@@ -34,6 +34,7 @@ import net.minecraft.world.level.ItemLike;
 import java.io.IOException;
 import java.nio.file.Path;
 
+import static com.c446.ars_trinkets.registry.ModRegistry.*;
 import static com.hollingsworth.arsnouveau.api.RegistryHelper.getRegistryName;
 import static net.minecraft.world.item.Items.NETHERITE_INGOT;
 
@@ -52,9 +53,9 @@ public class ArsProviders {
 
             Path output = this.generator.getOutputFolder();
 
-            recipes.add(get(WaterSpear.INSTANCE).withItem(ItemsRegistry.WATER_ESSENCE, 4).withItem(ModRegistry.GREEN_ESSENCE.get(), 4).withItem(NETHERITE_INGOT,1));
-            recipes.add(get(AirSword.INSTANCE).withItem(ItemsRegistry.AIR_ESSENCE, 4).withItem(ModRegistry.GREEN_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
-            recipes.add(get(SacrificeHealth.INSTANCE).withItem(Items.DIAMOND_SWORD).withItem(ModRegistry.RED_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
+            recipes.add(get(WaterSpear.INSTANCE).withItem(ItemsRegistry.WATER_ESSENCE, 4).withItem(GREEN_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
+            recipes.add(get(AirSword.INSTANCE).withItem(ItemsRegistry.AIR_ESSENCE, 4).withItem(GREEN_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
+            recipes.add(get(SacrificeHealth.INSTANCE).withItem(Items.DIAMOND_SWORD).withItem(RED_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
 
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());
@@ -84,65 +85,124 @@ public class ArsProviders {
             // # TRINKETS RECIPES
             recipes.add(builder()
                     .withSourceCost(1000)
-                    .withPedestalItem(4, ModRegistry.SILVER_ESSENCE)
+                    .withPedestalItem(4, SILVER_ESSENCE)
                     .withReagent(ItemsRegistry.AMULET_OF_MANA_REGEN)
-                    .withResult(ModRegistry.ESSENCE_LOTUS_3)
+                    .withResult(ESSENCE_LOTUS_3)
                     .build()
             );
             recipes.add(builder()
                     .withSourceCost(1500)
-                    .withPedestalItem(4, ModRegistry.GOLD_ESSENCE)
-                    .withReagent(ModRegistry.ESSENCE_LOTUS_3)
-                    .withResult(ModRegistry.ESSENCE_LOTUS_4)
+                    .withPedestalItem(4, GOLD_ESSENCE)
+                    .withReagent(ESSENCE_LOTUS_3)
+                    .withResult(ESSENCE_LOTUS_4)
                     .build()
             );
             recipes.add(builder()
                     .withSourceCost(2000)
-                    .withPedestalItem(4, ModRegistry.CRYSTAL_ESSENCE)
-                    .withReagent(ModRegistry.ESSENCE_LOTUS_4)
-                    .withResult(ModRegistry.ESSENCE_LOTUS_5)
+                    .withPedestalItem(4, CRYSTAL_ESSENCE)
+                    .withReagent(ESSENCE_LOTUS_4)
+                    .withResult(ESSENCE_LOTUS_5)
                     .build()
             );
             recipes.add(builder()
                     .withSourceCost(2500)
-                    .withPedestalItem(4, ModRegistry.GREEN_ESSENCE)
-                    .withReagent(ModRegistry.ESSENCE_LOTUS_5)
-                    .withResult(ModRegistry.ESSENCE_LOTUS_6)
+                    .withPedestalItem(4, GREEN_ESSENCE)
+                    .withReagent(ESSENCE_LOTUS_5)
+                    .withResult(ESSENCE_LOTUS_6)
                     .build()
             );
             recipes.add(builder()
                     .withSourceCost(4000)
-                    .withPedestalItem(4, ModRegistry.RED_ESSENCE)
-                    .withReagent(ModRegistry.ESSENCE_LOTUS_6)
-                    .withResult(ModRegistry.ESSENCE_LOTUS_7)
+                    .withPedestalItem(4, RED_ESSENCE)
+                    .withReagent(ESSENCE_LOTUS_6)
+                    .withResult(ESSENCE_LOTUS_7)
                     .build()
             );
             recipes.add(builder()
                     .withSourceCost(6000)
-                    .withPedestalItem(4, ModRegistry.WHITE_ESSENCE)
-                    .withReagent(ModRegistry.ESSENCE_LOTUS_7)
-                    .withResult(ModRegistry.ESSENCE_LOTUS_8)
+                    .withPedestalItem(4, WHITE_ESSENCE)
+                    .withReagent(ESSENCE_LOTUS_7)
+                    .withResult(ESSENCE_LOTUS_8)
                     .build()
             );
             recipes.add(builder()
                     .withSourceCost(10000)
-                    .withPedestalItem(4, ModRegistry.YELLOW_ESSENCE)
-                    .withReagent(ModRegistry.ESSENCE_LOTUS_8)
-                    .withResult(ModRegistry.ESSENCE_LOTUS_9)
+                    .withPedestalItem(4, YELLOW_ESSENCE)
+                    .withReagent(ESSENCE_LOTUS_8)
+                    .withResult(ESSENCE_LOTUS_9)
                     .build()
             );
             recipes.add(builder()
-                    .withSourceCost(10)
-                    .withPedestalItem(4, ModRegistry.ESSENCE_LOTUS_9)
-                    .withPedestalItem(4, ModRegistry.PURPLE_ESSENCE)
-                    .withReagent(ModRegistry.ESSENCE_LOTUS_3)
-                    .withResult(ModRegistry.ESSENCE_LOTUS_10)
+                    .withSourceCost(15000)
+                    .withPedestalItem(4, ESSENCE_LOTUS_9)
+                    .withPedestalItem(4, PURPLE_ESSENCE)
+                    .withReagent(ESSENCE_LOTUS_9)
+                    .withResult(ESSENCE_LOTUS_10)
                     .build()
             );
             recipes.add(builder()
-                    .withPedestalItem(8, ModRegistry.YELLOW_ESSENCE)
-                    .withSourceCost(1000)
+                    .withSourceCost(20000)
+                    .withPedestalItem(8, YELLOW_ESSENCE)
                     .withResult(BlockRegistry.CREATIVE_SOURCE_JAR)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(1000)
+                    .withPedestalItem(4, SILVER_ESSENCE)
+                    .withReagent(ItemsRegistry.AMULET_OF_MANA_BOOST)
+                    .withResult(MANA_CONDENSOR_3)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(1500)
+                    .withPedestalItem(4, GOLD_ESSENCE)
+                    .withReagent(MANA_CONDENSOR_3)
+                    .withResult(MANA_CONDENSOR_4)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(2000)
+                    .withPedestalItem(4, CRYSTAL_ESSENCE)
+                    .withReagent(MANA_CONDENSOR_4)
+                    .withResult(MANA_CONDENSOR_5)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(2500)
+                    .withPedestalItem(4, GREEN_ESSENCE)
+                    .withReagent(MANA_CONDENSOR_5)
+                    .withResult(MANA_CONDENSOR_6)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(4000)
+                    .withPedestalItem(4, RED_ESSENCE)
+                    .withReagent(MANA_CONDENSOR_6)
+                    .withResult(MANA_CONDENSOR_7)
+                    .build()
+            );
+            recipes.add(builder()
+
+                    .withSourceCost(6000)
+                    .withPedestalItem(4, WHITE_ESSENCE)
+                    .withReagent(MANA_CONDENSOR_7)
+                    .withResult(MANA_CONDENSOR_8)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withPedestalItem(4, YELLOW_ESSENCE)
+                    .withPedestalItem(2, MANA_CONDENSOR_8)
+                    .withReagent(MANA_CONDENSOR_8)
+                    .withResult(MANA_CONDENSOR_9)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(15000)
+                    .withPedestalItem(4, PURPLE_ESSENCE)
+                    .withPedestalItem(4, MANA_CONDENSOR_9)
+                    .withReagent(MANA_CONDENSOR_9)
+                    .withResult(MANA_CONDENSOR_10)
                     .build()
             );
 
@@ -174,61 +234,61 @@ public class ArsProviders {
 
         @Override
         public void run(CachedOutput cache) throws IOException {
-            recipes.add(new ImbuementRecipe("essence_silver", Ingredient.of(Items.IRON_BLOCK), new ItemStack(ModRegistry.SILVER_ESSENCE.get()), 10)
+            recipes.add(new ImbuementRecipe("essence_silver", Ingredient.of(Items.IRON_BLOCK), new ItemStack(SILVER_ESSENCE.get()), 10)
                     .withPedestalItem(Items.IRON_INGOT)
                     .withPedestalItem(Items.IRON_INGOT)
             );
-            recipes.add(new ImbuementRecipe("essence_gold", Ingredient.of(Items.GOLD_BLOCK), new ItemStack(ModRegistry.GOLD_ESSENCE.get()), 20)
-                    .withPedestalItem(ModRegistry.SILVER_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.SILVER_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.SILVER_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.SILVER_ESSENCE.get())
+            recipes.add(new ImbuementRecipe("essence_gold", Ingredient.of(Items.GOLD_BLOCK), new ItemStack(GOLD_ESSENCE.get()), 20)
+                    .withPedestalItem(SILVER_ESSENCE.get())
+                    .withPedestalItem(SILVER_ESSENCE.get())
+                    .withPedestalItem(SILVER_ESSENCE.get())
+                    .withPedestalItem(SILVER_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_crystal", Ingredient.of(Items.LAPIS_BLOCK), new ItemStack(ModRegistry.CRYSTAL_ESSENCE.get()), 40)
-                    .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.GOLD_ESSENCE.get())
+            recipes.add(new ImbuementRecipe("essence_crystal", Ingredient.of(Items.LAPIS_BLOCK), new ItemStack(CRYSTAL_ESSENCE.get()), 40)
+                    .withPedestalItem(GOLD_ESSENCE.get())
+                    .withPedestalItem(GOLD_ESSENCE.get())
+                    .withPedestalItem(GOLD_ESSENCE.get())
+                    .withPedestalItem(GOLD_ESSENCE.get())
+                    .withPedestalItem(GOLD_ESSENCE.get())
+                    .withPedestalItem(GOLD_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_green", Ingredient.of(Items.DIAMOND_BLOCK), new ItemStack(ModRegistry.GREEN_ESSENCE.get()), 100)
-                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.CRYSTAL_ESSENCE.get())
+            recipes.add(new ImbuementRecipe("essence_green", Ingredient.of(Items.DIAMOND_BLOCK), new ItemStack(GREEN_ESSENCE.get()), 100)
+                    .withPedestalItem(CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(CRYSTAL_ESSENCE.get())
+                    .withPedestalItem(CRYSTAL_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_red", Ingredient.of(Items.NETHERITE_SCRAP), new ItemStack(ModRegistry.RED_ESSENCE.get()), 300)
-                    .withPedestalItem(ModRegistry.GREEN_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.GREEN_ESSENCE.get())
+            recipes.add(new ImbuementRecipe("essence_red", Ingredient.of(Items.NETHERITE_SCRAP), new ItemStack(RED_ESSENCE.get()), 300)
+                    .withPedestalItem(GREEN_ESSENCE.get())
+                    .withPedestalItem(GREEN_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_white", Ingredient.of(NETHERITE_INGOT), new ItemStack(ModRegistry.WHITE_ESSENCE.get()), 900)
-                    .withPedestalItem(ModRegistry.RED_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.RED_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.RED_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.RED_ESSENCE.get())
+            recipes.add(new ImbuementRecipe("essence_white", Ingredient.of(NETHERITE_INGOT), new ItemStack(WHITE_ESSENCE.get()), 900)
+                    .withPedestalItem(RED_ESSENCE.get())
+                    .withPedestalItem(RED_ESSENCE.get())
+                    .withPedestalItem(RED_ESSENCE.get())
+                    .withPedestalItem(RED_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_yellow", Ingredient.of(Items.NETHERITE_BLOCK), new ItemStack(ModRegistry.YELLOW_ESSENCE.get()), 900)
-                    .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.WHITE_ESSENCE.get())
+            recipes.add(new ImbuementRecipe("essence_yellow", Ingredient.of(Items.NETHERITE_BLOCK), new ItemStack(YELLOW_ESSENCE.get()), 900)
+                    .withPedestalItem(WHITE_ESSENCE.get())
+                    .withPedestalItem(WHITE_ESSENCE.get())
+                    .withPedestalItem(WHITE_ESSENCE.get())
+                    .withPedestalItem(WHITE_ESSENCE.get())
+                    .withPedestalItem(WHITE_ESSENCE.get())
+                    .withPedestalItem(WHITE_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_purple", Ingredient.of(Items.DIAMOND), new ItemStack(ModRegistry.PURPLE_ESSENCE.get()), 10)
-                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
-                    .withPedestalItem(ModRegistry.YELLOW_ESSENCE.get())
+            recipes.add(new ImbuementRecipe("essence_purple", Ingredient.of(Items.DIAMOND), new ItemStack(PURPLE_ESSENCE.get()), 10)
+                    .withPedestalItem(YELLOW_ESSENCE.get())
+                    .withPedestalItem(YELLOW_ESSENCE.get())
+                    .withPedestalItem(YELLOW_ESSENCE.get())
+                    .withPedestalItem(YELLOW_ESSENCE.get())
+                    .withPedestalItem(YELLOW_ESSENCE.get())
+                    .withPedestalItem(YELLOW_ESSENCE.get())
+                    .withPedestalItem(YELLOW_ESSENCE.get())
+                    .withPedestalItem(YELLOW_ESSENCE.get())
 
 
             );

@@ -11,11 +11,13 @@ import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
+import javax.swing.text.DefaultStyledDocument;
 import java.util.UUID;
 
 public class MagicItems extends RegularItems implements ICurioItem, IManaEquipment {
     int boost;
     int regen;
+    int damage_boost;
     public MagicItems(Properties properties, int boost, int regen){
         super(properties);
         this.boost = boost;
@@ -30,6 +32,7 @@ public class MagicItems extends RegularItems implements ICurioItem, IManaEquipme
     public int getMaxManaBoost(ItemStack stack) {
         return boost;
     }
+    public int getSpellDamageBoost(ItemStack stack) {return damage_boost}
     @Override
     public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
         return true;
@@ -38,6 +41,7 @@ public class MagicItems extends RegularItems implements ICurioItem, IManaEquipme
         Multimap<Attribute, AttributeModifier> attributes = ICurioItem.super.getAttributeModifiers(slotContext, uuid, stack);
         attributes.put((Attribute) PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_modifier_curio", (double)this.getMaxManaBoost(stack), AttributeModifier.Operation.ADDITION));
         attributes.put((Attribute) PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_modifier_curio", (double)this.getManaRegenBonus(stack), AttributeModifier.Operation.ADDITION));
+        attributes.put((Attribute) PerkAttributes.SPELL_DAMAGE_BONUS.get(), new AttributeModifier(uuid, "spell_damage_bonus_modifier_curio", (double) this.getSpellDamageBoost(stack), AttributeModifier.Operation.ADDITION));
         return attributes;
     }
 }
