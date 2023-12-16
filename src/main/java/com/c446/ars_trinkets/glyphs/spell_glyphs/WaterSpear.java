@@ -72,7 +72,7 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
             for (double[] position : particles) {
                 level.sendParticles(ParticleTypes.SPLASH, position[0], position[1], position[2], 3, 0, 0, 0, 1);
             }
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic().bypassArmor(), (float) ( DAMAGE * 5));
+            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic().bypassArmor(), (float) ( DAMAGE /3));
             living.invulnerableTime = 3;
         }
     }

@@ -48,17 +48,7 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
             level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, 0.5, 0, 1);
             level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, 0.5, 0, 1);
 
-            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, -0.5, 0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, -0.5, 0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, 0.5, 0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, 0.5, 0.5, 1);
-
-            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, -0.5, -0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, -0.5, -0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, 0.5, 0.5, -0.5, 1);
-            level.sendParticles(ParticleTypes.END_ROD, x, y, z, 1, -0.5, 0.5, -0.5, 1);
-
-            level.sendParticles(ParticleTypes.SWEEP_ATTACK, x, y, z, 1, 0, 0, 0, 1);
+            level.sendParticles(ParticleTypes.SWEEP_ATTACK, x, y, z, 1, 0, 0, 0.5, 1);
 
             double damageBonusTimes = 1;
             float AMP_DAMAGE = 7f;

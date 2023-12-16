@@ -32,7 +32,7 @@ public class MagicItems extends RegularItems implements ICurioItem, IManaEquipme
     public int getMaxManaBoost(ItemStack stack) {
         return boost;
     }
-    public int getSpellDamageBoost(ItemStack stack) {return damage_boost}
+    public int getSpellDamageBoost(ItemStack stack) {return damage_boost;}
     @Override
     public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
         return true;

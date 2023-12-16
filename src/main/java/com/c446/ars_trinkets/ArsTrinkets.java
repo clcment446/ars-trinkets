@@ -4,6 +4,7 @@ import com.c446.ars_trinkets.item.EssenceItem;
 import com.c446.ars_trinkets.item.ManaCrystal;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.SpellTier;
+import com.hollingsworth.arsnouveau.setup.Config;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
