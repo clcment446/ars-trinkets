@@ -88,14 +88,14 @@ public class ModRegistry {
         MANA_CONDENSOR_9 = ITEMS.register("mana_stone_9", ()->new MagicItems(new Item.Properties().rarity(Rarity.EPIC).tab(ArsNouveau.itemGroup).stacksTo(1), 1280, -192));
         MANA_CONDENSOR_10 = ITEMS.register("mana_stone_10", ()->new MagicItems(new Item.Properties().rarity(Rarity.EPIC).tab(ArsNouveau.itemGroup).stacksTo(1), 2560, -384));
 
-        SILVER_ESSENCE = ITEMS.register("silver_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).rarity(Rarity.COMMON)));
-        GOLD_ESSENCE = ITEMS.register("gold_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).rarity(Rarity.COMMON)));
-        CRYSTAL_ESSENCE = ITEMS.register("crystal_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).rarity(Rarity.UNCOMMON)));
-        GREEN_ESSENCE = ITEMS.register("green_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.UNCOMMON),true));
-        RED_ESSENCE = ITEMS.register("red_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.RARE),true));
-        WHITE_ESSENCE = ITEMS.register("white_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.RARE),true));
-        YELLOW_ESSENCE = ITEMS.register("yellow_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.EPIC),true));
-        PURPLE_ESSENCE = ITEMS.register("purple_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.EPIC),true));
+        SILVER_ESSENCE = ITEMS.register("silver_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).rarity(Rarity.COMMON)));
+        GOLD_ESSENCE = ITEMS.register("gold_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).rarity(Rarity.COMMON)));
+        CRYSTAL_ESSENCE = ITEMS.register("crystal_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).rarity(Rarity.UNCOMMON)));
+        GREEN_ESSENCE = ITEMS.register("green_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.UNCOMMON),true));
+        RED_ESSENCE = ITEMS.register("red_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.RARE),true));
+        WHITE_ESSENCE = ITEMS.register("white_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.RARE),true));
+        YELLOW_ESSENCE = ITEMS.register("yellow_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.EPIC),true));
+        PURPLE_ESSENCE = ITEMS.register("purple_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).fireResistant().rarity(Rarity.EPIC),true));
 
 
 //        BLOOD_ESSENCE = ITEMS.register("blood_essence", () -> new RegularItems(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(60).rarity(Rarity.RARE)));

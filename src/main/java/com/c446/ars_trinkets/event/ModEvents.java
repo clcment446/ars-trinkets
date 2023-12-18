@@ -13,6 +13,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
 @Mod.EventBusSubscriber(modid = ArsTrinkets.MODID)
 public class ModEvents {
     @SubscribeEvent
@@ -68,15 +69,15 @@ public class ModEvents {
      * Get player capability
      * If 'ManaStoneProvider' is present, attempt to add the item's worth of mana into the player's reserve.
      */
-    public static void essenceIsConsumed(Player pPlayer) {
-        if (EssenceItem.getManaValue(pPlayer.getItemBySlot(EquipmentSlot.OFFHAND).getItem()) != 0) {
-            pPlayer.getCapability(ManaStoneProvider.PLAYER_MANA).ifPresent(manaStone -> {
-                int count = pPlayer.getItemBySlot(EquipmentSlot.OFFHAND).getCount();
-                int k = EssenceItem.getManaValue(pPlayer.getItemBySlot(EquipmentSlot.OFFHAND).getItem()) * count;
-                pPlayer.getInventory().removeItem(Inventory.SLOT_OFFHAND, count);
-                manaStone.addCrystalMana(k);
-//                pPlayer.displayClientMessage(net.minecraft.network.chat.Component.);
-            });
-        }
-    }
+//    public static void essenceIsConsumed(Player pPlayer) {
+//        if (EssenceItem.getManaValue(pPlayer.getItemBySlot(EquipmentSlot.OFFHAND).getItem()) != 0) {
+//            pPlayer.getCapability(ManaStoneProvider.PLAYER_MANA).ifPresent(manaStone -> {
+//                int count = pPlayer.getItemBySlot(EquipmentSlot.OFFHAND).getCount();
+//                int k = EssenceItem.getManaValue(pPlayer.getItemBySlot(EquipmentSlot.OFFHAND).getItem()) * count;
+//                pPlayer.getInventory().removeItem(Inventory.SLOT_OFFHAND, count);
+//                manaStone.addCrystalMana(k);
+////                pPlayer.displayClientMessage(net.minecraft.network.chat.Component.);
+//            });
+//        }
+//    }
 }

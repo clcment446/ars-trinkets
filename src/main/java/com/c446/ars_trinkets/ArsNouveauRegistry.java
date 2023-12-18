@@ -20,7 +20,7 @@ public class ArsNouveauRegistry {
 //        register(RotateEntity.INSTANCE);
         register(AirSword.INSTANCE);
 //        register(SwapEntityPosition.INSTANCE);
-
+        register(ExpSacrifice.INSTANCE);
 
     }
     public static void registerSounds(){

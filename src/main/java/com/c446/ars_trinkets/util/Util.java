@@ -1,5 +1,7 @@
 package com.c446.ars_trinkets.util;
 
+import alexthw.ars_elemental.api.item.ISchoolFocus;
+import com.dkmk100.arsomega.util.RegistryHandler;
 import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
 import com.hollingsworth.arsnouveau.setup.ItemsRegistry;
 import net.minecraft.world.InteractionHand;
@@ -10,16 +12,15 @@ import org.jetbrains.annotations.NotNull;
 import top.theillusivec4.curios.api.CuriosApi;
 import top.theillusivec4.curios.api.SlotResult;
 
+import java.rmi.registry.Registry;
 import java.util.ArrayList;
 
 public class Util {
     ArrayList<Item> focus = new ArrayList<>();
 
-public Util(){
-    focus.clear();
-    focus.add(ItemsRegistry.SHAPERS_FOCUS.get());
-    focus.add(ItemsRegistry.SUMMONING_FOCUS.get());
-}
+    public Util() {
+    }
+
     public static ArrayList<double[]> Vec1Vec2TraceGet(Vec3 start, Vec3 end, double maximum, double minimum, int divisors) {
         /**
          * Returns an Array made of a Double[] array, which represents a number of points divisors from start to end.
@@ -50,21 +51,33 @@ public Util(){
         }
         return (particlePos);
     }
+/*
+@Deprecated
+    static Item getFociSchool(@NotNull Player player) {
+        InteractionHand[] var1 = InteractionHand.values();
+        int var2 = var1.length;
 
-    SpellSchool getFocus(@NotNull Player player) {
-        //check the player's hands and curios for a focus and return the school if found
-        for (InteractionHand curHand : InteractionHand.values()) {
-            Item hand = player.getItemInHand(curHand).getItem();
-            if (focus.contains(hand)) {
-
+        for (int var3 = 0; var3 < var2; ++var3) {
+            InteractionHand curHand = var1[var3];
+            Item item = player.getItemInHand(curHand).getItem();
+            if ((item == RegistryHandler.FOCUS_OF_LIFE.get() || item == RegistryHandler.FOCUS_OF_ALCHEMY.get() || item == RegistryHandler.FOCUS_OF_ADVANCED_ALCHEMY.get()) || item instanceof ISchoolFocus) {
+                return item;
             }
         }
-        SlotResult curio = CuriosApi.getCuriosHelper().findFirstCurio(player, c -> (c.getItem() instanceof ISchoolFocus)).orElse(null);
-        if (curio != null && focus.contains(curio.stack().getItem())) {
-            (curio.stack().getItem());
+        SlotResult curio = (SlotResult) CuriosApi.getCuriosHelper().findFirstCurio(player, (c) -> {
+            Item item = c.getItem();
+
+            if ((item == RegistryHandler.FOCUS_OF_LIFE.get() || item == RegistryHandler.FOCUS_OF_ALCHEMY.get() || item == RegistryHandler.FOCUS_OF_ADVANCED_ALCHEMY.get()) || item instanceof ISchoolFocus) {
+                return item;
+            }
+        }).orElse((Object) null);
+        if (curio != null) {
+            Item var9 = curio.stack().getItem();
+            if ((var9 == RegistryHandler.FOCUS_OF_LIFE.get() || var9 == RegistryHandler.FOCUS_OF_ALCHEMY.get() || var9 == RegistryHandler.FOCUS_OF_ADVANCED_ALCHEMY.get()) || var9 instanceof ISchoolFocus) {
+                ISchoolFocus focus = (ISchoolFocus) var9;
+                return focus.getSchool();
+            }
         }
         return null;
-    }
-
-
+    }*/
 }

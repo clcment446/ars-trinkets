@@ -1,6 +1,7 @@
 package com.c446.ars_trinkets.glyphs.spell_glyphs;
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.dkmk100.arsomega.glyphs.TierFourEffect;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
@@ -29,6 +30,7 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
 
     double AMP_DAMAGE = 1.3D;
     public static final WaterSpear INSTANCE = new WaterSpear(new ResourceLocation(ArsTrinkets.MODID, "glyph_water_spear"), "Water Spear");
+
     public WaterSpear(ResourceLocation tag, String description) {
         super(tag, description);
     }
@@ -45,20 +47,20 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
             Vec3 vecTar = entity.position();
             Vec3 eyesPos = shooter.getEyePosition(1.0f);
             double damageBonusTimes = 1;
-            float AMP_DAMAGE = 7f;
+            float AMP_DAMAGE = 10f;
             double DAMAGE = ((double) 40);
             if (living.hasEffect(ModPotions.FREEZING_EFFECT.get())) {
                 int s = (int) (Objects.requireNonNull(living.getEffect(ModPotions.FREEZING_EFFECT.get())).getAmplifier());
-                s*=1.2;
+                s *= 1.2;
                 damageBonusTimes += s;
             }
             if (living.hasEffect(ModPotions.SHOCKED_EFFECT.get())) {
-                int s =  Objects.requireNonNull(living.getEffect(ModPotions.SHOCKED_EFFECT.get())).getAmplifier();
-                s/=2;
+                int s = Objects.requireNonNull(living.getEffect(ModPotions.SHOCKED_EFFECT.get())).getAmplifier();
+                s /= 2;
                 damageBonusTimes += s;
             }
             if (living.hasEffect(ModPotions.HEX_EFFECT.get())) {
-                int s =  Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier();
+                int s = Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier();
                 s /= 8;
                 damageBonusTimes += s;
             }
@@ -68,11 +70,11 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
             DAMAGE += (spellStats.getAmpMultiplier() * AMP_DAMAGE);
             DAMAGE *= damageBonusTimes;
 
-            ArrayList<double[]> particles = Vec1Vec2TraceGet(eyesPos, vecTar, (double) 5 * spellStats.getAoeMultiplier(), 1, (int) (AMP_DAMAGE * spellStats.getAmpMultiplier() * spellStats.getAoeMultiplier()/ 2));
+            ArrayList<double[]> particles = Vec1Vec2TraceGet(eyesPos, vecTar, (double) 5 * spellStats.getAoeMultiplier(), 1, (int) (AMP_DAMAGE * spellStats.getAmpMultiplier() * spellStats.getAoeMultiplier() / 2));
             for (double[] position : particles) {
                 level.sendParticles(ParticleTypes.SPLASH, position[0], position[1], position[2], 3, 0, 0, 0, 1);
             }
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic().bypassArmor(), (float) ( DAMAGE /3));
+            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic().bypassArmor(), (float) (DAMAGE / 3));
             living.invulnerableTime = 3;
         }
     }
@@ -90,7 +92,7 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
 
     @Override
     public SpellTier defaultTier() {
-        return SpellTier.THREE;
+        return TierFourEffect.FOUR;
     }
 
     @Override

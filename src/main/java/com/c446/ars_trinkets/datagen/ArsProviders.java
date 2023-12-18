@@ -6,6 +6,7 @@ import com.c446.ars_trinkets.glyphs.spell_glyphs.AirSword;
 import com.c446.ars_trinkets.glyphs.spell_glyphs.SacrificeHealth;
 import com.c446.ars_trinkets.glyphs.spell_glyphs.WaterSpear;
 import com.c446.ars_trinkets.registry.ModRegistry;
+import com.dkmk100.arsomega.util.RegistryHandler;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
@@ -86,7 +87,7 @@ public class ArsProviders {
             recipes.add(builder()
                     .withSourceCost(1000)
                     .withPedestalItem(4, SILVER_ESSENCE)
-                    .withReagent(ItemsRegistry.AMULET_OF_MANA_REGEN)
+                    .withReagent(RegistryHandler.ARCANE_REGEN_AMULET)
                     .withResult(ESSENCE_LOTUS_3)
                     .build()
             );
@@ -149,7 +150,7 @@ public class ArsProviders {
             recipes.add(builder()
                     .withSourceCost(1000)
                     .withPedestalItem(4, SILVER_ESSENCE)
-                    .withReagent(ItemsRegistry.AMULET_OF_MANA_BOOST)
+                    .withReagent(RegistryHandler.RING_BOOST)
                     .withResult(MANA_CONDENSOR_3)
                     .build()
             );
