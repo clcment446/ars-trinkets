@@ -3,11 +3,11 @@ package com.c446.ars_trinkets.glyphs.spell_glyphs;
 import com.c446.ars_trinkets.ArsTrinkets;
 import com.dkmk100.arsomega.glyphs.TierFourEffect;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -20,11 +20,10 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
-import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
 
-import static com.c446.ars_trinkets.util.Util.Vec1Vec2TraceGet;
+import static com.c446.ars_trinkets.util.Util.CreateParticleBeam;
 
 public class WaterSpear extends AbstractEffect implements IDamageEffect {
 
@@ -70,10 +69,11 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
             DAMAGE += (spellStats.getAmpMultiplier() * AMP_DAMAGE);
             DAMAGE *= damageBonusTimes;
 
-            ArrayList<double[]> particles = Vec1Vec2TraceGet(eyesPos, vecTar, (double) 5 * spellStats.getAoeMultiplier(), 1, (int) (AMP_DAMAGE * spellStats.getAmpMultiplier() * spellStats.getAoeMultiplier() / 2));
-            for (double[] position : particles) {
-                level.sendParticles(ParticleTypes.SPLASH, position[0], position[1], position[2], 3, 0, 0, 0, 1);
-            }
+//            ArrayList<double[]> particles = Vec1Vec2TraceGet(eyesPos, vecTar, (double) 5 * spellStats.getAoeMultiplier(), 1, (int) (AMP_DAMAGE * spellStats.getAmpMultiplier() * spellStats.getAoeMultiplier() / 2));
+//            for (double[] position : particles) {
+//                level.sendParticles(ParticleTypes.SPLASH, position[0], position[1], position[2], 3, 0, 0, 0, 1);
+//            }
+            CreateParticleBeam(eyesPos, vecTar, level, new ParticleColor(0,0,250));
             this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic().bypassArmor(), (float) (DAMAGE / 3));
             living.invulnerableTime = 3;
         }
