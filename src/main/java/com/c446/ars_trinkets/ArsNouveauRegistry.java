@@ -16,11 +16,10 @@ public class ArsNouveauRegistry {
 
     public static void registerGlyphs(){
         register(SacrificeHealth.INSTANCE);
+        register(SacrificeExperience.INSTANCE);
         register(WaterSpear.INSTANCE);
-//        register(RotateEntity.INSTANCE);
         register(AirSword.INSTANCE);
-//        register(SwapEntityPosition.INSTANCE);
-        register(ExpSacrifice.INSTANCE);
+
 
     }
     public static void registerSounds(){

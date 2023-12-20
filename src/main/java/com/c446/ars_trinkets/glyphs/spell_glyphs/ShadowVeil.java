@@ -1,15 +1,15 @@
 package com.c446.ars_trinkets.glyphs.spell_glyphs;
 
 import com.c446.ars_trinkets.ArsTrinkets;
-import com.c446.ars_trinkets.util.Util;
+import com.dkmk100.arsomega.glyphs.Schools;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
-import com.hollingsworth.arsnouveau.setup.config.ServerConfig;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -21,10 +21,9 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import java.util.Set;
 
-import static com.c446.ars_trinkets.util.Util.CreateParticleBeam;
 
-public class SonicBoom extends AbstractEffect implements IDamageEffect {
-    public SonicBoom(ResourceLocation tag, String description) {
+public class ShadowVeil extends AbstractEffect {
+    public ShadowVeil(ResourceLocation tag, String description) {
         super(tag, description);
     }
 
@@ -45,7 +44,7 @@ public class SonicBoom extends AbstractEffect implements IDamageEffect {
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return augmentSetOf(AugmentAmplify.INSTANCE, AugmentAOE.INSTANCE);
+        return augmentSetOf(AugmentAmplify.INSTANCE, AugmentExtendTime.INSTANCE);
     }
 
     @Override
@@ -55,22 +54,23 @@ public class SonicBoom extends AbstractEffect implements IDamageEffect {
 
     @Override
     public int getDefaultManaCost() {
-        return 1200;
+        return 2000;
     }
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
-        return this.setOf(SpellSchools.ELEMENTAL_AIR);
+        return this.setOf(Schools.DEMONIC);
     }
+
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Entity entity = rayTraceResult.getEntity();
-        if (world instanceof ServerLevel level && entity instanceof LivingEntity living){
-            Vec3 eyesPosTar = living.getEyePosition();
-            Vec3 eyesPosPla = shooter.getEyePosition();
-            CreateParticleBeam(eyesPosPla, eyesPosTar, level, ParticleTypes.SONIC_BOOM.getType(), 1.0);
-            attemptDamage(level, shooter, spellStats, spellContext, resolver, entity, DamageSource.sonicBoom((Entity) shooter), 8);
+        if (entity instanceof LivingEntity living && world instanceof ServerLevel level) {
+            living.addEffect(new MobEffectInstance(MobEffects.DARKNESS, (int) (20 * spellStats.getDurationMultiplier()), (int) (1 * spellStats.getAmpMultiplier())));
+            Vec3 livingPos = living.getEyePosition();
+            level.sendParticles(ParticleTypes.SQUID_INK, livingPos.x, livingPos.y, livingPos.z, 100, 0, 0, 0, 0.5);
         }
     }
+
 
 }

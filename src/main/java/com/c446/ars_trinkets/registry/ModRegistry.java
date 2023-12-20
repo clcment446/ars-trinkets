@@ -71,22 +71,22 @@ public class ModRegistry {
 
     static {
         //trinkets
-        ESSENCE_LOTUS_3 = ITEMS.register("essence_lotus_3", () -> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 15, 10));
-        ESSENCE_LOTUS_4 = ITEMS.register("essence_lotus_4", () -> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 30, 20));
-        ESSENCE_LOTUS_5 = ITEMS.register("essence_lotus_5", () -> new MagicItems(new Item.Properties().rarity(Rarity.UNCOMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 45, 40));
-        ESSENCE_LOTUS_6 = ITEMS.register("essence_lotus_6", () -> new MagicItems(new Item.Properties().rarity(Rarity.UNCOMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 60, 80));
-        ESSENCE_LOTUS_7 = ITEMS.register("essence_lotus_7", () -> new MagicItems(new Item.Properties().rarity(Rarity.RARE).tab(ArsNouveau.itemGroup).stacksTo(1), 75, 160));
-        ESSENCE_LOTUS_8 = ITEMS.register("essence_lotus_8", () -> new MagicItems(new Item.Properties().rarity(Rarity.RARE).tab(ArsNouveau.itemGroup).stacksTo(1), 90, 320));
-        ESSENCE_LOTUS_9 = ITEMS.register("essence_lotus_9", () -> new MagicItems(new Item.Properties().rarity(Rarity.EPIC).tab(ArsNouveau.itemGroup).stacksTo(1), 105, 640));
-        ESSENCE_LOTUS_10 = ITEMS.register("essence_lotus_10", () -> new MagicItems(new Item.Properties().rarity(Rarity.EPIC).tab(ArsNouveau.itemGroup).stacksTo(1), 250, 1250));
-        MANA_CONDENSOR_3 = ITEMS.register("mana_stone_3", ()-> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 20, -3));
-        MANA_CONDENSOR_4 = ITEMS.register("mana_stone_4", ()-> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 40, -6));
-        MANA_CONDENSOR_5 = ITEMS.register("mana_stone_5", ()-> new MagicItems(new Item.Properties().rarity(Rarity.UNCOMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 80, -12));
-        MANA_CONDENSOR_6 = ITEMS.register("mana_stone_6", ()->new MagicItems(new Item.Properties().rarity(Rarity.UNCOMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 160, -24));
-        MANA_CONDENSOR_7 = ITEMS.register("mana_stone_7", ()->new MagicItems(new Item.Properties().rarity(Rarity.RARE).tab(ArsNouveau.itemGroup).stacksTo(1), 320, -48));
-        MANA_CONDENSOR_8 = ITEMS.register("mana_stone_8", ()->new MagicItems(new Item.Properties().rarity(Rarity.RARE).tab(ArsNouveau.itemGroup).stacksTo(1), 640, -96));
-        MANA_CONDENSOR_9 = ITEMS.register("mana_stone_9", ()->new MagicItems(new Item.Properties().rarity(Rarity.EPIC).tab(ArsNouveau.itemGroup).stacksTo(1), 1280, -192));
-        MANA_CONDENSOR_10 = ITEMS.register("mana_stone_10", ()->new MagicItems(new Item.Properties().rarity(Rarity.EPIC).tab(ArsNouveau.itemGroup).stacksTo(1), 2560, -384));
+        ESSENCE_LOTUS_3 = ITEMS.register("essence_lotus_3", () -> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 15, 10,0,0));
+        ESSENCE_LOTUS_4 = ITEMS.register("essence_lotus_4", () -> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 30, 20,0,0));
+        ESSENCE_LOTUS_5 = ITEMS.register("essence_lotus_5", () -> new MagicItems(new Item.Properties().rarity(Rarity.UNCOMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 45, 40,0,0));
+        ESSENCE_LOTUS_6 = ITEMS.register("essence_lotus_6", () -> new MagicItems(new Item.Properties().rarity(Rarity.UNCOMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 60, 80,0,0));
+        ESSENCE_LOTUS_7 = ITEMS.register("essence_lotus_7", () -> new MagicItems(new Item.Properties().rarity(Rarity.RARE).tab(ArsNouveau.itemGroup).stacksTo(1), 75, 160,0,0));
+        ESSENCE_LOTUS_8 = ITEMS.register("essence_lotus_8", () -> new MagicItems(new Item.Properties().rarity(Rarity.RARE).tab(ArsNouveau.itemGroup).stacksTo(1), 90, 320,0,0));
+        ESSENCE_LOTUS_9 = ITEMS.register("essence_lotus_9", () -> new MagicItems(new Item.Properties().rarity(Rarity.EPIC).tab(ArsNouveau.itemGroup).stacksTo(1), 105, 640,0,0));
+        ESSENCE_LOTUS_10 = ITEMS.register("essence_lotus_10", () -> new MagicItems(new Item.Properties().rarity(Rarity.EPIC).tab(ArsNouveau.itemGroup).stacksTo(1), 250, 1250,0,0));
+        MANA_CONDENSOR_3 = ITEMS.register("mana_stone_3", ()-> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 20, -3,0,0));
+        MANA_CONDENSOR_4 = ITEMS.register("mana_stone_4", ()-> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 40, -6,0,0));
+        MANA_CONDENSOR_5 = ITEMS.register("mana_stone_5", ()-> new MagicItems(new Item.Properties().rarity(Rarity.UNCOMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 80, -12,0,0));
+        MANA_CONDENSOR_6 = ITEMS.register("mana_stone_6", ()->new MagicItems(new Item.Properties().rarity(Rarity.UNCOMMON).tab(ArsNouveau.itemGroup).stacksTo(1), 160, -24,0,0));
+        MANA_CONDENSOR_7 = ITEMS.register("mana_stone_7", ()->new MagicItems(new Item.Properties().rarity(Rarity.RARE).tab(ArsNouveau.itemGroup).stacksTo(1), 320, -48,0,0));
+        MANA_CONDENSOR_8 = ITEMS.register("mana_stone_8", ()->new MagicItems(new Item.Properties().rarity(Rarity.RARE).tab(ArsNouveau.itemGroup).stacksTo(1), 640, -96,0,0));
+        MANA_CONDENSOR_9 = ITEMS.register("mana_stone_9", ()->new MagicItems(new Item.Properties().rarity(Rarity.EPIC).tab(ArsNouveau.itemGroup).stacksTo(1), 1280, -192,0,0));
+        MANA_CONDENSOR_10 = ITEMS.register("mana_stone_10", ()->new MagicItems(new Item.Properties().rarity(Rarity.EPIC).tab(ArsNouveau.itemGroup).stacksTo(1), 2560, -384,0,0));
 
         SILVER_ESSENCE = ITEMS.register("silver_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).rarity(Rarity.COMMON)));
         GOLD_ESSENCE = ITEMS.register("gold_essence", () -> new EssenceItem(new Item.Properties().tab(ArsNouveau.itemGroup).stacksTo(64).rarity(Rarity.COMMON)));

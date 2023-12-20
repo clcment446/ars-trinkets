@@ -18,10 +18,13 @@ public class MagicItems extends RegularItems implements ICurioItem, IManaEquipme
     int boost;
     int regen;
     int damage_boost;
-    public MagicItems(Properties properties, int boost, int regen){
+    int max_boost;
+    public MagicItems(Properties properties, int boost, int regen, int max_boost, int damage_boost){
         super(properties);
         this.boost = boost;
         this.regen = regen;
+        this.max_boost = max_boost;
+        this.damage_boost =damage_boost;
     }
 
     @Override
@@ -33,15 +36,17 @@ public class MagicItems extends RegularItems implements ICurioItem, IManaEquipme
         return boost;
     }
     public int getSpellDamageBoost(ItemStack stack) {return damage_boost;}
+    public int getMaxManaBoostPct(ItemStack stack) {return max_boost;}
     @Override
     public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
         return true;
     }
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> attributes = ICurioItem.super.getAttributeModifiers(slotContext, uuid, stack);
-        attributes.put((Attribute) PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_modifier_curio", (double)this.getMaxManaBoost(stack), AttributeModifier.Operation.ADDITION));
+        attributes.put((Attribute) PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "flat_max_mana_modifier_curio", (double)this.getMaxManaBoost(stack), AttributeModifier.Operation.ADDITION));
         attributes.put((Attribute) PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_modifier_curio", (double)this.getManaRegenBonus(stack), AttributeModifier.Operation.ADDITION));
         attributes.put((Attribute) PerkAttributes.SPELL_DAMAGE_BONUS.get(), new AttributeModifier(uuid, "spell_damage_bonus_modifier_curio", (double) this.getSpellDamageBoost(stack), AttributeModifier.Operation.ADDITION));
+        attributes.put((Attribute) PerkAttributes.MAX_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_bonus_modifier_curio", (double) this.getMaxManaBoostPct(stack),AttributeModifier.Operation.MULTIPLY_TOTAL));
         return attributes;
     }
 }

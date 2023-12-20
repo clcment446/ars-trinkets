@@ -31,10 +31,10 @@ import javax.annotation.Nonnull;
 import java.util.Set;
 
 
-public class ExpSacrifice extends AbstractEffect implements IDamageEffect {
+public class SacrificeExperience extends AbstractEffect implements IDamageEffect {
 
-    public static final ExpSacrifice INSTANCE = new ExpSacrifice(new ResourceLocation(ArsTrinkets.MODID, "glyph_exp_sac"), "Sacrificing Experience");
-    public ExpSacrifice(ResourceLocation tag, String description) {
+    public static final SacrificeExperience INSTANCE = new SacrificeExperience(new ResourceLocation(ArsTrinkets.MODID, "glyph_exp_sac"), "Sacrificing Experience");
+    public SacrificeExperience(ResourceLocation tag, String description) {
         super(tag, description);
     }
 
@@ -56,7 +56,7 @@ public class ExpSacrifice extends AbstractEffect implements IDamageEffect {
                 focus += 2;
             }
             int range = (int) (2 * spellStats.getAoeMultiplier());
-            int exp = (int) (0.3 * (1 + focus / 2) * player.totalExperience * spellStats.getAmpMultiplier());
+            int exp = (int) (0.3 * (1 + focus / 2) * player.experienceLevel* spellStats.getAmpMultiplier());
             DamageSource SOURCE = DamageSource.MAGIC.bypassMagic();
             player.giveExperiencePoints(-exp / 3);
             float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
