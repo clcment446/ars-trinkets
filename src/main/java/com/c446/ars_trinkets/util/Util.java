@@ -5,6 +5,7 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -16,7 +17,7 @@ public interface Util {
     ArrayList<Item> focus = new ArrayList<>();
 
 
-    public static void CreateParticleBeam(Vec3 start, Vec3 end, Level level, ParticleColor color) {
+    public static void CreateParticleBeam(Vec3 start, Vec3 end, ServerLevel level, ParticleColor color) {
         /**
          * Creates a beam of particles between two points.
          * @param start: Vec3; the vector that represents the start of the line.
@@ -40,6 +41,7 @@ public interface Util {
                     (level.random.nextFloat() - 0.5) * speedCoefficient);
         }
     }
+
     public static void CreateParticleBeam(Vec3 start, Vec3 end, Level level, ParticleColor color, double increment) {
         /**
          * Creates a beam of particles between two points.
@@ -78,7 +80,7 @@ public interface Util {
          * */
 
         double distance = start.distanceTo(end);
-        double traceStart = 0.0,increment=1.0/16;
+        double traceStart = 0.0, increment = 1.0 / 16;
         for (double d = traceStart; d < distance; d += increment) {
             double fractionalDistance = d / distance;
             double speedCoefficient = Mth.lerp(fractionalDistance, 0.2, 0.001);
@@ -93,7 +95,7 @@ public interface Util {
         }
     }
 
-    public static void CreateParticleBeam(Vec3 start, Vec3 end, Level level, SimpleParticleType particleType , double increment) {
+    public static void CreateParticleBeam(Vec3 start, Vec3 end, Level level, SimpleParticleType particleType, double increment) {
         /**
          * Creates a beam of particles between two points.
          * @param start: Vec3; the vector that represents the start of the line.
@@ -118,26 +120,8 @@ public interface Util {
                     (level.random.nextFloat() - 0.5) * speedCoefficient);
         }
     }
-    /*
-* double distance = msg.from.distanceTo(msg.to);
-            double start = 0.0, increment = 1.0/16.0;
-            if (player.position().distanceToSqr(msg.from) < 4.0 && msg.to.subtract(msg.from).normalize().dot(player.getViewVector(1f)) > Mth.SQRT_OF_TWO/2) {
-                start = Math.min(2.0, distance / 2.0);
-                increment = 1.0 / 8.0;
-            }
-            for (double d = start; d < distance; d += increment) {
-                double fractionalDistance = d / distance;
-                double speedCoefficient = Mth.lerp(fractionalDistance, 0.2, 0.001);
-                level.addParticle(
-                        GlowParticleData.createData(msg.color),
-                        Mth.lerp(fractionalDistance, msg.from.x, msg.to.x),
-                        Mth.lerp(fractionalDistance, msg.from.y, msg.to.y),
-                        Mth.lerp(fractionalDistance, msg.from.z, msg.to.z),
-                        (level.random.nextFloat() - 0.5) * speedCoefficient,
-                        (level.random.nextFloat() - 0.5) * speedCoefficient,
-                        (level.random.nextFloat() - 0.5) * speedCoefficient);
-            }
-        }
 
-*/
+    public static long randomLongFromRange(int lower, int upper) {
+        return (lower + (long) (Math.random() * (upper - lower)));
+    }
 }

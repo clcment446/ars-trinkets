@@ -1,18 +1,26 @@
 package com.c446.ars_trinkets.glyphs.spell_glyphs;
 
+
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.util.Util;
+import com.dkmk100.arsomega.glyphs.TierFourEffect;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
+import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.ars_nouveau.shadowed.eliotlash.mclib.math.functions.utility.RandomInteger;
 
 import javax.annotation.Nonnull;
+import java.util.Random;
 import java.util.Set;
 
 public class GlyphMeteorite extends AbstractEffect implements IDamageEffect {
@@ -25,8 +33,13 @@ public class GlyphMeteorite extends AbstractEffect implements IDamageEffect {
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-
-
+        if (world instanceof ServerLevel level && rayTraceResult.getEntity() instanceof LivingEntity living){
+            Vec3 targetEyes = living.getEyePosition();
+            Vec3 upper = new Vec3(Util.randomLongFromRange(0,29)-15,Util.randomLongFromRange(0,29)-15,Util.randomLongFromRange(75,125));
+            Vec3 ground = new Vec3(targetEyes.x+Util.randomLongFromRange(-3,3),targetEyes.y+Util.randomLongFromRange(-3,3),targetEyes.z);
+            Util.CreateParticleBeam(upper, targetEyes, level, ParticleColor.CYAN);
+        //create explosion and deal damage
+        }
     }
 
     @Override
@@ -34,13 +47,13 @@ public class GlyphMeteorite extends AbstractEffect implements IDamageEffect {
         super.buildConfig(builder);
         addDamageConfig(builder, 18);
         addAmpConfig(builder, 5);
-        com.hollingsworth.arsnouveau.common.entity.
     }
 
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return augmentSetOf(AugmentAmplify.INSTANCE);
+        return augmentSetOf(AugmentAmplify.INSTANCE, AugmentAOE.INSTANCE, AugmentSplit.INSTANCE);
+
     }
 
     @Override
@@ -57,6 +70,4 @@ public class GlyphMeteorite extends AbstractEffect implements IDamageEffect {
     protected @NotNull Set<SpellSchool> getSchools() {
         return this.setOf(SpellSchools.ELEMENTAL_AIR);
     }
-}
-
 }
