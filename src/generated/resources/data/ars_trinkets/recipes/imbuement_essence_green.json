@@ -2,7 +2,7 @@
   "type": "ars_nouveau:imbuement",
   "count": 1,
   "input": {
-    "item": "minecraft:diamond_block"
+    "item": "arsomega:infused_diamond_block"
   },
   "output": "ars_trinkets:green_essence",
   "pedestalItems": [

@@ -2,9 +2,7 @@ package com.c446.ars_trinkets.datagen;
 
 import com.c446.ars_trinkets.ArsNouveauRegistry;
 import com.c446.ars_trinkets.ArsTrinkets;
-import com.c446.ars_trinkets.glyphs.spell_glyphs.AirSword;
-import com.c446.ars_trinkets.glyphs.spell_glyphs.SacrificeHealth;
-import com.c446.ars_trinkets.glyphs.spell_glyphs.WaterSpear;
+import com.c446.ars_trinkets.glyphs.spell_glyphs.*;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.dkmk100.arsomega.util.RegistryHandler;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
@@ -37,7 +35,7 @@ import java.nio.file.Path;
 
 import static com.c446.ars_trinkets.registry.ModRegistry.*;
 import static com.hollingsworth.arsnouveau.api.RegistryHelper.getRegistryName;
-import static net.minecraft.world.item.Items.NETHERITE_INGOT;
+import static net.minecraft.world.item.Items.*;
 
 public class ArsProviders {
 
@@ -54,10 +52,12 @@ public class ArsProviders {
 
             Path output = this.generator.getOutputFolder();
 
-            recipes.add(get(WaterSpear.INSTANCE).withItem(ItemsRegistry.WATER_ESSENCE, 4).withItem(GREEN_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
-            recipes.add(get(AirSword.INSTANCE).withItem(ItemsRegistry.AIR_ESSENCE, 4).withItem(GREEN_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
+            recipes.add(get(WaterSpear.INSTANCE).withItem(ItemsRegistry.WATER_ESSENCE, 4).withItem(PURPLE_ESSENCE.get(), 4).withItem(RegistryHandler.ENCHANTED_DIAMOND_BLOCK_ITEM.get(), 1));
+            recipes.add(get(AirSword.INSTANCE).withItem(ItemsRegistry.AIR_ESSENCE, 4).withItem(PURPLE_ESSENCE.get(), 4).withItem(RegistryHandler.ENCHANTED_DIAMOND_BLOCK_ITEM.get(), 1));
             recipes.add(get(SacrificeHealth.INSTANCE).withItem(Items.DIAMOND_SWORD).withItem(RED_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
-
+            recipes.add(get(SacrificeExperience.INSTANCE).withItem(RegistryHandler.ENCHANTED_DEMONIC_GEM.get()).withItem(WHITE_ESSENCE.get(), 3).withItem(RegistryHandler.ENCHANTED_DIAMOND_BLOCK_ITEM.get(), 2).withItem(ENCHANTED_BOOK).withItem(EXPERIENCE_BOTTLE));
+            recipes.add(get(ShadowVeil.INSTANCE).withItem(RegistryHandler.ENCHANTED_DEMONIC_GEM.get()).withItem(WHITE_ESSENCE.get(),4).withItem(SCULK_CATALYST,2));
+            recipes.add(get(SonicBoom.INSTANCE).withItem(RegistryHandler.ENCHANTED_DIAMOND_BLOCK_ITEM.get()).withItem(ItemsRegistry.AIR_ESSENCE,4).withItem(SCULK_CATALYST,2).withItem(PURPLE_ESSENCE.get(),4));
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());
                 DataProvider.saveStable(cache, recipe.asRecipe(), path);
@@ -206,6 +206,28 @@ public class ArsProviders {
                     .withResult(MANA_CONDENSOR_10)
                     .build()
             );
+            recipes.add(builder()
+                    .withSourceCost(20000)
+                    .withPedestalItem(4, PURPLE_ESSENCE.get())
+                    .withPedestalItem(BlockRegistry.SOURCE_JAR.asItem())
+                    .withReagent(RegistryHandler.ARCANE_APPLE_ITEM.get())
+                    .withResult(BlockRegistry.CREATIVE_SOURCE_JAR.asItem())
+                    .build()
+            );
+            /*
+            * recipes.add(new ImbuementRecipe("mana_jar_inf", Ingredient.of(), new ItemStack(10000)
+                    .
+                    .withPedestalItem(PURPLE_ESSENCE.get())
+                    .withPedestalItem(PURPLE_ESSENCE.get())
+                    .withPedestalItem(PURPLE_ESSENCE.get())
+
+                    .withPedestalItem(BlockRegistry.SOURCE_JAR.asItem())
+                    .withPedestalItem(BlockRegistry.SOURCE_JAR.asItem())
+                    .withPedestalItem(BlockRegistry.SOURCE_JAR.asItem())
+            );
+            *
+            *
+            * */
 
             Path output = this.generator.getOutputFolder();
             for (EnchantingApparatusRecipe g : recipes) {
@@ -245,7 +267,7 @@ public class ArsProviders {
                     .withPedestalItem(SILVER_ESSENCE.get())
                     .withPedestalItem(SILVER_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_crystal", Ingredient.of(Items.LAPIS_BLOCK), new ItemStack(CRYSTAL_ESSENCE.get()), 40)
+            recipes.add(new ImbuementRecipe("essence_crystal", Ingredient.of(RegistryHandler.INFUSED_DIAMOND.get()), new ItemStack(CRYSTAL_ESSENCE.get()), 40)
                     .withPedestalItem(GOLD_ESSENCE.get())
                     .withPedestalItem(GOLD_ESSENCE.get())
                     .withPedestalItem(GOLD_ESSENCE.get())
@@ -253,7 +275,7 @@ public class ArsProviders {
                     .withPedestalItem(GOLD_ESSENCE.get())
                     .withPedestalItem(GOLD_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_green", Ingredient.of(Items.DIAMOND_BLOCK), new ItemStack(GREEN_ESSENCE.get()), 100)
+            recipes.add(new ImbuementRecipe("essence_green", Ingredient.of(RegistryHandler.INFUSED_DIAMOND_BLOCK_ITEM.get()), new ItemStack(GREEN_ESSENCE.get()), 100)
                     .withPedestalItem(CRYSTAL_ESSENCE.get())
                     .withPedestalItem(CRYSTAL_ESSENCE.get())
                     .withPedestalItem(CRYSTAL_ESSENCE.get())
@@ -263,17 +285,17 @@ public class ArsProviders {
                     .withPedestalItem(CRYSTAL_ESSENCE.get())
                     .withPedestalItem(CRYSTAL_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_red", Ingredient.of(Items.NETHERITE_SCRAP), new ItemStack(RED_ESSENCE.get()), 300)
+            recipes.add(new ImbuementRecipe("essence_red", Ingredient.of(RegistryHandler.ENCHANTED_DIAMOND.get()), new ItemStack(RED_ESSENCE.get()), 300)
                     .withPedestalItem(GREEN_ESSENCE.get())
                     .withPedestalItem(GREEN_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_white", Ingredient.of(NETHERITE_INGOT), new ItemStack(WHITE_ESSENCE.get()), 900)
+            recipes.add(new ImbuementRecipe("essence_white", Ingredient.of(RegistryHandler.ENCHANTED_DIAMOND_BLOCK_ITEM.get()), new ItemStack(WHITE_ESSENCE.get()), 900)
                     .withPedestalItem(RED_ESSENCE.get())
                     .withPedestalItem(RED_ESSENCE.get())
                     .withPedestalItem(RED_ESSENCE.get())
                     .withPedestalItem(RED_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_yellow", Ingredient.of(Items.NETHERITE_BLOCK), new ItemStack(YELLOW_ESSENCE.get()), 900)
+            recipes.add(new ImbuementRecipe("essence_yellow", Ingredient.of(RegistryHandler.ARCANE_DIAMOND.get()), new ItemStack(YELLOW_ESSENCE.get()), 900)
                     .withPedestalItem(WHITE_ESSENCE.get())
                     .withPedestalItem(WHITE_ESSENCE.get())
                     .withPedestalItem(WHITE_ESSENCE.get())
@@ -281,7 +303,7 @@ public class ArsProviders {
                     .withPedestalItem(WHITE_ESSENCE.get())
                     .withPedestalItem(WHITE_ESSENCE.get())
             );
-            recipes.add(new ImbuementRecipe("essence_purple", Ingredient.of(Items.DIAMOND), new ItemStack(PURPLE_ESSENCE.get()), 10)
+            recipes.add(new ImbuementRecipe("essence_purple", Ingredient.of(RegistryHandler.ARCANE_DIAMOND_BLOCK_ITEM.get()), new ItemStack(PURPLE_ESSENCE.get()), 1500)
                     .withPedestalItem(YELLOW_ESSENCE.get())
                     .withPedestalItem(YELLOW_ESSENCE.get())
                     .withPedestalItem(YELLOW_ESSENCE.get())
@@ -290,9 +312,8 @@ public class ArsProviders {
                     .withPedestalItem(YELLOW_ESSENCE.get())
                     .withPedestalItem(YELLOW_ESSENCE.get())
                     .withPedestalItem(YELLOW_ESSENCE.get())
+            );
 
-
-            );
             Path output = generator.getOutputFolder();
             for (ImbuementRecipe g : recipes) {
                 Path path = getRecipePath(output, g.getId().getPath());

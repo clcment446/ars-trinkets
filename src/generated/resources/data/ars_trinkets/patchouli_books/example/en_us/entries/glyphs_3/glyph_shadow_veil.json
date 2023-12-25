@@ -1,0 +1,16 @@
+{
+  "category": "ars_nouveau:glyphs_3",
+  "icon": "ars_trinkets:glyph_shadow_veil",
+  "name": "ars_trinkets.glyph_name.glyph_shadow_veil",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_trinkets.glyph_desc.glyph_shadow_veil"
+    },
+    {
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_trinkets:glyph_shadow_veil"
+    }
+  ],
+  "sortnum": 2
+}

@@ -28,7 +28,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
 
-version = "1.19.2-0.5.2"
+version = "1.19.2-1.0"
 group = 'com.hollingsworth.ars_trinkets' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'ars_trinkets'
 
@@ -129,7 +129,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
 
-    implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${mc_version}:${ars_version}")
+    implementation fg.deobf("curse.maven:ars-nouveau-401955:4809720")
     implementation fg.deobf("curse.maven:ars-elemental-561470:4864938")
     implementation fg.deobf("curse.maven:ars-omega-597007:4779979")
 

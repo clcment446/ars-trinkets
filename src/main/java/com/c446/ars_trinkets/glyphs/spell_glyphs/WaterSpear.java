@@ -8,6 +8,7 @@ import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -50,17 +51,17 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
             double DAMAGE = ((double) 40);
             if (living.hasEffect(ModPotions.FREEZING_EFFECT.get())) {
                 int s = (int) (Objects.requireNonNull(living.getEffect(ModPotions.FREEZING_EFFECT.get())).getAmplifier());
-                s *= 1.2;
+                s /= 2;
                 damageBonusTimes += s;
             }
             if (living.hasEffect(ModPotions.SHOCKED_EFFECT.get())) {
                 int s = Objects.requireNonNull(living.getEffect(ModPotions.SHOCKED_EFFECT.get())).getAmplifier();
-                s /= 2;
+                s /= 2.5;
                 damageBonusTimes += s;
             }
             if (living.hasEffect(ModPotions.HEX_EFFECT.get())) {
                 int s = Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier();
-                s /= 8;
+                s /= 7;
                 damageBonusTimes += s;
             }
             if (living.isOnFire()) {
@@ -73,7 +74,7 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
 //            for (double[] position : particles) {
 //                level.sendParticles(ParticleTypes.SPLASH, position[0], position[1], position[2], 3, 0, 0, 0, 1);
 //            }
-            CreateParticleBeam(eyesPos, vecTar, level, new ParticleColor(0,0,250));
+            CreateParticleBeam(eyesPos, vecTar, level, ParticleTypes.SPLASH);
             this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageSource.MAGIC.bypassMagic().bypassArmor(), (float) (DAMAGE / 3));
             living.invulnerableTime = 3;
         }

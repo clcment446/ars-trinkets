@@ -19,7 +19,9 @@ public class ArsNouveauRegistry {
         register(SacrificeExperience.INSTANCE);
         register(WaterSpear.INSTANCE);
         register(AirSword.INSTANCE);
-
+        register(ShadowVeil.INSTANCE);
+        register(SonicBoom.INSTANCE);
+//        register();
 
     }
     public static void registerSounds(){

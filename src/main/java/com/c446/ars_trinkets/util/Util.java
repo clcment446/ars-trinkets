@@ -69,7 +69,7 @@ public interface Util {
     }
 
 
-    public static void CreateParticleBeam(Vec3 start, Vec3 end, Level level, SimpleParticleType particleType) {
+    public static void CreateParticleBeam(Vec3 start, Vec3 end, ServerLevel level, SimpleParticleType particle) {
         /**
          * Creates a beam of particles between two points.
          * @param start: Vec3; the vector that represents the start of the line.
@@ -83,19 +83,15 @@ public interface Util {
         double traceStart = 0.0, increment = 1.0 / 16;
         for (double d = traceStart; d < distance; d += increment) {
             double fractionalDistance = d / distance;
-            double speedCoefficient = Mth.lerp(fractionalDistance, 0.2, 0.001);
-            level.addParticle(
-                    (ParticleOptions) particleType,
+            level.sendParticles(particle,
                     Mth.lerp(fractionalDistance, start.x, end.x),
                     Mth.lerp(fractionalDistance, start.y, end.y),
-                    Mth.lerp(fractionalDistance, start.z, end.z),
-                    (level.random.nextFloat() - 0.5) * speedCoefficient,
-                    (level.random.nextFloat() - 0.5) * speedCoefficient,
-                    (level.random.nextFloat() - 0.5) * speedCoefficient);
+                    Mth.lerp(fractionalDistance, start.z, end.z)
+                    ,100,0,0,0,1);
         }
     }
 
-    public static void CreateParticleBeam(Vec3 start, Vec3 end, Level level, SimpleParticleType particleType, double increment) {
+    public static void CreateParticleBeam(Vec3 start, Vec3 end, ServerLevel level, SimpleParticleType particle, double increment) {
         /**
          * Creates a beam of particles between two points.
          * @param start: Vec3; the vector that represents the start of the line.
@@ -105,21 +101,18 @@ public interface Util {
          * This function was copied and modified from the Too Many Glyphs project. Github Repo here : https://github.com/DerringersMods/TooManyGlyphs/blob/1.19.x/src/main/java/io/github/derringersmods/toomanyglyphs/common/network/PacketRayEffect.java#L29.
          * */
 
-        double distance = start.distanceTo(end);
-        double traceStart = 0.0;
-        for (double d = traceStart; d < distance; d += increment) {
-            double fractionalDistance = d / distance;
-            double speedCoefficient = Mth.lerp(fractionalDistance, 0.2, 0.001);
-            level.addParticle(
-                    (ParticleOptions) particleType,
-                    Mth.lerp(fractionalDistance, start.x, end.x),
-                    Mth.lerp(fractionalDistance, start.y, end.y),
-                    Mth.lerp(fractionalDistance, start.z, end.z),
-                    (level.random.nextFloat() - 0.5) * speedCoefficient,
-                    (level.random.nextFloat() - 0.5) * speedCoefficient,
-                    (level.random.nextFloat() - 0.5) * speedCoefficient);
+
+            double distance = start.distanceTo(end);
+            double traceStart = 0.0;
+            for (double d = traceStart; d < distance; d += increment) {
+                double fractionalDistance = d / distance;
+                level.sendParticles(particle,
+                        Mth.lerp(fractionalDistance, start.x, end.x),
+                        Mth.lerp(fractionalDistance, start.y, end.y),
+                        Mth.lerp(fractionalDistance, start.z, end.z)
+                        ,100,0,0,0,1);
+            }
         }
-    }
 
     public static long randomLongFromRange(int lower, int upper) {
         return (lower + (long) (Math.random() * (upper - lower)));

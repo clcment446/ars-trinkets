@@ -6,29 +6,21 @@
   },
   "pedestalItems": [
     {
-      "item": {
-        "item": "ars_trinkets:silver_essence"
-      }
+      "item": "ars_trinkets:silver_essence"
     },
     {
-      "item": {
-        "item": "ars_trinkets:silver_essence"
-      }
+      "item": "ars_trinkets:silver_essence"
     },
     {
-      "item": {
-        "item": "ars_trinkets:silver_essence"
-      }
+      "item": "ars_trinkets:silver_essence"
     },
     {
-      "item": {
-        "item": "ars_trinkets:silver_essence"
-      }
+      "item": "ars_trinkets:silver_essence"
     }
   ],
   "reagent": [
     {
-      "item": "ars_nouveau:amulet_of_mana_regen"
+      "item": "arsomega:arcane_regen_amulet"
     }
   ],
   "sourceCost": 1000

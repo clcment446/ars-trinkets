@@ -23,7 +23,7 @@ public class ManaCrystal extends Item implements ICurioItem {
     @Override
     public InteractionResultHolder<ItemStack> use(Level pLevel, Player pPlayer, InteractionHand pUsedHand) {
         if (!pLevel.isClientSide && pUsedHand == InteractionHand.MAIN_HAND) {
-            ModEvents.essenceIsConsumed(pPlayer);
+
         }
         return super.use(pLevel, pPlayer, pUsedHand);
     }

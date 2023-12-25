@@ -1,14 +1,11 @@
 {
-  "type": "ars_nouveau:imbuement",
+  "type": "ars_nouveau:glyph",
   "count": 1,
-  "input": {
-    "item": "arsomega:arcane_diamond"
-  },
-  "output": "ars_trinkets:yellow_essence",
-  "pedestalItems": [
+  "exp": 160,
+  "inputItems": [
     {
       "item": {
-        "item": "ars_trinkets:white_essence"
+        "item": "arsomega:enchanted_demonic_gem"
       }
     },
     {
@@ -33,9 +30,14 @@
     },
     {
       "item": {
-        "item": "ars_trinkets:white_essence"
+        "item": "minecraft:sculk_catalyst"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:sculk_catalyst"
       }
     }
   ],
-  "source": 900
+  "output": "ars_trinkets:glyph_shadow_veil"
 }

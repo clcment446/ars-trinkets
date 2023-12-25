@@ -34,5 +34,12 @@
 	"ars_trinkets.glyph_desc.glyph_sword": "Summons a sword which ignores most defences.",
 	"ars_trinkets.glyph_name.glyph_sword": "Air Sword",
 	"ars_trinkets.glyph_desc.glyph_swap_position": "Swaps the position of the user and the target.",
-	"ars_trinkets.glyph_name.glyph_swap_position": "Swap Position"
+	"ars_trinkets.glyph_name.glyph_swap_position": "Swap Position",
+	"ars_trinkets.glyph_desc.glyph_exp_sac": "Sacrifices a portion of the experience bar to deal more damage. Scales with Amplify",
+	"ars_trinkets.glyph_name.glyph_exp_sac": "Corrupted Blessing",
+	"ars_trinkets.glyph_desc.glyph_shadow_veil": "Traps the enemy in a veil of slowing darkness.",
+	"ars_trinkets.glyph_name.glyph_shadow_veil": "Shadow Veil"
+
+
+
 }

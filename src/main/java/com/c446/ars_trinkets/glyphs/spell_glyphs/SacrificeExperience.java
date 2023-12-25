@@ -34,6 +34,7 @@ import java.util.Set;
 public class SacrificeExperience extends AbstractEffect implements IDamageEffect {
 
     public static final SacrificeExperience INSTANCE = new SacrificeExperience(new ResourceLocation(ArsTrinkets.MODID, "glyph_exp_sac"), "Sacrificing Experience");
+
     public SacrificeExperience(ResourceLocation tag, String description) {
         super(tag, description);
     }
@@ -42,34 +43,23 @@ public class SacrificeExperience extends AbstractEffect implements IDamageEffect
     public void onResolveEntity(@NotNull EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Entity entity = rayTraceResult.getEntity();
         if (world instanceof ServerLevel level && entity instanceof LivingEntity living && shooter instanceof Player player) {
-            int focus = 0;
-            if (resolver.hasFocus(new ItemStack(RegistryHandler.FOCUS_OF_LIFE.get()))) {
-                focus += 4;
-            }
-            if (resolver.hasFocus(new ItemStack(ModItems.NECRO_FOCUS.get()))) {
-                focus += 4;
-            }
-            if (resolver.hasFocus(new ItemStack(RegistryHandler.FOCUS_OF_ADVANCED_ALCHEMY.get()))) {
-                focus += 3;
-            }
-            if (resolver.hasFocus(new ItemStack(RegistryHandler.FOCUS_OF_ALCHEMY.get()))) {
-                focus += 2;
-            }
-            int range = (int) (2 * spellStats.getAoeMultiplier());
-            int exp = (int) (0.3 * (1 + focus / 2) * player.experienceLevel* spellStats.getAmpMultiplier());
+            int focus = 6;
+
+            int range = (int) (1.5 * spellStats.getAoeMultiplier());
+            int exp = (int) (0.3 + 1 + focus / 2 * player.experienceLevel * spellStats.getAmpMultiplier());
             DamageSource SOURCE = DamageSource.MAGIC.bypassMagic();
             player.giveExperiencePoints(-exp / 3);
             float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier());
 
             Vec3 position = safelyGetHitPos(rayTraceResult);
             attemptDamage(world, shooter, spellStats, spellContext, resolver, living, SOURCE, damage);
-            level.sendParticles(ParticleTypes.ENCHANT, position.x, position.y, position.z, 50,
-                    ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.3);
             for (Entity e : world.getEntities(shooter, new AABB(
                     living.position().add(range, range, range), living.position().subtract(range, range, range)))) {
                 if (e.equals(living) || !(e instanceof LivingEntity))
                     continue;
-                attemptDamage(world, shooter, spellStats, spellContext, resolver, e, SOURCE, damage);
+                attemptDamage(world, shooter, spellStats, spellContext, resolver, e, SOURCE, damage *= 0.8);
+                level.sendParticles(ParticleTypes.ENCHANT, position.x, position.y, position.z, 100,
+                        ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 3);
             }
         }
     }
@@ -87,7 +77,7 @@ public class SacrificeExperience extends AbstractEffect implements IDamageEffect
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
-        return this.setOf(ArsNouveauRegistry.NECROMANCY, Schools.LIFE, Schools.ALCHEMY);
+        return this.setOf(ArsNouveauRegistry.NECROMANCY);
     }
 
     @Override

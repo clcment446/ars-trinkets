@@ -3,8 +3,10 @@ package com.c446.ars_trinkets.glyphs.spell_glyphs;
 import com.c446.ars_trinkets.ArsTrinkets;
 import com.dkmk100.arsomega.glyphs.Schools;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.common.potions.SnareEffect;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
+import com.hollingsworth.arsnouveau.common.spell.effect.EffectSnare;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -27,7 +29,7 @@ public class ShadowVeil extends AbstractEffect {
         super(tag, description);
     }
 
-    public static final SonicBoom INSTANCE = new SonicBoom(new ResourceLocation(ArsTrinkets.MODID, "glyph_sound_boom"), "Sonic Bool");
+    public static final ShadowVeil INSTANCE = new ShadowVeil(new ResourceLocation(ArsTrinkets.MODID, "glyph_shadow_veil"), "Shadow Veil");
 
     double damage;
     double damageBonusTimes;
@@ -67,10 +69,9 @@ public class ShadowVeil extends AbstractEffect {
         Entity entity = rayTraceResult.getEntity();
         if (entity instanceof LivingEntity living && world instanceof ServerLevel level) {
             living.addEffect(new MobEffectInstance(MobEffects.DARKNESS, (int) (20 * spellStats.getDurationMultiplier()), (int) (1 * spellStats.getAmpMultiplier())));
+            living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (20 * spellStats.getDurationMultiplier()), (int) (0.5 * spellStats.getAmpMultiplier())));
             Vec3 livingPos = living.getEyePosition();
             level.sendParticles(ParticleTypes.SQUID_INK, livingPos.x, livingPos.y, livingPos.z, 100, 0, 0, 0, 0.5);
         }
     }
-
-
 }

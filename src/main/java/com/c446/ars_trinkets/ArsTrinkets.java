@@ -1,19 +1,10 @@
 package com.c446.ars_trinkets;
 
 import com.c446.ars_trinkets.item.EssenceItem;
-import com.c446.ars_trinkets.item.ManaCrystal;
 import com.c446.ars_trinkets.registry.ModRegistry;
-import com.hollingsworth.arsnouveau.api.spell.SpellTier;
-import com.hollingsworth.arsnouveau.setup.Config;
-import com.hollingsworth.arsnouveau.setup.config.ServerConfig;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
-import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;

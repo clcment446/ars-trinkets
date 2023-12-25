@@ -2,7 +2,7 @@
   "type": "ars_nouveau:imbuement",
   "count": 1,
   "input": {
-    "item": "minecraft:diamond"
+    "item": "arsomega:arcane_diamond_block"
   },
   "output": "ars_trinkets:purple_essence",
   "pedestalItems": [
@@ -47,5 +47,5 @@
       }
     }
   ],
-  "source": 10
+  "source": 1500
 }

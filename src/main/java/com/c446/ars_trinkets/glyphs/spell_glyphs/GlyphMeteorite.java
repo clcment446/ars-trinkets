@@ -6,6 +6,7 @@ import com.c446.ars_trinkets.util.Util;
 import com.dkmk100.arsomega.glyphs.TierFourEffect;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
+import com.hollingsworth.arsnouveau.common.items.Glyph;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
@@ -28,7 +29,7 @@ public class GlyphMeteorite extends AbstractEffect implements IDamageEffect {
         super(tag, description);
     }
 
-    public static final AirSword INSTANCE = new AirSword(new ResourceLocation(ArsTrinkets.MODID, "glyph_sword"), "Air Sword");
+    public static final GlyphMeteorite INSTANCE = new GlyphMeteorite(new ResourceLocation(ArsTrinkets.MODID, "glyph_meteorite"), "Celestial Shower");
 
 
     @Override
