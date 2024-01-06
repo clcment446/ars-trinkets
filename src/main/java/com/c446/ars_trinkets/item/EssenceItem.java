@@ -1,6 +1,7 @@
 package com.c446.ars_trinkets.item;
 
-import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
+import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.*;
+import com.c446.ars_trinkets.registry.ModRegistry;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Inventory;
@@ -50,7 +51,7 @@ public class EssenceItem extends RegularItems {
         return super.use(pLevel, pPlayer, pUsedHand);
     }
 
-    public static int getManaValue(Item item) {
+    public static int getExperienceValue(Item item) {
         if (ESSENCE_LIST.contains(item)) {
             return ESSENCE_VALUE.get(item);
         }
@@ -58,19 +59,18 @@ public class EssenceItem extends RegularItems {
     }
 
     public void ConsumeMana(Player player, boolean slot/* is off hand*/, ItemStack stack) {
-        player.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(iManaCap -> {
-            iManaCap.addMana(getManaValue(stack.getItem()));
-            if (slot) {
-                player.getInventory().removeItem(Inventory.SLOT_OFFHAND, 1);
-            } else {
-                for (int i = 0; i < 35; i++) {
-                    if (player.getInventory().getItem(i) == stack) {
-                        player.getInventory().removeItem(i, 1);
-                    }
+        if (slot) {
+            player.getInventory().removeItem(Inventory.SLOT_OFFHAND, 1);
+        } else {
+            for (int i = 0; i < 35; i++) {
+                if (player.getInventory().getItem(i) == stack) {
+                    player.getInventory().removeItem(i, 1);
                 }
-                player.getInventory().removeItem(player.getMainHandItem());
             }
-        });
+        }
+        player.getInventory().removeItem(player.getMainHandItem());
+        player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(arcaneLevels -> arcaneLevels.updateSoulEssence(getExperienceValue(stack.getItem()), false, player));
+
     }
 
     public static void setEssenceLists() {
@@ -83,14 +83,17 @@ public class EssenceItem extends RegularItems {
         ESSENCE_LIST.add(WHITE_ESSENCE.get());
         ESSENCE_LIST.add(YELLOW_ESSENCE.get());
 
-        ESSENCE_VALUE.put(SILVER_ESSENCE.get(), 50);
-        ESSENCE_VALUE.put(GOLD_ESSENCE.get(), 150);
-        ESSENCE_VALUE.put(CRYSTAL_ESSENCE.get(), 450);
-        ESSENCE_VALUE.put(GREEN_ESSENCE.get(), 1000);
-        ESSENCE_VALUE.put(RED_ESSENCE.get(), 2500);
-        ESSENCE_VALUE.put(WHITE_ESSENCE.get(), 10000);
-        ESSENCE_VALUE.put(YELLOW_ESSENCE.get(), 50000);
-        ESSENCE_VALUE.put(PURPLE_ESSENCE.get(), 2000000);
+        ESSENCE_VALUE.clear();
+        ESSENCE_VALUE.put(ModRegistry.IRON_ESSENCE.get(), 25);
+        ESSENCE_VALUE.put(ModRegistry.COPPER_ESSENCE.get(), 50);
+        ESSENCE_VALUE.put(ModRegistry.SILVER_ESSENCE.get(), 100);
+        ESSENCE_VALUE.put(ModRegistry.GOLD_ESSENCE.get(), 200);
+        ESSENCE_VALUE.put(ModRegistry.CRYSTAL_ESSENCE.get(), 300);
+        ESSENCE_VALUE.put(ModRegistry.GREEN_ESSENCE.get(), 1000);
+        ESSENCE_VALUE.put(ModRegistry.RED_ESSENCE.get(), 2500);
+        ESSENCE_VALUE.put(ModRegistry.WHITE_ESSENCE.get(), 7000);
+        ESSENCE_VALUE.put(ModRegistry.YELLOW_ESSENCE.get(), 14000);
+        ESSENCE_VALUE.put(ModRegistry.PURPLE_ESSENCE.get(), 27000);
     }
 }
 

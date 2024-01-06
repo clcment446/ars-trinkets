@@ -1,10 +1,9 @@
 package com.c446.ars_trinkets.glyphs.spell_glyphs;
 
 import com.c446.ars_trinkets.ArsTrinkets;
-import com.dkmk100.arsomega.glyphs.TierFourEffect;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.common.potions.ModPotions;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
+import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -23,7 +22,6 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 import java.util.Set;
 
-import static net.minecraft.world.damagesource.DamageSource.MAGIC;
 
 public class AirSword extends AbstractEffect implements IDamageEffect {
     public AirSword(ResourceLocation tag, String description) {
@@ -53,8 +51,8 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
             level.sendParticles(ParticleTypes.SWEEP_ATTACK, x, y, z, 1, 0, 0, 0.5, 1);
 
             double damageBonusTimes = 1;
-            float AMP_DAMAGE = 9f;
-            double DAMAGE = 10;
+            float AMP_DAMAGE = 6f;
+            double DAMAGE = 6;
             if (living.hasEffect(ModPotions.HEX_EFFECT.get())) {
                 int multiplier = Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier();
                 damageBonusTimes += multiplier / 8.0;
@@ -66,9 +64,9 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
             }
             DAMAGE += (spellStats.getAmpMultiplier() * AMP_DAMAGE);
             DAMAGE *= damageBonusTimes;
-            DamageSource source = DamageSource.MAGIC.bypassMagic();
+            DamageSource source = buildDamageSource(world,shooter);
             if (shooter instanceof Player) {
-                source = DamageSource.playerAttack((Player) shooter).bypassMagic();
+                source = buildDamageSource(world, shooter);
             }
             attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, source, (float) DAMAGE / 2);
             living.invulnerableTime = 0;
@@ -90,7 +88,7 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
 
     @Override
     public SpellTier defaultTier() {
-        return TierFourEffect.FOUR;
+        return SpellTier.THREE;
     }
 
     @Override

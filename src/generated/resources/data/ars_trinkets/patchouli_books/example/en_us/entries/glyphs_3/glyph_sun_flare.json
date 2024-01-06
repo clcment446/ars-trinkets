@@ -1,0 +1,16 @@
+{
+  "category": "ars_nouveau:glyphs_3",
+  "icon": "ars_trinkets:glyph_sun_flare",
+  "name": "ars_trinkets.glyph_name.glyph_sun_flare",
+  "pages": [
+    {
+      "type": "patchouli:text",
+      "text": "ars_trinkets.glyph_desc.glyph_sun_flare"
+    },
+    {
+      "type": "ars_nouveau:glyph_recipe",
+      "recipe": "ars_trinkets:glyph_sun_flare"
+    }
+  ],
+  "sortnum": 2
+}

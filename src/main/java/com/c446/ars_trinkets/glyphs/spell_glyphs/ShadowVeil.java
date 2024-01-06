@@ -1,12 +1,9 @@
 package com.c446.ars_trinkets.glyphs.spell_glyphs;
 
 import com.c446.ars_trinkets.ArsTrinkets;
-import com.dkmk100.arsomega.glyphs.Schools;
 import com.hollingsworth.arsnouveau.api.spell.*;
-import com.hollingsworth.arsnouveau.common.potions.SnareEffect;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
-import com.hollingsworth.arsnouveau.common.spell.effect.EffectSnare;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -32,8 +29,6 @@ public class ShadowVeil extends AbstractEffect {
     public static final ShadowVeil INSTANCE = new ShadowVeil(new ResourceLocation(ArsTrinkets.MODID, "glyph_shadow_veil"), "Shadow Veil");
 
     double damage;
-    double damageBonusTimes;
-    float AMP_DAMAGE = 4f;
 
     @Override
     public void buildConfig(ForgeConfigSpec.Builder builder) {
@@ -61,17 +56,18 @@ public class ShadowVeil extends AbstractEffect {
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
-        return this.setOf(Schools.DEMONIC);
+        return this.setOf(SpellSchools.ELEMENTAL_WATER);
     }
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Entity entity = rayTraceResult.getEntity();
         if (entity instanceof LivingEntity living && world instanceof ServerLevel level) {
-            living.addEffect(new MobEffectInstance(MobEffects.DARKNESS, (int) (20 * spellStats.getDurationMultiplier()), (int) (1 * spellStats.getAmpMultiplier())));
-            living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (20 * spellStats.getDurationMultiplier()), (int) (0.5 * spellStats.getAmpMultiplier())));
+            living.addEffect(new MobEffectInstance(MobEffects.DARKNESS, (int) (20+20 * spellStats.getDurationMultiplier()), (int) (1+2 * spellStats.getAmpMultiplier())));
+            living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, (int) (20+20 * spellStats.getDurationMultiplier()), (int) (1+0.5 * spellStats.getAmpMultiplier())));
+            living.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, (int) (20+20 * spellStats.getDurationMultiplier()), (int)(1+1.5* spellStats.getAmpMultiplier())));
             Vec3 livingPos = living.getEyePosition();
-            level.sendParticles(ParticleTypes.SQUID_INK, livingPos.x, livingPos.y, livingPos.z, 100, 0, 0, 0, 0.5);
+            level.sendParticles(ParticleTypes.SQUID_INK, livingPos.x, livingPos.y, livingPos.z, 100, 0, 0, 0, 0);
         }
     }
 }

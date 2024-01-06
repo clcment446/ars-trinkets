@@ -1,0 +1,27 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "output": {
+    "item": "ars_trinkets:monocle_6"
+  },
+  "pedestalItems": [
+    {
+      "item": "ars_trinkets:green_essence"
+    },
+    {
+      "item": "ars_trinkets:green_essence"
+    },
+    {
+      "item": "ars_trinkets:green_essence"
+    },
+    {
+      "item": "ars_trinkets:green_essence"
+    }
+  ],
+  "reagent": [
+    {
+      "item": "ars_trinkets:monocle_5"
+    }
+  ],
+  "sourceCost": 2500
+}

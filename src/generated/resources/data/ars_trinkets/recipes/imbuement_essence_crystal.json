@@ -35,7 +35,17 @@
       "item": {
         "item": "ars_trinkets:gold_essence"
       }
+    },
+    {
+      "item": {
+        "item": "minecraft:amethyst_block"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:amethyst_block"
+      }
     }
   ],
-  "source": 40
+  "source": 160
 }

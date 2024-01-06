@@ -1,0 +1,27 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "output": {
+    "item": "ars_trinkets:monocle_4"
+  },
+  "pedestalItems": [
+    {
+      "item": "ars_trinkets:gold_essence"
+    },
+    {
+      "item": "ars_trinkets:gold_essence"
+    },
+    {
+      "item": "ars_trinkets:gold_essence"
+    },
+    {
+      "item": "ars_trinkets:gold_essence"
+    }
+  ],
+  "reagent": [
+    {
+      "item": "ars_trinkets:monocle_3"
+    }
+  ],
+  "sourceCost": 1500
+}

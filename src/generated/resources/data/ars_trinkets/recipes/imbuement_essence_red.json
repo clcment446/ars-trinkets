@@ -2,10 +2,15 @@
   "type": "ars_nouveau:imbuement",
   "count": 1,
   "input": {
-    "item": "arsomega:enchanted_diamond"
+    "item": "minecraft:diamond"
   },
   "output": "ars_trinkets:red_essence",
   "pedestalItems": [
+    {
+      "item": {
+        "item": "ars_trinkets:green_essence"
+      }
+    },
     {
       "item": {
         "item": "ars_trinkets:green_essence"

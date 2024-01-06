@@ -1,0 +1,63 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 0,
+  "inputItems": [
+    {
+      "item": {
+        "item": "arsomega:enchanted_diamond_block"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:fire_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:fire_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:fire_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:fire_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:glowstone"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:glowstone"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    }
+  ],
+  "output": "ars_trinkets:glyph_sun_flare"
+}

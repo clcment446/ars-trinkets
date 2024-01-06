@@ -1,10 +1,14 @@
 package com.c446.ars_trinkets;
 
+import com.c446.ars_trinkets.event.ModEvents;
 import com.c446.ars_trinkets.item.EssenceItem;
 import com.c446.ars_trinkets.registry.ModRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -33,6 +37,11 @@ public class ArsTrinkets {
         ArsNouveauRegistry.registerGlyphs();
         modbus.addListener(this::setup);
         modbus.addListener(this::doClientStuff);
+        modbus.addListener(this::doTabThings);
+        modbus.addListener(ModEvents::registerCapabilities);
+//        modbus.addListener(ModEvents::onAttachCapabilitiesEntity);
+//        modbus.addListener(ModEvents::PlayerKillRefineSoul);
+//        modbus.addListener(this::)
         MinecraftForge.EVENT_BUS.register(this);
     }
 
@@ -57,6 +66,17 @@ public class ArsTrinkets {
 
     }
 
+    @SubscribeEvent
+    public void doTabThings(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTab() == CreativeTabRegistry.BLOCKS.get()) {
+            for (var item : ModRegistry.ITEMS.getEntries()) {
+                event.accept(item::get);
+            }
+        }
+    }
+    @SubscribeEvent
+    public void doCapabilities(RegisterCapabilitiesEvent event){
 
+    }
 }
 

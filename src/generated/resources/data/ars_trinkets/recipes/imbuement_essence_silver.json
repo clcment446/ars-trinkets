@@ -2,20 +2,30 @@
   "type": "ars_nouveau:imbuement",
   "count": 1,
   "input": {
-    "item": "minecraft:iron_block"
+    "item": "minecraft:charcoal"
   },
   "output": "ars_trinkets:silver_essence",
   "pedestalItems": [
     {
       "item": {
-        "item": "minecraft:iron_ingot"
+        "item": "ars_trinkets:iron_essence"
       }
     },
     {
       "item": {
-        "item": "minecraft:iron_ingot"
+        "item": "ars_trinkets:iron_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:iron_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:iron_essence"
       }
     }
   ],
-  "source": 10
+  "source": 40
 }

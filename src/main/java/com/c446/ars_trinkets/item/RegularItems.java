@@ -19,6 +19,5 @@ public class RegularItems extends Item {
     @Override
     public boolean isFoil(ItemStack s){
         if(showEnch){return true;}else{return super.isFoil(s);}
-
     }
 }

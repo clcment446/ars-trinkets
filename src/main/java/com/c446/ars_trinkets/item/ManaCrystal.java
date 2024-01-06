@@ -1,7 +1,4 @@
 package com.c446.ars_trinkets.item;
-
-import com.c446.ars_trinkets.event.ModEvents;
-import com.hollingsworth.arsnouveau.common.capability.CapabilityRegistry;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;

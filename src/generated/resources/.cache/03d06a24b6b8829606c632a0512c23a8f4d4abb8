@@ -1,7 +1,10 @@
-// 1.19.2	2023-12-25T17:51:34.6129788	Example Patchouli Datagen
+// 1.19.2	2023-12-28T21:50:22.1595913	Example Patchouli Datagen
+a47aed6c929f490771396315b391b588c5bab387 data/ars_trinkets/patchouli_books/example/en_us/entries/glyphs_2/glyph_filter_not_self.json
+ac77b49540936e93c8645087211d446fc6430902 data/ars_trinkets/patchouli_books/example/en_us/entries/glyphs_2/glyph_filter_self.json
 288afbc74854420d4923bdc1f9978769c3e14a92 data/ars_trinkets/patchouli_books/example/en_us/entries/glyphs_3/glyph_exp_sac.json
 c5b37cfb6a49c592ffe61ffe320f3845ba149686 data/ars_trinkets/patchouli_books/example/en_us/entries/glyphs_3/glyph_sacrifice.json
 c826b0410063beced80fc2f2c0383fe9eb7707e1 data/ars_trinkets/patchouli_books/example/en_us/entries/glyphs_3/glyph_shadow_veil.json
 94d5339abab987f41bef8c6c72e8e87df62b4b75 data/ars_trinkets/patchouli_books/example/en_us/entries/glyphs_3/glyph_sound_boom.json
+c558e934948d4291a1072d4e5d9fe85d3e38f498 data/ars_trinkets/patchouli_books/example/en_us/entries/glyphs_3/glyph_sun_flare.json
 1193c96bf652f41b3b5cb2b1f86898624ce51d7f data/ars_trinkets/patchouli_books/example/en_us/entries/glyphs_3/glyph_sword.json
 0c0087c8d7fb5fa38d82e101e4360a3072dcb9ee data/ars_trinkets/patchouli_books/example/en_us/entries/glyphs_3/glyph_water_spear.json

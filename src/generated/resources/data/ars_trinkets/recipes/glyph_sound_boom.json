@@ -30,17 +30,12 @@
     },
     {
       "item": {
-        "item": "minecraft:sculk_catalyst"
+        "item": "minecraft:sculk"
       }
     },
     {
       "item": {
-        "item": "minecraft:sculk_catalyst"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_trinkets:purple_essence"
+        "item": "minecraft:sculk"
       }
     },
     {
@@ -56,6 +51,36 @@
     {
       "item": {
         "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:tnt"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:tnt"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:tnt"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:tnt"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:tnt"
       }
     }
   ],

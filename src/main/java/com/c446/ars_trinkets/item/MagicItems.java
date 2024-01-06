@@ -47,6 +47,7 @@ public class MagicItems extends RegularItems implements ICurioItem, IManaEquipme
         attributes.put((Attribute) PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_modifier_curio", (double)this.getManaRegenBonus(stack), AttributeModifier.Operation.ADDITION));
         attributes.put((Attribute) PerkAttributes.SPELL_DAMAGE_BONUS.get(), new AttributeModifier(uuid, "spell_damage_bonus_modifier_curio", (double) this.getSpellDamageBoost(stack), AttributeModifier.Operation.ADDITION));
         attributes.put((Attribute) PerkAttributes.MAX_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_bonus_modifier_curio", (double) this.getMaxManaBoostPct(stack),AttributeModifier.Operation.MULTIPLY_TOTAL));
+
         return attributes;
     }
 }

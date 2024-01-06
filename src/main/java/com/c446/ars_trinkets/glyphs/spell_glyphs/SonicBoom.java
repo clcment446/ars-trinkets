@@ -68,18 +68,18 @@ public class SonicBoom extends AbstractEffect implements IDamageEffect {
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Entity entity = rayTraceResult.getEntity();
         if (world instanceof ServerLevel level && entity instanceof LivingEntity living) {
-            int range = (int) (2 * spellStats.getAoeMultiplier());
-            damage = DAMAGE.get() + spellStats.getAmpMultiplier() * this.AMP_DAMAGE;
+            int range = (int) (1+2 * spellStats.getAoeMultiplier());
+            damage = 1+DAMAGE.get() + spellStats.getAmpMultiplier() * this.AMP_DAMAGE;
             Vec3 eyesPosTar = living.getEyePosition();
             Vec3 eyesPosPla = shooter.getEyePosition();
-            CreateParticleBeam(eyesPosPla, eyesPosTar, level, ParticleTypes.SONIC_BOOM.getType(), 1.0);
+            CreateParticleBeam(eyesPosPla, eyesPosTar, level, ParticleTypes.SONIC_BOOM.getType(), 2,2);
             level.sendParticles(ParticleTypes.EXPLOSION, eyesPosTar.x, eyesPosTar.y, eyesPosTar.z,1,0,10,0,2);
-            attemptDamage(level, shooter, spellStats, spellContext, resolver, entity, DamageSource.sonicBoom((Entity) shooter), (float) damage);
+            attemptDamage(level, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world,shooter), (float) damage);
             for (Entity e : world.getEntities(shooter, new AABB(
                     living.position().add(range, range, range), living.position().subtract(range, range, range)))) {
                 if (e.equals(living) || !(e instanceof LivingEntity))
                     continue;
-                attemptDamage(world, shooter, spellStats, spellContext, resolver, e, DamageSource.sonicBoom((Entity) shooter), (float) ((float) damage * 0.8));
+                attemptDamage(world, shooter, spellStats, spellContext, resolver, e, buildDamageSource(world,shooter), (float) ((float) damage * 0.8));
 
                 level.sendParticles(ParticleTypes.EXPLOSION, e.getX(), e.getY(), e.getZ(),1,0,0,0,2);
             }
