@@ -37,6 +37,7 @@
 	"item.ars_trinkets.monocle_8": "White Essence Monocle",
 	"item.ars_trinkets.monocle_9": "Yellow Essence Monocle",
 	"item.ars_trinkets.monocle_10": "Purple Essence Flawless Monocle",
+	"_commenteffect":"text for the effect group.",
 	"ars_trinkets.glyph_desc.glyph_sacrifice": "Sacrifices a percentage of your health and converts it to overflow mana",
 	"ars_trinkets.glyph_name.glyph_sacrifice": "Sacrifice",
 	"ars_trinkets.glyph_desc.glyph_water_spear": "Summons a spear of water, piercine the enemy and dealing damage.",
@@ -55,11 +56,34 @@
 	"ars_trinkets.glyph_desc.glyph_sound_boom": "Creates an explosion of sound, which will ripple across multiple enemies. Does not harm the caster. Scales with amplify and AOE",
 	"ars_trinkets.glyph_desc.glyph_sun_flare":"The sun's blinding light punishes the evils.",
 	"ars_trinkets.glyph_name.glyph_sun_flare": "Sun Flare",
+	"": "",
+	"": "",
 	"ars_trinkets.glyph_name.glyph_filter_self": "Filter Self",
 	"ars_trinkets.glyph_desc.glyph_filter_self": "Stops the spell from resolving if the target entity is not the caster.",
 	"ars_trinkets.glyph_name.glyph_filter_not_self": "Filter Not Self",
 	"ars_trinkets.glyph_desc.glyph_filter_not_self": "Stops the spell from resolving if the target entity is the caster.",
-	"text.ars_trinkets.ritual_asc_1": "Your soul awakens as you become a mage acolyte. Perseverance is key in the pursuit of power+.",
+	
+	"_commentform":"text for the form group.",
+	"ars_trinkets.glyph_name.glyph_overhead": "Overhead",
+	"ars_trinkets.glyph_name.glyph_missile" : "Missile",
+	"ars_trinkets.glyph_desc.glyph_overhead": "Targets the spell on the block above the player.\noriginally from the Ars Omega project",	
+	"ars_trinkets.glyph_desc.glyph_missile" : "Similar to projectile, but with a short duration and will explode when it expires, casting the spell in the air (or on a nearby target, if found).",
+
+
+	"_commentpropagator":"text for the propagate group.",
+	"ars_trinkets.glyph_name.glyph_propagate_missile": "Propagate Missile",
+	"ars_trinkets.glyph_name.glyph_propagate_self": "Propagate Self",
+	"ars_trinkets.glyph_name.glyph_propagate_overhead": "Propagate Overhead",
+	"ars_trinkets.glyph_name.glyph_propagate_projectile": "Propagate Projectile",
+	"ars_trinkets.glyph_name.glyph_propagte_underfoot": "Propagate Underfoot",
+	"ars_trinkets.glyph_desc.glyph_propagate_missile": "Casts the rest of the spell as a missile from the target.",
+	"ars_trinkets.glyph_desc.glyph_propagate_self": "Casts the rest of the spell from the self form. Can have another propagate afterwards to make it behave like a default form.",
+	"ars_trinkets.glyph_desc.glyph_propagate_overhead": "Moves the spell to the block above the target. Moves more blocks upwards with amplify.",
+	"ars_trinkets.glyph_desc.glyph_propagate_projectile": "Casts the rest of the spell as a projectile from the target.",
+	"ars_trinkets.glyph_desc.glyph_propagte_underfoot": "Moves the spell to the block below the target. Moves more blocks downwards with amplify.",
+
+	"_commentrituals":"voicelines for the rituals.",
+	"text.ars_trinkets.ritual_asc_1": "Your soul awakens as you become a mage acolyte. Perseverance is key in the pursuit of power.",
 	"text.ars_trinkets.ritual_asc_2": "You feel a tremor in your soul as you become a mage apprentice. Your existence draws closer to nature.",
 	"text.ars_trinkets.ritual_asc_3": "As you ascend to the realm of a true mage, your spirit feels lighter than ever.",
 	"text.ars_trinkets.ritual_asc_4": "After persevering, your soul finally ascends to the mortal peak of power. You are now an Archmage, a King of Mages.",
@@ -88,8 +112,8 @@
 	"text.ars_trinkets.titles.dsc6": "Fallen Angel",
 	"text.ars_trinkets.titles.dsc7": "Unholy Demigod",
 	
-	"text.ars_trinkets.souls.breakthrough.unholy":"Your soul burst out with a black light as it attempts to mutate to become able to contain purer light.",
-	"text.ars_trinkets.souls.breakthrough.holy":"Your soul burst out with a bright light as it attempts to evolve to become able to contain more darkness.",
+	"text.ars_trinkets.souls.breakthrough.unholy":"Your soul burst out with a black light as it attempts to mutate to become able to contain more darkness.",
+	"text.ars_trinkets.souls.breakthrough.holy":"Your soul burst out with a bright light as it attempts to evolve to become able to contain more light.",
 	"text.ars_trinkets.souls.shatter": "Your soul shatters !",
 	"text.ars_trinkets.souls.overflow":"Your soul shows signs of cracking, as its fragile shell struggles to withstand the occult energies coursing through it.",
 	"text.ars_trinkets.souls.consumed":"You absorbed a dead soul. Your soul darkens.",
@@ -97,8 +121,9 @@
 	"text.ars_trinkets.souls.approach_madness": "Your soul shakes as it approaches corruption",
 	"text.ars_trinkets.souls.madness": "Your soul shatters as it falls to madness. You are now a member of the Profanes, and this curse will accompany your soul.",
 	"text.ars_trinkets.souls.bloated":"You feel a shiver run down your spine as your soul starts to feel full.",
+	"text.ars_trinkets.souls.finished":"You already have a flawless Soul !",
 
-	"text.ars_trinkets.spell.whispers":"The universe whispers into your ear."
+	"text.ars_trinkets.souls.whispers":"An unknow voice whispers: \n"
 	
 
 	

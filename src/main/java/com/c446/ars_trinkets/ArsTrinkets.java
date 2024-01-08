@@ -1,35 +1,31 @@
 package com.c446.ars_trinkets;
 
 import com.c446.ars_trinkets.event.ModEvents;
-import com.c446.ars_trinkets.item.EssenceItem;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 
 // The value here should match an entry in the META-INF/mods.toml file
-@Mod(ArsTrinkets.MODID)
+@Mod(ArsTrinkets.MOD_ID)
 public class ArsTrinkets {
-    public static final String MODID = "ars_trinkets";
+    public static final String MOD_ID = "ars_trinkets";
 
     private static final Logger LOGGER = LogManager.getLogger();
-    public static final ArrayList<Item> ESSENCE_LIST = new ArrayList<Item>();
-    public static final HashMap<Item, Integer> ESSENCE_VALUE = new HashMap<Item, Integer>();
 
     public ArsTrinkets() {
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -39,14 +35,14 @@ public class ArsTrinkets {
         modbus.addListener(this::doClientStuff);
         modbus.addListener(this::doTabThings);
         modbus.addListener(ModEvents::registerCapabilities);
-//        modbus.addListener(ModEvents::onAttachCapabilitiesEntity);
-//        modbus.addListener(ModEvents::PlayerKillRefineSoul);
-//        modbus.addListener(this::)
+        ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
+
+
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     public static ResourceLocation prefix(String path) {
-        return new ResourceLocation(MODID, path);
+        return new ResourceLocation(MOD_ID, path);
     }
 
     private void setup(final FMLCommonSetupEvent event) {
@@ -62,8 +58,6 @@ public class ArsTrinkets {
     public void onServerStarting(ServerStartingEvent event) {
         // do something when the server starts
         LOGGER.info("HELLO from server starting");
-        EssenceItem.setEssenceLists();
-
     }
 
     @SubscribeEvent

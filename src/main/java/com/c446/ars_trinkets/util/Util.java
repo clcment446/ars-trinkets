@@ -1,5 +1,6 @@
 package com.c446.ars_trinkets.util;
 
+import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.client.particle.GlowParticleData;
 import com.hollingsworth.arsnouveau.client.particle.ParticleColor;
 import net.minecraft.core.particles.ParticleOptions;
@@ -12,9 +13,13 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
-public interface Util {
+import static com.c446.ars_trinkets.registry.ModRegistry.*;
+import static com.c446.ars_trinkets.registry.ModRegistry.PURPLE_ESSENCE;
+
+public class Util {
     ArrayList<Item> focus = new ArrayList<>();
 
 
@@ -137,11 +142,56 @@ public interface Util {
                     , count, 0, 0, 0, 1);
         }
     }
-
-
-
-
     public static long randomLongFromRange(int lower, int upper) {
         return (lower + (long) (Math.random() * (upper - lower)));
     }
+    public static ArrayList<Item> getAllEssences(){
+        ArrayList<Item> ESSENCE_LIST = new ArrayList<Item>();
+
+        System.out.println("Essence List created");
+
+        ESSENCE_LIST.add(SILVER_ESSENCE.get());
+        ESSENCE_LIST.add(GOLD_ESSENCE.get());
+        ESSENCE_LIST.add(CRYSTAL_ESSENCE.get());
+        ESSENCE_LIST.add(GREEN_ESSENCE.get());
+        ESSENCE_LIST.add(RED_ESSENCE.get());
+        ESSENCE_LIST.add(WHITE_ESSENCE.get());
+        ESSENCE_LIST.add(YELLOW_ESSENCE.get());
+        ESSENCE_LIST.add(PURPLE_ESSENCE.get());
+
+        return ESSENCE_LIST;
+    }
+    public static HashMap<Item, Integer> getAllEssencesValues(){
+        HashMap<Item, Integer> ESSENCE_VALUE = new HashMap<Item, Integer>();
+
+        System.out.println("Essence Values created");
+
+        ESSENCE_VALUE.put(ModRegistry.IRON_ESSENCE.get(), 25);
+        ESSENCE_VALUE.put(ModRegistry.COPPER_ESSENCE.get(), 50);
+        ESSENCE_VALUE.put(ModRegistry.SILVER_ESSENCE.get(), 100);
+        ESSENCE_VALUE.put(ModRegistry.GOLD_ESSENCE.get(), 200);
+        ESSENCE_VALUE.put(ModRegistry.CRYSTAL_ESSENCE.get(), 300);
+        ESSENCE_VALUE.put(ModRegistry.GREEN_ESSENCE.get(), 1000);
+        ESSENCE_VALUE.put(ModRegistry.RED_ESSENCE.get(), 2500);
+        ESSENCE_VALUE.put(ModRegistry.WHITE_ESSENCE.get(), 7000);
+        ESSENCE_VALUE.put(ModRegistry.YELLOW_ESSENCE.get(), 14000);
+        ESSENCE_VALUE.put(ModRegistry.PURPLE_ESSENCE.get(), 27000);
+
+        return ESSENCE_VALUE;
+    }
+
+    public static HashMap<Integer, Integer> getAllRefinementStages(){
+        HashMap<Integer, Integer> refinement = new HashMap<Integer, Integer>();
+//        refinement.put(0,450);
+        refinement.put(0, 770);
+        refinement.put(1, 6_134);
+        refinement.put(2, 12_204);
+        refinement.put(3, 56_180);
+        refinement.put(4, 273_912);
+        refinement.put(5, 770_077);
+        refinement.put(6, 1_497_450);
+        refinement.put(7,10_482_150);
+        return refinement;
+    }
+
 }

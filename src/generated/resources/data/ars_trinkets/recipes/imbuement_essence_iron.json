@@ -2,7 +2,7 @@
   "type": "ars_nouveau:imbuement",
   "count": 1,
   "input": {
-    "item": "minecraft:iron_block"
+    "item": "ars_trinkets:copper_essence"
   },
   "output": "ars_trinkets:iron_essence",
   "pedestalItems": [

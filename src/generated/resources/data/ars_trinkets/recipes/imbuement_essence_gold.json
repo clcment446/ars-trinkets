@@ -2,7 +2,7 @@
   "type": "ars_nouveau:imbuement",
   "count": 1,
   "input": {
-    "item": "minecraft:gold_block"
+    "item": "ars_trinkets:silver_essence"
   },
   "output": "ars_trinkets:gold_essence",
   "pedestalItems": [

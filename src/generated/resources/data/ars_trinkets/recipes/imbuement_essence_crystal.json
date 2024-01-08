@@ -2,7 +2,7 @@
   "type": "ars_nouveau:imbuement",
   "count": 1,
   "input": {
-    "item": "arsomega:infused_diamond"
+    "item": "ars_trinkets:gold_essence"
   },
   "output": "ars_trinkets:crystal_essence",
   "pedestalItems": [

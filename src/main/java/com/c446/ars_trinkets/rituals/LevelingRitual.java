@@ -26,7 +26,6 @@ public class LevelingRitual extends AbstractRitual {
     boolean profane;
 
     protected final HashMap<Item, Integer> allowed = new HashMap<>();
-    public static final HashMap<Integer, Integer> refinement = new HashMap<>();
     Player target;
     int targer_player_ref;
     int past_target_ref = 0;
@@ -45,14 +44,6 @@ public class LevelingRitual extends AbstractRitual {
         allowed.put(ModRegistry.YELLOW_ESSENCE.get(), 14000);
         allowed.put(ModRegistry.PURPLE_ESSENCE.get(), 27000);
 
-        refinement.clear();
-        refinement.put(1, 770);
-        refinement.put(2, 6_134);
-        refinement.put(3, 12_204);
-        refinement.put(4, 56_180);
-        refinement.put(5, 273_912);
-        refinement.put(6, 770_077);
-        refinement.put(7, 1_497_450);
     }
 
     @Override

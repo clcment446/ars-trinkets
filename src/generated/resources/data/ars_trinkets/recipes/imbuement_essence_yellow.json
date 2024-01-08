@@ -2,7 +2,7 @@
   "type": "ars_nouveau:imbuement",
   "count": 1,
   "input": {
-    "item": "arsomega:infused_diamond_block"
+    "item": "ars_trinkets:white_essence"
   },
   "output": "ars_trinkets:yellow_essence",
   "pedestalItems": [

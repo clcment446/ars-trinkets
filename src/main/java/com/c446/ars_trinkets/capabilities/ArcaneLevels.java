@@ -1,23 +1,27 @@
 package com.c446.ars_trinkets.capabilities;
 
+import com.c446.ars_trinkets.util.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
-import com.c446.ars_trinkets.rituals.LevelingRitual;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvider;
 
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 public class ArcaneLevels implements IArcaneLevels {
     // counts as the player's level.
-    private int player_arcane_level;
+    private int player_arcane_level = 0;
     // counts as the player's experience.
-    private int player_soul_refinement;
-    private int player_collected_souls;
-    private HashMap<Integer, String[]> player_titles;
+    private int player_soul_refinement = 1;
+    private int player_collected_souls = 0;
     private boolean profane = false;
+    protected static final int minimum_level = 0;
+    protected static final int maximum_level = 8;
+    private boolean warning_2 = false;
+    private boolean warning_3 = false;
 
 
     @Override
@@ -33,7 +37,6 @@ public class ArcaneLevels implements IArcaneLevels {
     }
 
     @Override
-
     public int getPlayerSoulRefinement() {
         System.out.println("Player soul refinement asked");
         return player_soul_refinement;
@@ -110,9 +113,8 @@ public class ArcaneLevels implements IArcaneLevels {
 
     @Override
     public int getPlayerManaBonus() {
-        int x = (int) Math.pow(1.2, (8 * player_arcane_level));
-        System.out.println("Max Mana bonus questioned");
-        return x;
+        //        System.out.println("Max Mana bonus questioned");
+        return (int) Math.pow(1.2, (8 * player_arcane_level));
     }
 
     @Override
@@ -128,34 +130,32 @@ public class ArcaneLevels implements IArcaneLevels {
             case 7 -> x = 2000;
             default -> x = 0;
         }
-        System.out.println("Mana Regen bonus interrogated");
+//        System.out.println("Mana Regen bonus interrogated");
         return x;
     }
 
     @Override
-    public int checkRefinement(int refinement, int level, Player player) {
-        float x = (float) refinement / LevelingRitual.refinement.get(level);
+    public int checkRefinement(Player player) {
+        System.out.println("CheckRefinement triggered");
+        float x = (float) player_soul_refinement / Util.getAllRefinementStages().get(this.getPlayerArcaneLevel());
         if (x < 0.5) {
+            System.out.println("case 1");
             return 1;
         } else if (x > 0.5 && x < 0.75) {
+            System.out.println("case 2");
             return 2;
         } else if (x > 0.75 && x < 0.99) {
+            System.out.println("case 3");
             return 3;
         } else if (x > 0.99) {
+            System.out.println("case 4");
             return 4;
         }
         return 0;
     }
 
-    @Override
-    @Deprecated
-    public void sendPlayerRefinement(Player player) {
-        /**
-         * Deprecated funtion.
-         * @param player the player
-         *
-         * */
-        player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> checkRefinement(a.player_soul_refinement, a.player_arcane_level, player));
+    public void nextRank() {
+        player_arcane_level++;
     }
 
     @Override
@@ -166,15 +166,28 @@ public class ArcaneLevels implements IArcaneLevels {
          * @InternalValue SRF: the percentage of refinement from the minimum value to the maximum value of the arcane level
          * */
         player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-            float k = (float) (a.checkRefinement(a.player_soul_refinement, a.player_arcane_level, player));
+
+            float k = (float) (a.checkRefinement(player));
             float x = new Random().nextFloat();
             k /= 3.0;
+            System.out.println("SRF = " + k);
             if (k > x) {
-                a.setPlayerArcaneLevel(a.player_arcane_level++);
                 if (a.profane) {
-                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_dsc_" + a.player_soul_refinement), false);
+                    try {
+                        TimeUnit.SECONDS.sleep(2L);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    a.nextRank();
+                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_dsc_" + a.getPlayerArcaneLevel()), false);
                 } else {
-                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_asc_" + a.player_soul_refinement), false);
+                    try {
+                        TimeUnit.SECONDS.sleep(2L);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                    a.nextRank();
+                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_asc_" + a.getPlayerArcaneLevel()), false);
                 }
             } else {
                 player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.shatter"), false);
@@ -182,6 +195,8 @@ public class ArcaneLevels implements IArcaneLevels {
                 a.setProfane(true);
                 a.setPlayerSoulRefinement((int) (a.getPlayerSoulRefinement() * 0.3));
             }
+            a.warning_2 = false;
+            a.warning_3 = false;
         });
     }
 
@@ -191,14 +206,22 @@ public class ArcaneLevels implements IArcaneLevels {
          * @Param slain: were the soul fragments obtained from killing.
          * @Param quantity: the number of soul fragments.
          * */
-        if (!slain) {
-            this.player_soul_refinement += quantity;
-        } else {
-            this.player_soul_refinement += 3 * quantity;
-            this.player_collected_souls += 3 * quantity;
+        if (player_arcane_level <= 7) {
+            System.out.println("UpdateSoulEssence called");
+            System.out.println(quantity);
+
+            if (!slain) {
+                this.player_soul_refinement += quantity;
+            } else {
+                this.player_soul_refinement += 3 * quantity;
+                this.player_collected_souls += 3 * quantity;
+            }
+            playerMain(player);
+            System.out.println("Soul Essence Updated");
         }
-        playerMain(player);
-        System.out.println("Soul Essence Updated");
+        else {
+            player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.finished"),true);
+        }
     }
 
     @Override
@@ -210,25 +233,37 @@ public class ArcaneLevels implements IArcaneLevels {
          * then it will either do nothing, launch a warning message, or triggger the player's ascension/descension.
          * */
         player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-            int refi = a.checkRefinement(a.player_soul_refinement, a.player_arcane_level, player);
+            int refi = a.checkRefinement(player);
+            System.out.println("check refinement created successfully");
+//            if (!(a.getPlayerArcaneLevel() >= maximum_level)) {
+//                return;
+//            }
             switch (refi) {
                 case 0, 1 -> {
                 }
-                case 2 -> player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.bloated"), false);
-                case 3 ->
+                case 2 -> {
+                    if (!a.warning_2) {
+                        player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.bloated"), false);
+                        a.warning_2 = true;
+                    }
+                }
+                case 3 -> {
+                    if (!a.warning_3) {
                         player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.overflow"), false);
+                        a.warning_3 = true;
+                    }
+                }
                 case 4 -> {
-                    if (!a.getProfane()) {
+                    if (a.getProfane()) {
                         player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.breakthrough.unholy"), false);
                         a.triggerPlayerBreakthrough(player);
                     } else {
                         player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.breakthrough.holy"), false);
+                        a.triggerPlayerBreakthrough(player);
                     }
-
-
+                    System.out.println("Player main accessed with success");
                 }
             }
-            System.out.println("Player main accessed with success");
         });
         System.out.println("Player Main triggered");
     }
@@ -242,6 +277,8 @@ public class ArcaneLevels implements IArcaneLevels {
         this.player_soul_refinement = source.player_soul_refinement;
         this.player_collected_souls = source.player_collected_souls;
         this.profane = source.profane;
+        this.warning_2 = source.warning_2;
+        this.warning_3 = source.warning_3;
         System.out.println("Arcane Cap Copied");
     }
 
@@ -254,6 +291,9 @@ public class ArcaneLevels implements IArcaneLevels {
         nbt.putInt("player_soul_refinement", player_soul_refinement);
         nbt.putInt("player_slain_souls", player_collected_souls);
         nbt.putBoolean("player_profane_soul", profane);
+        nbt.putBoolean("warning_2", warning_2);
+        nbt.putBoolean("warning_3", warning_3);
+
         System.out.println("Arcane Cap Saved");
     }
 
@@ -266,6 +306,18 @@ public class ArcaneLevels implements IArcaneLevels {
         player_soul_refinement = nbt.getInt("player_soul_refinement");
         player_collected_souls = nbt.getInt("player_slain_souls");
         profane = nbt.getBoolean("player_profane_soul");
+        warning_2 = nbt.getBoolean("player_warning_2");
+        warning_3 = nbt.getBoolean("player_warning_3");
         System.out.println("Arcane Cap loaded");
+    }
+
+
+    public void RESET_PLAYER() {
+        player_arcane_level = 0;
+        player_soul_refinement = 1;
+        player_collected_souls = 0;
+        warning_2 = false;
+        warning_3 = false;
+        profane = false;
     }
 }

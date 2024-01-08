@@ -2,7 +2,7 @@
   "type": "ars_nouveau:imbuement",
   "count": 1,
   "input": {
-    "item": "minecraft:diamond_block"
+    "item": "ars_trinkets:red_essence"
   },
   "output": "ars_trinkets:white_essence",
   "pedestalItems": [

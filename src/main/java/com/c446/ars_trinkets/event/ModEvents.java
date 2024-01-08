@@ -1,30 +1,37 @@
 package com.c446.ars_trinkets.event;
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.capabilities.ArcaneLevels;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvider;
+import com.c446.ars_trinkets.commands.CommandResetArcaneProgression;
+import com.c446.ars_trinkets.commands.SetArcaneProgression;
 import com.hollingsworth.arsnouveau.api.event.*;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import com.c446.ars_trinkets.capabilities.CapabilityRegistry;
 
 import static com.c446.ars_trinkets.capabilities.CapabilityRegistry.getArcaneLevels;
 
-@Mod.EventBusSubscriber(modid = ArsTrinkets.MODID)
+@Mod.EventBusSubscriber(modid = ArsTrinkets.MOD_ID)
 public class ModEvents {
     @SubscribeEvent
+    public static void commandRegister(RegisterCommandsEvent event) {
+        CommandResetArcaneProgression.register(event.getDispatcher());
+        SetArcaneProgression.register(event.getDispatcher());
+    }
+    @SubscribeEvent
     public static void attachCapabilities(final AttachCapabilitiesEvent<Entity> event) {
-        System.out.println("attach Cap Entity triggered");
+//        System.out.println("attach Cap Entity triggered");
         if (event.getObject() instanceof Player) {
             ArcaneLevelsAttacher.attach(event);
-            System.out.println("Arcane Level Capability Created");
+//            System.out.println("Arcane Level Capability Created");
         }
     }
 
@@ -32,7 +39,7 @@ public class ModEvents {
     public static void registerCapabilities(RegisterCapabilitiesEvent event) {
         event.register(ArcaneLevels.class);
 
-        System.out.println("Arcane Cap registered");
+//        System.out.println("Arcane Cap registered");
     }
 
     @SubscribeEvent
@@ -46,38 +53,46 @@ public class ModEvents {
             newArcaneLevels.setCollectedSouls(oldArcane.getPlayerCollectedSouls());
         }));
         event.getOriginal().invalidateCaps();
-        System.out.println("Arcane Cap Cloned");
+//        System.out.println("Arcane Cap Cloned");
     }
-
-
-
-
-//    public static void syncPlayerCaps(Player player){
-//        ArcaneLevels cap = CapabilityRegistry.(player).orElse(new ArcaneLevels())
-//        CompoundTag tag = cap.ser
-//    }
 
     @SubscribeEvent
     public static void MaxManaCalcEvent(MaxManaCalcEvent event) {
+        if (!Config.IS_LEVELING_ENABLED.get()){
+            return;
+        }
         if (event.getEntity() instanceof Player player && player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).isPresent()) {
             player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(
                     arcaneLevels -> event.setMax(event.getMax() + arcaneLevels.getPlayerManaBonus()));
 
-            System.out.println("max mana altered");
+//            System.out.println("max mana altered");
         }
     }
 
     @SubscribeEvent
     public static void ManaRegenCalcEvent(ManaRegenCalcEvent event) {
+        if (!Config.IS_LEVELING_ENABLED.get()){
+            return;
+        }
         if (event.getEntity() instanceof Player player && player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).isPresent()) {
             player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(
                     a -> event.setRegen(event.getRegen() + a.getPlayerRegenBonus()));
-            System.out.println("mana regen altered");
+//            System.out.println("mana regen altered");
         }
     }
 
     @SubscribeEvent
+    public static void SpellDamageApplied(SpellDamageEvent event){
+        if (!Config.IS_LEVELING_ENABLED.get()){
+            return;
+        }
+
+    }
+    @SubscribeEvent
     public static void PlayerKillRefineSoul(net.minecraftforge.event.entity.living.LivingDeathEvent deathEvent) {
+        if (!Config.IS_LEVELING_ENABLED.get()){
+            return;
+        }
         if (deathEvent.getSource().getEntity() instanceof Player player) {
             player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> a.updateSoulEssence((int) (deathEvent.getEntity().getMaxHealth() / 10), true, player));
             System.out.println(player.getName() + " killed " + deathEvent.getEntity().getName() + " for " + (int) deathEvent.getEntity().getMaxHealth() / 10);

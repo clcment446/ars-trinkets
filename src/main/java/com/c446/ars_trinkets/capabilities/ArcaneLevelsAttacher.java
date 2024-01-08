@@ -18,7 +18,7 @@ import org.jetbrains.annotations.Nullable;
 public class ArcaneLevelsAttacher {
 
     public static class ArcaneLevelsProvider implements ICapabilityProvider, INBTSerializable<CompoundTag> {
-        public static final ResourceLocation IDENTIFIER = new  ResourceLocation(ArsTrinkets.MODID,"levels");
+        public static final ResourceLocation IDENTIFIER = new  ResourceLocation(ArsTrinkets.MOD_ID,"levels");
         public static Capability<ArcaneLevels> PLAYER_LEVEL = CapabilityManager.get(new CapabilityToken<ArcaneLevels>() {});
         private ArcaneLevels arcane_levels = null;
         private final LazyOptional<ArcaneLevels> optional = LazyOptional.of(this::createArcaneLevel);

@@ -2,12 +2,8 @@ package com.c446.ars_trinkets.datagen;
 
 import com.c446.ars_trinkets.ArsNouveauRegistry;
 import com.c446.ars_trinkets.ArsTrinkets;
-import com.c446.ars_trinkets.glyphs.spell_glyphs.*;
+import com.c446.ars_trinkets.glyphs.effect_glyph.*;
 
-import com.c446.ars_trinkets.registry.ModRegistry;
-import com.c446.ars_trinkets.rituals.LevelingRitual;
-import com.hollingsworth.arsnouveau.ArsNouveau;
-import com.hollingsworth.arsnouveau.api.ArsNouveauAPI;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
@@ -22,7 +18,6 @@ import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
-import com.sun.jna.platform.win32.Wtsapi32;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataGenerator;
@@ -36,25 +31,20 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.ShapelessRecipe;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.IOException;
 import java.nio.file.Path;
 import java.util.function.Consumer;
 
-import static com.c446.ars_trinkets.ArsTrinkets.prefix;
 import static com.c446.ars_trinkets.registry.ModRegistry.*;
 import static com.hollingsworth.arsnouveau.setup.registry.RegistryHelper.getRegistryName;
 import static net.minecraft.world.item.Items.*;
 
 public class ArsProviders {
 
-    static String root = ArsTrinkets.MODID;
+    static String root = ArsTrinkets.MOD_ID;
 
     public static class CraftingTableProvider extends RecipeProvider {
         public CraftingTableProvider(DataGenerator pGenerator) {
@@ -368,6 +358,7 @@ public class ArsProviders {
 
         @Override
         public void collectJsons(CachedOutput cache) {
+            System.out.println("started Imbument>collect jsons");
             recipes.add(new ImbuementRecipe("essence_copper", Ingredient.of(COPPER_BLOCK), new ItemStack(COPPER_ESSENCE.get()), 10)
                     .withPedestalItem(COPPER_INGOT)
                     .withPedestalItem(COPPER_INGOT)
@@ -444,8 +435,9 @@ public class ArsProviders {
             Path output = generator.getPackOutput().getOutputFolder();
             for (ImbuementRecipe g : recipes) {
                 Path path = getRecipePath(output, g.getId().getPath());
-                DataProvider.saveStable(cache, g.asRecipe(), path);
+                saveStable(cache, g.asRecipe(), path);
             }
+
         }
 
         protected Path getRecipePath(Path pathIn, String str) {

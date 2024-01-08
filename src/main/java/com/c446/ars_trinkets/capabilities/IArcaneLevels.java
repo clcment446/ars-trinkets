@@ -64,7 +64,7 @@ public interface IArcaneLevels {
     }
 
 
-    public default int checkRefinement(int refinement, int level, Player player) {
+    public default int checkRefinement(Player player) {
 
         return 0;
     }
