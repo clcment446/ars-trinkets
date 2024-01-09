@@ -33,15 +33,12 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
     private int getAmps(int i) {
         switch (i) {
             case 0 -> {
-                return 0;
-            }
-            case 1 -> {
                 return 1;
             }
-            case 2 -> {
+            case 1 -> {
                 return 2;
             }
-            case 3 -> {
+            case 2 -> {
                 return 3;
             }
             default -> {
@@ -57,27 +54,29 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         int amp = (int) spellStats.getAmpMultiplier();
-        int range = 2 + (int) (1.25 * spellStats.getAoeMultiplier());
+        int range = 2 + (int) (2 * spellStats.getAoeMultiplier());
         Entity entity = rayTraceResult.getEntity();
         if ((entity instanceof LivingEntity living && world instanceof ServerLevel level)) {
             shooter.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(a ->
             {
-                mana = (int) a.getCurrentMana();
-                a.setMana(mana * (getAmps(amp) / 4));
+                mana = (int) a.getCurrentMana()/28;
+                a.setMana(0);
             });
-            damage = mana * getAmps(amp)/4;
+            damage = (float) (mana);
             for (Entity e : world.getEntities(shooter, new AABB(
                     living.position().add(range, range, range), living.position().subtract(range, range, range)))) {
                 if (e.equals(living) || !(e instanceof LivingEntity)) {
                     continue;
                 }
                 Vec3 position = e.position();
-                attemptDamage(level, shooter, spellStats, spellContext, resolver, e, buildDamageSource(level, shooter), damage);
+                attemptDamage(level, shooter, spellStats, spellContext, resolver, e, DamageUtil.source(level, DamageTypes.MAGIC, shooter), damage);
                 level.sendParticles(ParticleTypes.WITCH, position.x, position.y, position.z, 50,
                         ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 3);
+                e.invulnerableTime = 40;
             }
-            attemptDamage(level,shooter,spellStats,spellContext,resolver,living,buildDamageSource(level, shooter), damage);
-            level.sendParticles(ParticleTypes.WITCH,living.getX(),living.getY(),living.getZ(),100,0,0,0,1);
+            attemptDamage(level, shooter, spellStats, spellContext, resolver, living, DamageUtil.source(level, DamageTypes.MAGIC, shooter), damage);
+            level.sendParticles(ParticleTypes.WITCH, living.getX(), living.getY(), living.getZ(), 100, 0, 0, 0, 1);
+            living.invulnerableTime = 40;
         }
     }
 
@@ -85,13 +84,13 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
         addDamageConfig(builder, 0);
-        addAmpConfig(builder, 1);
+//        addAmpConfig(builder, 1);
     }
 
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
-        return augmentSetOf(AugmentAmplify.INSTANCE, AugmentAOE.INSTANCE);
+        return augmentSetOf(AugmentAOE.INSTANCE);
     }
 
     @Override

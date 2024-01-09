@@ -86,7 +86,7 @@ public class ModEvents {
         if (!Config.IS_LEVELING_ENABLED.get()){
             return;
         }
-
+        event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a->event.damage *= Math.pow(1.8,a.getPlayerArcaneLevel()/1.3));
     }
     @SubscribeEvent
     public static void PlayerKillRefineSoul(net.minecraftforge.event.entity.living.LivingDeathEvent deathEvent) {
@@ -94,9 +94,14 @@ public class ModEvents {
             return;
         }
         if (deathEvent.getSource().getEntity() instanceof Player player) {
-            player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> a.updateSoulEssence((int) (deathEvent.getEntity().getMaxHealth() / 10), true, player));
-            System.out.println(player.getName() + " killed " + deathEvent.getEntity().getName() + " for " + (int) deathEvent.getEntity().getMaxHealth() / 10);
+            player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> a.updateSoulEssence((int) (deathEvent.getEntity().getMaxHealth() / 2), true, player));
+//            System.out.println(player.getName() + " killed " + deathEvent.getEntity().getName() + " for " + (int) deathEvent.getEntity().getMaxHealth() / 10);
         }
+    }
+    @SubscribeEvent
+    public static void onPlayerReceiveDamage(net.minecraftforge.event.entity.living.LivingDamageEvent event){
+        event.getEntity().getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> event.setAmount((float) (event.getAmount()/Math.pow(1.9,a.getPlayerArcaneLevel()/1.2))));
+
     }
 
 

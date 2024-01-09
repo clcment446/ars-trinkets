@@ -1,7 +1,8 @@
-// 1.20.1	2024-01-07T14:32:42.19235	Example Glyph Recipes
+// 1.20.1	2024-01-09T20:27:05.9037586	Example Glyph Recipes
 793b078b87c9be9b029e349c459355fe32feeded data/ars_trinkets/recipes/glyph_exp_sac.json
 c0c257199a0c62457c445c303cc4d90d812f0148 data/ars_trinkets/recipes/glyph_filter_not_self.json
 d6018cc9b1e7162e30472c8eaaf45437cc5f3959 data/ars_trinkets/recipes/glyph_filter_self.json
+d46e34969f1e4745e8b5786b4308f6f731bc5060 data/ars_trinkets/recipes/glyph_mana_bomb.json
 083348ccab012e5753a2b1b23c35d6d1a06c155e data/ars_trinkets/recipes/glyph_sacrifice.json
 5781416906d88ceb5c7ffbd2f9427e6a630a3a12 data/ars_trinkets/recipes/glyph_shadow_veil.json
 1ccb8d7965a7590458893f3b4b3254695858fd7a data/ars_trinkets/recipes/glyph_sound_boom.json

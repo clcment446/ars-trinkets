@@ -128,6 +128,7 @@ public class ArcaneLevels implements IArcaneLevels {
             case 5 -> x = 750;
             case 6 -> x = 1000;
             case 7 -> x = 2000;
+            case 8 -> x = 5000;
             default -> x = 0;
         }
 //        System.out.println("Mana Regen bonus interrogated");

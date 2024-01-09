@@ -95,6 +95,8 @@ public class ArsProviders {
             recipes.add(get(SunFlare.INSTANCE).withItem(DIAMOND, 2).withItem(NETHERITE_INGOT, 2).withItem(ItemsRegistry.FIRE_ESSENCE, 4).withItem(GLOWSTONE.asItem(), 2).withItem(PURPLE_ESSENCE.get(), 4));
             recipes.add(get(FilterIsNotSelf.INSTANCE).withItem(FilterIsSelf.INSTANCE.glyphItem.asItem()).withItem(ItemsRegistry.MANIPULATION_ESSENCE, 4));
             recipes.add(get(FilterIsSelf.INSTANCE).withItem(GOLDEN_CARROT).withItem(ItemsRegistry.MANIPULATION_ESSENCE, 4));
+            recipes.add(get(ManaBomb.INSTANCE).withItem(ItemsRegistry.CONJURATION_ESSENCE,3).withItem(ItemsRegistry.MANIPULATION_ESSENCE,2).withItem(PURPLE_ESSENCE.get(),3));
+            recipes.add(get().withItem)
 
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());

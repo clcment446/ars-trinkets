@@ -1,0 +1,48 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 160,
+  "inputItems": [
+    {
+      "item": {
+        "item": "ars_nouveau:conjuration_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:conjuration_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:conjuration_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:manipulation_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_nouveau:manipulation_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    }
+  ],
+  "output": "ars_trinkets:glyph_mana_bomb"
+}
