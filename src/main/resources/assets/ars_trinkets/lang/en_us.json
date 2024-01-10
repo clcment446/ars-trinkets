@@ -81,21 +81,27 @@
 	"ars_trinkets.glyph_desc.glyph_propagate_overhead": "Moves the spell to the block above the target. Moves more blocks upwards with amplify.",
 	"ars_trinkets.glyph_desc.glyph_propagate_projectile": "Casts the rest of the spell as a projectile from the target.",
 	"ars_trinkets.glyph_desc.glyph_propagte_underfoot": "Moves the spell to the block below the target. Moves more blocks downwards with amplify.",
+	"ars_trinkets.glyph_desc.glyph_soul_inspector":"Inspects the soul of the entity you are casting this spell on.",
+	"ars_trinkets.glyph_name.glyph_soul_inspector":"Inspect Soul",
+
 
 	"_commentrituals":"voicelines for the rituals.",
-	"text.ars_trinkets.ritual_asc_1": "Your soul awakens as you become a mage acolyte. Perseverance is key in the pursuit of power.",
-	"text.ars_trinkets.ritual_asc_2": "You feel a tremor in your soul as you become a mage apprentice. Your existence draws closer to nature.",
-	"text.ars_trinkets.ritual_asc_3": "As you ascend to the realm of a true mage, your spirit feels lighter than ever.",
-	"text.ars_trinkets.ritual_asc_4": "After persevering, your soul finally ascends to the mortal peak of power. You are now an Archmage, a King of Mages.",
-	"text.ars_trinkets.ritual_asc_5": "You finally ascend beyond mortality and start having qualities of an Astral Creature. \nYou become a saint and start to assimilate with the will of the Spirit World.",
-	"text.ars_trinkets.ritual_asc_6": "A tremor is felt across the Astral Plane. \n You have become an Angel.\n Your spirit starts to modify your body to better host itself in the material Plane",
-	"text.ars_trinkets.ritual_asc_7": "As you leave behind your mortal shell, the Astral Plane violently shakes. \nYour soul starts to merge the Astral Essence absorbed from the Astral Plane and the Soul Essence you have gathered.\nYou take the last step of ascension.\n You are now a Demigod",
-	"text.ars_trinkets.ritual_dsc_2":"After falling from the Path, your soul tremors as you become a Black apprentice.",
-	"text.ars_trinkets.ritual_dsc_3": "After you stray further from the Path, you feel your soul shakes as a dark power invades it.\nYou have become a black mage, a being rejected by Nature and the World.",
-	"text.ars_trinkets.ritual_dsc_4": "After surviving admist the Madness of the Corrupted path. \nYou became a Tenebrous Archmage, a King of the Black Mages ",
-	"text.ars_trinkets.ritual_dsc_5": "You fall further into corruption, as the Will of the World rejects your descension and a Chaotic power welcomes you. You have become a Tainted Saint",
-	"text.ars_trinkets.ritual_dsc_6": "A tremor is felt across the material plane as you become a Fallen Angel, a deputy of Chaos. \nYour spirit modifies your body to allow it to better withstand Soul Essence.",
-	"text.ars_trinkets.ritual_dsc_7": "As you leave your mortal flesh, the Astral Plane violently shakes. \nYour unholy soul starts to merge the Astral Essence trapping it and the Soul Essence that you stole.\nYou take the last step of Descension.\nYou are now an Unholy Demigod",
+	"text.ars_trinkets.ritual_asc_1": "You are now an Acolyte.",
+	"text.ars_trinkets.ritual_asc_2": "You are now an Apprentice.",
+	"text.ars_trinkets.ritual_asc_3": "You are now a Mage.",
+	"text.ars_trinkets.ritual_asc_4": "You are now an Archmage.",
+	"text.ars_trinkets.ritual_asc_5": "You are now a Saint.",
+	"text.ars_trinkets.ritual_asc_6": "Your body changes to better withstand Astral Essence.\nYou are now an Angel.",
+	"text.ars_trinkets.ritual_asc_7": "Your pure soul starts to merge the Astral Essence it consumed.\nYou take the last step of Ascension.\nYou are now a Demigod.",
+	"text.ars_trinkets.ritual_asc_8": "You are now a God of Order",
+	"text.ars_trinkets.ritual_dsc_1":"You are now a Defiled Acolyte.",
+	"text.ars_trinkets.ritual_dsc_2":"You are now a Black apprentice.",
+	"text.ars_trinkets.ritual_dsc_3": "You are now a Black Mage.",
+	"text.ars_trinkets.ritual_dsc_4": "You are now a Tenebrous Archmage.",
+	"text.ars_trinkets.ritual_dsc_5": "You are now a Tainted Saint.",
+	"text.ars_trinkets.ritual_dsc_6": "Your body changes to better withstand Soul Essenc.\nYou are now a Fallen Angel.",
+	"text.ars_trinkets.ritual_dsc_7": "Your unholy soul starts to merge the Soul Essence that you stole.\nYou take the last step of Descension.\nYou are now an Unholy Demigod.",
+	"text.ars_trinkets.ritual_dsc_8": "You are now an God of Chaos.",
 	
 	"text.ars_trinkets.titles.asc1": "Mage Acolyte",
 	"text.ars_trinkets.titles.asc2": "Mage Apprentice",
@@ -104,6 +110,7 @@
 	"text.ars_trinkets.titles.asc5": "Saint",
 	"text.ars_trinkets.titles.asc6": "Angel",
 	"text.ars_trinkets.titles.asc7": "Demigod",
+	"text.ars_trinkets.titles.asc8": "God of Order",
 	"text.ars_trinkets.titles.dsc1":"Defiled Acolyte",
 	"text.ars_trinkets.titles.dsc2":"Corrupted Apprentice",
 	"text.ars_trinkets.titles.dsc3": "Black Mage",
@@ -111,21 +118,22 @@
 	"text.ars_trinkets.titles.dsc5": "Tainted Saint",
 	"text.ars_trinkets.titles.dsc6": "Fallen Angel",
 	"text.ars_trinkets.titles.dsc7": "Unholy Demigod",
-	
+	"text.ars_trinkets.titles.dsc8": "God of Chaos",
+
 	"text.ars_trinkets.souls.breakthrough.unholy":"Your soul burst out with a black light as it attempts to mutate to become able to contain more darkness.",
 	"text.ars_trinkets.souls.breakthrough.holy":"Your soul burst out with a bright light as it attempts to evolve to become able to contain more light.",
 	"text.ars_trinkets.souls.shatter": "Your soul shatters !",
 	"text.ars_trinkets.souls.overflow":"Your soul shows signs of cracking, as its fragile shell struggles to withstand the occult energies coursing through it.",
 	"text.ars_trinkets.souls.consumed":"You absorbed a dead soul. Your soul darkens.",
-	"text.ars_trinkets.souls.essence_used":"You feel a pure power as essence flows into your soul. Your soul whitens",
+	"text.ars_trinkets.souls.essence_used":"You absorbed Astral Essence. Your soul whitens",
 	"text.ars_trinkets.souls.approach_madness": "Your soul shakes as it approaches corruption",
-	"text.ars_trinkets.souls.madness": "Your soul shatters as it falls to madness. You are now a member of the Profanes, and this curse will accompany your soul.",
+	"text.ars_trinkets.souls.madness": "Your soul shatters as it falls to madness. You are now a member of the Profanes, and this curse will accompany your soul beyond life and death.",
 	"text.ars_trinkets.souls.bloated":"You feel a shiver run down your spine as your soul starts to feel full.",
 	"text.ars_trinkets.souls.finished":"You already have a flawless Soul !",
 
-	"text.ars_trinkets.souls.whispers":"An unknow voice whispers: \n"
-	
-
+	"text.ars_trinkets.souls.whispers":"An unknown voice whispers:",
+	"text.ars_trinkets.souls.whispers.lookat":"You are looking at a :",
+	"text.ars_trinkets.souls.whispers.forbidden":"You can not peer through this soul !"
 	
 
 }

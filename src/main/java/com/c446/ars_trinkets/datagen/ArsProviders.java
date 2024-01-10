@@ -4,6 +4,10 @@ import com.c446.ars_trinkets.ArsNouveauRegistry;
 import com.c446.ars_trinkets.ArsTrinkets;
 import com.c446.ars_trinkets.glyphs.effect_glyph.*;
 
+import com.c446.ars_trinkets.glyphs.forms.FormMissile;
+import com.c446.ars_trinkets.glyphs.forms.FormOverhead;
+import com.c446.ars_trinkets.glyphs.propagators.PropagateMissile;
+import com.c446.ars_trinkets.glyphs.propagators.PropagateOverhead;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
 import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
@@ -17,6 +21,8 @@ import com.hollingsworth.arsnouveau.common.datagen.ApparatusRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.GlyphRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.ImbuementRecipeProvider;
 import com.hollingsworth.arsnouveau.common.datagen.patchouli.*;
+import com.hollingsworth.arsnouveau.common.items.ManipulationEssence;
+import com.hollingsworth.arsnouveau.common.spell.method.MethodProjectile;
 import com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.CachedOutput;
@@ -95,8 +101,12 @@ public class ArsProviders {
             recipes.add(get(SunFlare.INSTANCE).withItem(DIAMOND, 2).withItem(NETHERITE_INGOT, 2).withItem(ItemsRegistry.FIRE_ESSENCE, 4).withItem(GLOWSTONE.asItem(), 2).withItem(PURPLE_ESSENCE.get(), 4));
             recipes.add(get(FilterIsNotSelf.INSTANCE).withItem(FilterIsSelf.INSTANCE.glyphItem.asItem()).withItem(ItemsRegistry.MANIPULATION_ESSENCE, 4));
             recipes.add(get(FilterIsSelf.INSTANCE).withItem(GOLDEN_CARROT).withItem(ItemsRegistry.MANIPULATION_ESSENCE, 4));
-            recipes.add(get(ManaBomb.INSTANCE).withItem(ItemsRegistry.CONJURATION_ESSENCE,3).withItem(ItemsRegistry.MANIPULATION_ESSENCE,2).withItem(PURPLE_ESSENCE.get(),3));
-            recipes.add(get().withItem)
+            recipes.add(get(ManaBomb.INSTANCE).withItem(ItemsRegistry.CONJURATION_ESSENCE, 3).withItem(ItemsRegistry.MANIPULATION_ESSENCE, 2).withItem(PURPLE_ESSENCE.get(), 3));
+            recipes.add(get(FormMissile.INSTANCE).withItem(FIRE_CHARGE).withItem(ItemsRegistry.FIRE_ESSENCE, 2).withItem(ItemsRegistry.AIR_ESSENCE).withItem(GUNPOWDER, 2).withItem(ARROW));
+            recipes.add(get(FormOverhead.INSTANCE).withItem(IRON_HELMET).withItem(STONE_PRESSURE_PLATE));
+            recipes.add(get(PropagateOverhead.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(FormOverhead.INSTANCE.getGlyph().asItem()));
+            recipes.add(get(PropagateMissile.INSTANCE).withItem(ItemsRegistry.MANIPULATION_ESSENCE).withItem(FormMissile.INSTANCE.getGlyph().asItem()));
+
 
             for (GlyphRecipe recipe : recipes) {
                 Path path = getScribeGlyphPath(output, recipe.output.getItem());
@@ -197,14 +207,14 @@ public class ArsProviders {
 
             recipes.add(builder()
                     .withSourceCost(1000)
-                    .withPedestalItem(4, WHITE_ESSENCE)
+                    .withPedestalItem(4, SILVER_ESSENCE)
                     .withReagent(ItemsRegistry.AMULET_OF_MANA_REGEN)
                     .withResult(ESSENCE_LOTUS_3)
                     .build()
             );
             recipes.add(builder()
                     .withSourceCost(1500)
-                    .withPedestalItem(4, YELLOW_ESSENCE)
+                    .withPedestalItem(4, GOLD_ESSENCE)
                     .withReagent(ESSENCE_LOTUS_3)
                     .withResult(ESSENCE_LOTUS_4)
                     .build()

@@ -1,11 +1,11 @@
 {
   "type": "ars_nouveau:glyph",
   "count": 1,
-  "exp": 0,
+  "exp": 160,
   "inputItems": [
     {
       "item": {
-        "item": "arsomega:enchanted_demonic_gem"
+        "item": "minecraft:diamond_block"
       }
     },
     {
@@ -21,21 +21,26 @@
     {
       "item": {
         "item": "ars_trinkets:white_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "arsomega:enchanted_diamond_block"
-      }
-    },
-    {
-      "item": {
-        "item": "arsomega:enchanted_diamond_block"
       }
     },
     {
       "item": {
         "item": "minecraft:enchanted_book"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:enchanted_book"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:enchanted_book"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:experience_bottle"
       }
     },
     {

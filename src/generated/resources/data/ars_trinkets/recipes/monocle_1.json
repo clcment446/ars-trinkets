@@ -20,7 +20,7 @@
   ],
   "reagent": [
     {
-      "item": "arsomega:infused_glass"
+      "item": "minecraft:glass_pane"
     }
   ],
   "sourceCost": 250

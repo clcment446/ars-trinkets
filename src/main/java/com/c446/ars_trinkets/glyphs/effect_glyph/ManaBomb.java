@@ -24,6 +24,8 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import java.util.Set;
 
+import static alexthw.ars_elemental.ArsNouveauRegistry.NECROMANCY;
+
 
 public class ManaBomb extends AbstractEffect implements IDamageEffect {
     public ManaBomb(ResourceLocation tag, String description) {
@@ -59,13 +61,13 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
         if ((entity instanceof LivingEntity living && world instanceof ServerLevel level)) {
             shooter.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(a ->
             {
-                mana = (int) a.getCurrentMana()/28;
+                mana = (int) a.getCurrentMana()/280;
                 a.setMana(0);
             });
             damage = (float) (mana);
             for (Entity e : world.getEntities(shooter, new AABB(
                     living.position().add(range, range, range), living.position().subtract(range, range, range)))) {
-                if (e.equals(living) || !(e instanceof LivingEntity)) {
+                if (e.equals(living) || e.equals(shooter) ||!(e instanceof LivingEntity)) {
                     continue;
                 }
                 Vec3 position = e.position();
@@ -105,6 +107,6 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
-        return this.setOf(SpellSchools.ELEMENTAL);
+        return this.setOf(NECROMANCY);
     }
 }

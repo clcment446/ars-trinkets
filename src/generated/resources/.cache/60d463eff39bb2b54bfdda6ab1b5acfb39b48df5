@@ -1,8 +1,12 @@
-// 1.20.1	2024-01-09T20:27:05.9037586	Example Glyph Recipes
+// 1.20.1	2024-01-10T12:55:26.58492	Example Glyph Recipes
 793b078b87c9be9b029e349c459355fe32feeded data/ars_trinkets/recipes/glyph_exp_sac.json
 c0c257199a0c62457c445c303cc4d90d812f0148 data/ars_trinkets/recipes/glyph_filter_not_self.json
 d6018cc9b1e7162e30472c8eaaf45437cc5f3959 data/ars_trinkets/recipes/glyph_filter_self.json
 d46e34969f1e4745e8b5786b4308f6f731bc5060 data/ars_trinkets/recipes/glyph_mana_bomb.json
+de29b76a87cb9d85f8916042d62247cfc0bc69d5 data/ars_trinkets/recipes/glyph_missile.json
+0ef417a2bcd8df4376f553e76ac90554a8ef6dde data/ars_trinkets/recipes/glyph_overhead.json
+ca0fdf3c31638360d65a33e4b0b2500b5c4eb6b7 data/ars_trinkets/recipes/glyph_propagate_missile.json
+e978d7cadeeeb00922b529a889044c088afd324d data/ars_trinkets/recipes/glyph_propagate_overhead.json
 083348ccab012e5753a2b1b23c35d6d1a06c155e data/ars_trinkets/recipes/glyph_sacrifice.json
 5781416906d88ceb5c7ffbd2f9427e6a630a3a12 data/ars_trinkets/recipes/glyph_shadow_veil.json
 1ccb8d7965a7590458893f3b4b3254695858fd7a data/ars_trinkets/recipes/glyph_sound_boom.json

@@ -39,8 +39,8 @@ public class SacrificeExperience extends AbstractEffect implements IDamageEffect
         Entity entity = rayTraceResult.getEntity();
         if (world instanceof ServerLevel level && entity instanceof LivingEntity living && shooter instanceof Player player) {
 
-            int range = (int) (1.5 * spellStats.getAoeMultiplier());
-            long exp = (long) (5*Math.log((long) ((0.3 * player.experienceLevel) * spellStats.getAmpMultiplier())));
+            int range = (int) (1.5 * (1+spellStats.getAoeMultiplier()));
+            long exp = (long) (5*Math.log((long) ((0.3 * player.experienceLevel) * (1+spellStats.getAmpMultiplier()))));
             player.giveExperiencePoints(-(int) exp);
             damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier())*exp;
 

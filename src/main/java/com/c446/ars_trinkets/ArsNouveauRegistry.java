@@ -4,6 +4,7 @@ import com.c446.ars_trinkets.glyphs.forms.FormMissile;
 import com.c446.ars_trinkets.glyphs.forms.FormOverhead;
 import com.c446.ars_trinkets.glyphs.propagators.*;
 import com.c446.ars_trinkets.glyphs.effect_glyph.*;
+import com.c446.ars_trinkets.item.SoulsInspector;
 import com.hollingsworth.arsnouveau.api.registry.GlyphRegistry;
 import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
@@ -32,6 +33,7 @@ public class ArsNouveauRegistry {
         register(FormOverhead.INSTANCE);
         register(PropagateOverhead.INSTANCE);
         register(PropagateMissile.INSTANCE);
+        register(InspectSoul.INSTANCE);
 //            register(PropagateProjectile.INSTANCE);
 //            register(PropagateUnderfoot.INSTANCE);
 //            register(PropagateSelf.INSTANCE);

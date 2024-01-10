@@ -26,7 +26,6 @@ apply plugin: 'maven-publish'
 
 version = "${mc_version}-${mod_version}"
 
-version = "1.20.1-2.0"
 group = 'com.c446.ars_trinkets' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = project.mod_id
 

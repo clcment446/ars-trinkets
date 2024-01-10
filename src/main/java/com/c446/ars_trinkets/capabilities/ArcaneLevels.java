@@ -173,20 +173,11 @@ public class ArcaneLevels implements IArcaneLevels {
             k /= 3.0;
             System.out.println("SRF = " + k);
             if (k > x) {
+                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.whispers"), false);
                 if (a.profane) {
-                    try {
-                        TimeUnit.SECONDS.sleep(2L);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
                     a.nextRank();
                     player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_dsc_" + a.getPlayerArcaneLevel()), false);
                 } else {
-                    try {
-                        TimeUnit.SECONDS.sleep(2L);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
                     a.nextRank();
                     player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_asc_" + a.getPlayerArcaneLevel()), false);
                 }
@@ -219,9 +210,10 @@ public class ArcaneLevels implements IArcaneLevels {
             }
             playerMain(player);
             System.out.println("Soul Essence Updated");
-        }
-        else {
-            player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.finished"),true);
+        } else {
+            if (!slain) {
+                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.finished"), true);
+            }
         }
     }
 

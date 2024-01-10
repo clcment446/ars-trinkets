@@ -1,11 +1,26 @@
 {
   "type": "ars_nouveau:glyph",
   "count": 1,
-  "exp": 0,
+  "exp": 160,
   "inputItems": [
     {
       "item": {
-        "item": "arsomega:enchanted_diamond_block"
+        "item": "minecraft:diamond"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:diamond"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:netherite_ingot"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:netherite_ingot"
       }
     },
     {
