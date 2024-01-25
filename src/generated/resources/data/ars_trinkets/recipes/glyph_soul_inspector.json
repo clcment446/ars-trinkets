@@ -1,0 +1,38 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 27,
+  "inputItems": [
+    {
+      "item": {
+        "item": "minecraft:nether_star"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:wither_skeleton_skull"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:skeleton_skull"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:dragon_head"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:zombie_head"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:mana_core_1"
+      }
+    }
+  ],
+  "output": "ars_trinkets:glyph_soul_inspector"
+}

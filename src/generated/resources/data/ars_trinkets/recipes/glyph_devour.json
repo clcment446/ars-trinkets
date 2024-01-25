@@ -1,0 +1,38 @@
+{
+  "type": "ars_nouveau:glyph",
+  "count": 1,
+  "exp": 160,
+  "inputItems": [
+    {
+      "item": {
+        "item": "minecraft:nether_star"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:nether_star"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:nether_star"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:rotten_flesh"
+      }
+    },
+    {
+      "item": {
+        "item": "minecraft:rotten_flesh"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:glyph_sacrifice"
+      }
+    }
+  ],
+  "output": "ars_trinkets:glyph_devour"
+}

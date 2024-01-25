@@ -51,8 +51,8 @@ public class InspectSoul extends AbstractEffect {
                                 player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.whispers.forbidden"), false);
                             } else {
                                 title = a.getPlayerTitle();
-                                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.whispers.lookat"), false);
-                                player.displayClientMessage(title, false);
+                                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.whispers.lookat").append(""+a.getCores()+ " ").append(Component.translatable("text.ars_trinkets.souls.cored")).append(title ), false);
+
                             }
                         }
                 );

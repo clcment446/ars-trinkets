@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 import java.util.Set;
 
 import static alexthw.ars_elemental.ArsNouveauRegistry.NECROMANCY;
@@ -64,7 +65,7 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
                 mana = (int) a.getCurrentMana()/280;
                 a.setMana(0);
             });
-            damage = (float) (mana);
+            damage = (float) ((float) mana/2.0+Math.log(mana));
             for (Entity e : world.getEntities(shooter, new AABB(
                     living.position().add(range, range, range), living.position().subtract(range, range, range)))) {
                 if (e.equals(living) || e.equals(shooter) ||!(e instanceof LivingEntity)) {
@@ -108,5 +109,10 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
         return this.setOf(NECROMANCY);
+    }
+    @Override
+    public void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
+        defaults.put(AugmentAmplify.INSTANCE.getRegistryName(),4);
+        defaults.put(AugmentAOE.INSTANCE.getRegistryName(),4);
     }
 }

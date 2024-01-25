@@ -141,8 +141,7 @@ dependencies {
 
     minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
     //minecraft "net.neoforged:forge:${mc_version}-${forge_version}"
-
-    implementation fg.deobf("com.hollingsworth.ars_nouveau:ars_nouveau-${mc_version}:${ars_version}")
+    implementation fg.deobf("curse.maven:ars-nouveau-401955:4982441")
     implementation fg.deobf("software.bernie.geckolib:geckolib-forge-${mc_version}:${gecko_version}")
     implementation fg.deobf("curse.maven:ars-elemental-561470:4981256")
 

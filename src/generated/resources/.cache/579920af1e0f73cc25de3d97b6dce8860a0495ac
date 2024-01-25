@@ -1,4 +1,4 @@
-// 1.20.1	2024-01-10T13:51:38.779709	Example Apparatus
+// 1.20.1	2024-01-20T16:15:42.7540561	Example Apparatus
 de42ed8b25116aea6eaf3a82821617eb0fb5e811 data/ars_trinkets/recipes/essence_lotus_10.json
 6e09442fa82a5bbbe6c4ace19eb7ad6ab288073b data/ars_trinkets/recipes/essence_lotus_3.json
 f0b6e0fe1f8529394d73fcf09d1c03720eeb3588 data/ars_trinkets/recipes/essence_lotus_4.json
@@ -7,6 +7,14 @@ f0b6e0fe1f8529394d73fcf09d1c03720eeb3588 data/ars_trinkets/recipes/essence_lotus
 1405b4edb76a0dfcbd4cc169d0843943b9181826 data/ars_trinkets/recipes/essence_lotus_7.json
 0ae29e3f8ad8a3d2e147eed82901c43ce7a78a11 data/ars_trinkets/recipes/essence_lotus_8.json
 f8f584182931a48a46a0e1d3ff0ade47b7c1dac9 data/ars_trinkets/recipes/essence_lotus_9.json
+de206c1ca8374585e90c9de16b521204a136230a data/ars_trinkets/recipes/mana_core_1.json
+5e8008fe4bb2b00543ab74994918e7e1e003f7ff data/ars_trinkets/recipes/mana_core_2.json
+d1dc58c0ec55f6d1c0a9d36d032547ccb7f6e5d9 data/ars_trinkets/recipes/mana_core_3.json
+eb8e2bbaa20daa315b1da15a2ba3ed4db656bb13 data/ars_trinkets/recipes/mana_core_4.json
+0e254180c941478bea3e6d6bdb32168dc4f5eb2b data/ars_trinkets/recipes/mana_core_5.json
+50adcc54470dcf42450412b99a9f36ad215e8e6f data/ars_trinkets/recipes/mana_core_6.json
+26f6eeb58f4053262ac63fc10e73355b0518bd4b data/ars_trinkets/recipes/mana_core_7.json
+2465c921949df4a00115d7d99e2990ba27221730 data/ars_trinkets/recipes/mana_core_8.json
 36d11480f6c52cb8402b50db0f6aadaf1d0e0429 data/ars_trinkets/recipes/mana_stone_10.json
 84cf61e5e93cbe020cbd03aeffb325c011c2d6c9 data/ars_trinkets/recipes/mana_stone_3.json
 c7550c98b9361154e353fbf2e88a14587d0569e0 data/ars_trinkets/recipes/mana_stone_4.json

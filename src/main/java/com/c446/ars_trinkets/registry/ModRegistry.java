@@ -2,10 +2,12 @@ package com.c446.ars_trinkets.registry;
 
 import com.c446.ars_trinkets.ArsTrinkets;
 import com.c446.ars_trinkets.entities.EntityMissileSpell;
+import com.c446.ars_trinkets.entities.effects.AuraEffect;
 import com.c446.ars_trinkets.item.*;
 import com.hollingsworth.arsnouveau.api.sound.SpellSound;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.item.Item;
@@ -23,7 +25,9 @@ public class ModRegistry {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ArsTrinkets.MOD_ID);
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ArsTrinkets.MOD_ID);
 
+    public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ArsTrinkets.MOD_ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ArsTrinkets.MOD_ID);
+
 
 
     public static void registerRegistries(IEventBus bus) {
@@ -31,8 +35,8 @@ public class ModRegistry {
         ITEMS.register(bus);
         SOUNDS.register(bus);
         ENTITIES.register(bus);
+        EFFECTS.register(bus);
     }
-
     //    public static final RegistryObject<Item> EXAMPLE;
     public static final RegistryObject<Item> ESSENCE_LOTUS_3;
     public static final RegistryObject<Item> ESSENCE_LOTUS_4;
@@ -60,6 +64,15 @@ public class ModRegistry {
     public static final RegistryObject<Item> MONOCLE_8;
     public static final RegistryObject<Item> MONOCLE_9;
     public static final RegistryObject<Item> MONOCLE_10;
+    public static final RegistryObject<Item> MANA_CORE_1;
+    public static final RegistryObject<Item> MANA_CORE_2;
+    public static final RegistryObject<Item> MANA_CORE_3;
+    public static final RegistryObject<Item> MANA_CORE_4;
+    public static final RegistryObject<Item> MANA_CORE_5;
+    public static final RegistryObject<Item> MANA_CORE_6;
+    public static final RegistryObject<Item> MANA_CORE_7;
+    public static final RegistryObject<Item> MANA_CORE_8;
+
     public static final RegistryObject<Item> COPPER_ESSENCE;
     public static final RegistryObject<Item> IRON_ESSENCE;
     public static final RegistryObject<Item> SILVER_ESSENCE;
@@ -71,11 +84,11 @@ public class ModRegistry {
     public static final RegistryObject<Item> YELLOW_ESSENCE;
     public static final RegistryObject<Item> PURPLE_ESSENCE;
     public static final RegistryObject<EntityType<? extends EntityMissileSpell>> ENTITY_MISSILE = ENTITIES.register("missile_spell_proj", () -> EntityType.Builder.<EntityMissileSpell>of(EntityMissileSpell::new, MobCategory.MISC).sized(0.9F, 3.0F).build(new ResourceLocation(ArsTrinkets.MOD_ID, "missile_spell_proj").toString()));
-
-
     public static ResourceLocation getGlyphName(String name) {
         return new ResourceLocation(ArsTrinkets.MOD_ID, ("glyph_"+name));
     }
+
+    public static final RegistryObject<MobEffect> AURA_EFFECT = EFFECTS.register("glyph_aura", AuraEffect::new);
 
     public static SpellSound EXAMPLE_SPELL_SOUND;
 
@@ -109,6 +122,15 @@ public class ModRegistry {
         MONOCLE_8 = ITEMS.register("monocle_8", () -> new MagicItems(new Item.Properties().rarity(Rarity.RARE).stacksTo(1), 400, 40, 0, 30));
         MONOCLE_9 = ITEMS.register("monocle_9", () -> new MagicItems(new Item.Properties().rarity(Rarity.RARE).stacksTo(1), 500, 50, 0, 40));
         MONOCLE_10 = ITEMS.register("monocle_10", () -> new MagicItems(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), 1000, 100, 0, 80));
+
+        MANA_CORE_1 = ITEMS.register("mana_core_1", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,1));
+        MANA_CORE_2 = ITEMS.register("mana_core_2", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,2));
+        MANA_CORE_3 = ITEMS.register("mana_core_3", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,3));
+        MANA_CORE_4 = ITEMS.register("mana_core_4", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,4));
+        MANA_CORE_5 = ITEMS.register("mana_core_5", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,5));
+        MANA_CORE_6 = ITEMS.register("mana_core_6", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,6));
+        MANA_CORE_7 = ITEMS.register("mana_core_7", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,7));
+        MANA_CORE_8 = ITEMS.register("mana_core_8", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,8));
 
         COPPER_ESSENCE = ITEMS.register("copper_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)));
         IRON_ESSENCE = ITEMS.register("iron_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)));

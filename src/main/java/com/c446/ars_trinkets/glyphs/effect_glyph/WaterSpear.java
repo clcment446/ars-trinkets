@@ -2,13 +2,18 @@ package com.c446.ars_trinkets.glyphs.effect_glyph;
 
 import com.c446.ars_trinkets.ArsTrinkets;
 import com.hollingsworth.arsnouveau.api.spell.*;
+import com.hollingsworth.arsnouveau.api.util.DamageUtil;
+import com.hollingsworth.arsnouveau.common.datagen.DamageTypesProvider;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 
+import com.hollingsworth.arsnouveau.setup.registry.DamageTypesRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -20,6 +25,7 @@ import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
@@ -68,7 +74,7 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
             DAMAGE *= damageBonusTimes;
 
             level.sendParticles(ParticleTypes.SPLASH,vecTar.x, vecTar.y, vecTar.z,20,0,0,0,1);
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, buildDamageSource(world,shooter), (float) (DAMAGE));
+            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageUtil.source(level, DamageTypes.MAGIC,shooter), (float) (DAMAGE));
             living.invulnerableTime = 3;
         }
         com.hollingsworth.arsnouveau.api.util.DamageUtil.source((LevelAccessor) world, DamageTypes.DROWN);
@@ -94,5 +100,11 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
         super.buildConfig(builder);
         addDamageConfig(builder, 10.0);
         addAmpConfig(builder, 2.0);
+    }
+
+    @Override
+    public void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
+        defaults.put(AugmentAmplify.INSTANCE.getRegistryName(),4);
+        defaults.put(AugmentAOE.INSTANCE.getRegistryName(),4);
     }
 }

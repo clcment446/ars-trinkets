@@ -1,0 +1,39 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "output": {
+    "item": "ars_trinkets:mana_core_2"
+  },
+  "pedestalItems": [
+    {
+      "item": "ars_trinkets:purple_essence"
+    },
+    {
+      "item": "ars_trinkets:purple_essence"
+    },
+    {
+      "item": "ars_trinkets:purple_essence"
+    },
+    {
+      "item": "ars_trinkets:purple_essence"
+    },
+    {
+      "item": "ars_trinkets:purple_essence"
+    },
+    {
+      "item": "ars_trinkets:purple_essence"
+    },
+    {
+      "item": "ars_trinkets:purple_essence"
+    },
+    {
+      "item": "ars_trinkets:purple_essence"
+    }
+  ],
+  "reagent": [
+    {
+      "item": "ars_trinkets:mana_core_1"
+    }
+  ],
+  "sourceCost": 0
+}

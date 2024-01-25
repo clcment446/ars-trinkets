@@ -8,14 +8,22 @@ import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvi
 import com.c446.ars_trinkets.commands.CommandResetArcaneProgression;
 import com.c446.ars_trinkets.commands.SetArcaneProgression;
 import com.hollingsworth.arsnouveau.api.event.*;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.c446.ars_trinkets.capabilities.CapabilityRegistry.getArcaneLevels;
 
@@ -26,6 +34,7 @@ public class ModEvents {
         CommandResetArcaneProgression.register(event.getDispatcher());
         SetArcaneProgression.register(event.getDispatcher());
     }
+
     @SubscribeEvent
     public static void attachCapabilities(final AttachCapabilitiesEvent<Entity> event) {
 //        System.out.println("attach Cap Entity triggered");
@@ -58,98 +67,121 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void MaxManaCalcEvent(MaxManaCalcEvent event) {
-        if (!Config.IS_LEVELING_ENABLED.get()){
+        if (!Config.IS_LEVELING_ENABLED.get()) {
             return;
         }
         if (event.getEntity() instanceof Player player && player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).isPresent()) {
             player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(
-                    arcaneLevels -> event.setMax(event.getMax() + arcaneLevels.getPlayerManaBonus()));
-
+                    a -> {
+//                        if (a.getProfane()) {
+//                            if (a.getLastFed() > a.getFeedingTime()) {
+//                                event.setMax(event.getMax() + a.getPlayerManaBonus()/5);
+//                            } else {
+//                                event.setMax(event.getMax() + a.getPlayerManaBonus());
+//                            }
+////                            System.out.println("MANA ALTERED : irregular");
+//                        } else {
+                            event.setMax(event.getMax() + a.getPlayerManaBonus());
+//                            System.out.println("MANA ALTERED : regular");
+//                        }
+                    });
 //            System.out.println("max mana altered");
+//            player.displayClientMessage(Component.literal("mana regen altered"), false);
         }
     }
 
     @SubscribeEvent
     public static void ManaRegenCalcEvent(ManaRegenCalcEvent event) {
-        if (!Config.IS_LEVELING_ENABLED.get()){
+        if (!Config.IS_LEVELING_ENABLED.get()) {
             return;
         }
         if (event.getEntity() instanceof Player player && player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).isPresent()) {
             player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(
-                    a -> event.setRegen(event.getRegen() + a.getPlayerRegenBonus()));
+                    a -> {
+//                        if (a.getProfane()) {
+//                            if (a.getLastFed() > a.getFeedingTime()) {
+//                                event.setRegen(event.getRegen() + a.getPlayerRegenBonus()/5);
+//                            } else {
+//                                event.setRegen(event.getRegen() + a.getPlayerRegenBonus());
+//                            }
+////                            System.out.println("MANA REGEN ALTERED : irregular");
+//                        } else {
+                            event.setRegen(event.getRegen() + a.getPlayerRegenBonus());
+//                            System.out.println("MANA REGEN ALTERED : regular");
+//                        }
+                    });
 //            System.out.println("mana regen altered");
+//            player.displayClientMessage(Component.literal("mana regen altered"), false);
         }
     }
 
     @SubscribeEvent
-    public static void SpellDamageApplied(SpellDamageEvent event){
-        if (!Config.IS_LEVELING_ENABLED.get()){
+    public static void SpellDamageApplied(SpellDamageEvent event) {
+        if (!Config.IS_LEVELING_ENABLED.get()) {
             return;
         }
-        event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a->event.damage *= Math.pow(1.8,a.getPlayerArcaneLevel()/1.3));
+        event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {event.damage *= Math.pow(1.7, a.getPlayerArcaneLevel() / 2);
+
+        });
+        Player p = (Player) event.caster;
+//        p.displayClientMessage(Component.literal("spell damage applied"), false);
     }
+
     @SubscribeEvent
     public static void PlayerKillRefineSoul(net.minecraftforge.event.entity.living.LivingDeathEvent deathEvent) {
-        if (!Config.IS_LEVELING_ENABLED.get()){
+        if (!Config.IS_LEVELING_ENABLED.get()) {
+
             return;
         }
         if (deathEvent.getSource().getEntity() instanceof Player player) {
-            player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> a.updateSoulEssence((int) (deathEvent.getEntity().getMaxHealth() / 2), true, player));
+            player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+                a.updateSoulEssence((int) (deathEvent.getEntity().getMaxHealth() / 2), true, player);
+                a.updatePlayerCores(player);
+            });
 //            System.out.println(player.getName() + " killed " + deathEvent.getEntity().getName() + " for " + (int) deathEvent.getEntity().getMaxHealth() / 10);
+//            player.displayClientMessage(Component.literal("kill event"), false);
         }
     }
-    @SubscribeEvent
-    public static void onPlayerReceiveDamage(net.minecraftforge.event.entity.living.LivingDamageEvent event){
-        event.getEntity().getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> event.setAmount((float) (event.getAmount()/Math.pow(1.9,a.getPlayerArcaneLevel()/1.2))));
 
+    @SubscribeEvent
+    public static void onPlayerReceiveDamage(net.minecraftforge.event.entity.living.LivingDamageEvent event) {
+        event.getEntity().getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+            event.setAmount((float) (event.getAmount() / Math.pow(1.9, a.getPlayerArcaneLevel() / 1.2)));
+            if (a.getProfane()) {
+                event.setAmount((float) (event.getAmount() * 1.5));
+            }
+        });
     }
 
+    @SubscribeEvent
+    public static void expPickupEvent(PlayerXpEvent.PickupXp event) {
+        event.getEntity().getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+            if (a.getProfane()) {
+                event.getOrb().value = event.getOrb().value / 2;
+            }
+        });
+    }
 
-
-
-
-
-
-    /*
-     * Algorithm description
-     * Check if side is server
-     * Get player capability
-     * If MANA CAPABILITY is available then set current mana as max mana
-     * Then
-     * If MANA STONE available, if STONE SUB LEGAL then substract.
-     */
 //    @SubscribeEvent
-//    public static void onTickPasses(TickEvent.PlayerTickEvent event) {
-//        if (event.side == LogicalSide.SERVER) {
-//            if (event.player.getCapability(CapabilityRegistry.MANA_CAPABILITY).isPresent() && event.player.getCapability(ManaStoneProvider.PLAYER_MANA).isPresent()) {
-//                event.player.getCapability(ManaStoneProvider.PLAYER_MANA).ifPresent(manaStone -> event.player.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(playerMana -> {
-//                    int missingMana = (int) (playerMana.getMaxMana() - playerMana.getCurrentMana());
-//                    if (missingMana > 0) {
-//                        if (ManaStone.isSubLegal(missingMana, manaStone.getCrystalMana())) {
-//                            manaStone.subCrystalMana(missingMana);
-//                            playerMana.addMana(missingMana);
-//                        }
-//                    }
-//                }));
+//    public static void tickEntity(TickEvent.PlayerTickEvent event) {
+//        event.player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+//            if (a.getProfane()) {
+//                Player player = event.player;
+//                if (a.getLastFed() > a.getFeedingTime() / 2) {
+//                    player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.hunger1"), true);
+//                    a.warned1 = true;
+//                } else if (a.getLastFed() > a.getFeedingTime()) {
+//                    a.warned2 = true;
+//                    player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.hunger2"), true);
+//                    player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 5, 3));
+//                    player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 5, 3));
+//                    player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 5, 1));
+//                    player.addEffect(new MobEffectInstance(MobEffects.WITHER, 5, 1));
+//                    player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN,5,1));
+//                                    System.out.println("PLAYER FAMISHED !");
+//                }
+//                a.setLastFed(a.getLastFed() + 1);
 //            }
-//        }
-//    }
-
-    /*
-     * Algorithm description;
-     * Check if the offhand item is included in the essence list
-     * Get player capability
-     * If 'ManaStoneProvider' is present, attempt to add the item's worth of mana into the player's reserve.
-     */
-//    public static void essenceIsConsumed(Player pPlayer) {
-//        if (EssenceItem.getManaValue(pPlayer.getItemBySlot(EquipmentSlot.OFFHAND).getItem()) != 0) {
-//            pPlayer.getCapability(ManaStoneProvider.PLAYER_MANA).ifPresent(manaStone -> {
-//                int count = pPlayer.getItemBySlot(EquipmentSlot.OFFHAND).getCount();
-//                int k = EssenceItem.getManaValue(pPlayer.getItemBySlot(EquipmentSlot.OFFHAND).getItem()) * count;
-//                pPlayer.getInventory().removeItem(Inventory.SLOT_OFFHAND, count);
-//                manaStone.addCrystalMana(k);
-////                pPlayer.displayClientMessage(net.minecraft.network.chat.Component.);
-//            });
-//        }
+//        });
 //    }
 }

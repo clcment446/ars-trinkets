@@ -1,5 +1,6 @@
 package com.c446.ars_trinkets;
 
+import com.c446.ars_trinkets.glyphs.forms.AuraForm;
 import com.c446.ars_trinkets.glyphs.forms.FormMissile;
 import com.c446.ars_trinkets.glyphs.forms.FormOverhead;
 import com.c446.ars_trinkets.glyphs.propagators.*;
@@ -28,12 +29,16 @@ public class ArsNouveauRegistry {
         register(FilterIsSelf.INSTANCE);
         register(FilterIsNotSelf.INSTANCE);
         register(ManaBomb.INSTANCE);
+        register(InspectSoul.INSTANCE);
+        register(Devour.INSTANCE);
+        register(DevourSoul.INSTANCE);
+
         // register omega glyphs
         register(FormMissile.INSTANCE);
         register(FormOverhead.INSTANCE);
         register(PropagateOverhead.INSTANCE);
         register(PropagateMissile.INSTANCE);
-        register(InspectSoul.INSTANCE);
+        register(AuraForm.INSTANCE);
 //            register(PropagateProjectile.INSTANCE);
 //            register(PropagateUnderfoot.INSTANCE);
 //            register(PropagateSelf.INSTANCE);

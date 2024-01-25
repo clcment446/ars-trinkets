@@ -1,4 +1,4 @@
-// 1.20.1	2024-01-07T17:40:54.8642028	Example Imbuement
+// 1.20.1	2024-01-21T14:27:25.7882158	Example Imbuement
 37d24456c3447f01ca39f0886d89d329a3a6d31a data/ars_trinkets/recipes/imbuement_essence_copper.json
 6381ca9e116b7e5f4c00d188626e322747a0d86d data/ars_trinkets/recipes/imbuement_essence_crystal.json
 ba37f448e817767c9b71c3dcd6dc8fdb8e53028e data/ars_trinkets/recipes/imbuement_essence_gold.json
@@ -9,3 +9,4 @@ f462d403dc505a060233905e96652b48cdab2951 data/ars_trinkets/recipes/imbuement_ess
 6d776b770f6d6b10f8dbf1bae52ff93974ad0b26 data/ars_trinkets/recipes/imbuement_essence_silver.json
 0bdb9655ee21d0d3ea06dcd4061500cede8e1e80 data/ars_trinkets/recipes/imbuement_essence_white.json
 924f9e406efa75c9d51761367aa3e1456404e839 data/ars_trinkets/recipes/imbuement_essence_yellow.json
+05b50bf4371aaa853d68391322a9c4da76b411a7 data/ars_trinkets/recipes/imbuement_gold_to_copper.json

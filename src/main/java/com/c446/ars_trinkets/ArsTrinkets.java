@@ -2,6 +2,7 @@ package com.c446.ars_trinkets;
 
 import com.c446.ars_trinkets.event.ModEvents;
 import com.c446.ars_trinkets.registry.ModRegistry;
+import com.c446.ars_trinkets.util.SetInterval;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
@@ -71,6 +72,9 @@ public class ArsTrinkets {
     @SubscribeEvent
     public void doCapabilities(RegisterCapabilitiesEvent event){
 
+    }
+    public static void setInterval(Runnable method, int tickInterval, int timeToLive){
+        MinecraftForge.EVENT_BUS.register(new SetInterval(method, tickInterval, timeToLive));
     }
 }
 
