@@ -120,6 +120,7 @@ public class Util {
                     , 100, 0, 0, 0, 1);
         }
     }
+
     public static void CreateParticleBeam(Vec3 start, Vec3 end, ServerLevel level, SimpleParticleType particle, double increment, int count) {
         /**
          * Creates a beam of particles between two points.
@@ -142,10 +143,12 @@ public class Util {
                     , count, 0, 0, 0, 1);
         }
     }
+
     public static long randomLongFromRange(int lower, int upper) {
         return (lower + (long) (Math.random() * (upper - lower)));
     }
-    public static ArrayList<Item> getAllEssences(){
+
+    public static ArrayList<Item> getAllEssences() {
         ArrayList<Item> ESSENCE_LIST = new ArrayList<Item>();
 
         System.out.println("Essence List created");
@@ -161,7 +164,8 @@ public class Util {
 
         return ESSENCE_LIST;
     }
-    public static HashMap<Item, Integer> getAllEssencesValues(){
+
+    public static HashMap<Item, Integer> getAllEssencesValues() {
         HashMap<Item, Integer> ESSENCE_VALUE = new HashMap<Item, Integer>();
 
         System.out.println("Essence Values created");
@@ -180,7 +184,7 @@ public class Util {
         return ESSENCE_VALUE;
     }
 
-    public static HashMap<Integer, Integer> getAllRefinementStages(){
+    public static HashMap<Integer, Integer> getAllRefinementStages() {
         HashMap<Integer, Integer> refinement = new HashMap<Integer, Integer>();
 //        refinement.put(0,450);
         refinement.put(0, 770);
@@ -190,7 +194,9 @@ public class Util {
         refinement.put(4, 273_912);
         refinement.put(5, 770_077);
         refinement.put(6, 1_497_450);
-        refinement.put(7,10_482_150);
+        refinement.put(7, 2_994_900);
+        refinement.put(8, 5_989_800);
+        refinement.put(9, 17_969_400);
         return refinement;
     }
 

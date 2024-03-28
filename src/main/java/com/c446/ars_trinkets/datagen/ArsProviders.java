@@ -99,14 +99,14 @@ public class ArsProviders {
             recipes.add(get(SacrificeHealth.INSTANCE).withItem(Items.DIAMOND_SWORD).withItem(RED_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
             recipes.add(get(SacrificeExperience.INSTANCE).withItem(DIAMOND_BLOCK).withItem(WHITE_ESSENCE.get(), 3).withItem(ENCHANTED_BOOK, 3).withItem(EXPERIENCE_BOTTLE, 2));
             recipes.add(get(ShadowVeil.INSTANCE).withItem(NETHERITE_INGOT).withItem(WHITE_ESSENCE.get(), 4).withItem(SCULK, 2));
-            recipes.add(get(SonicBoom.INSTANCE).withItem(DIAMOND_BLOCK).withItem(ItemsRegistry.AIR_ESSENCE, 4).withItem(SCULK, 2).withItem(PURPLE_ESSENCE.get(), 4).withItem(TNT, 5));
-            recipes.add(get(SunFlare.INSTANCE).withItem(DIAMOND, 2).withItem(NETHERITE_INGOT, 2).withItem(ItemsRegistry.FIRE_ESSENCE, 4).withItem(GLOWSTONE.asItem(), 2).withItem(PURPLE_ESSENCE.get(), 4));
+            recipes.add(get(SonicBoom.INSTANCE).withItem(DIAMOND_BLOCK).withItem(ItemsRegistry.AIR_ESSENCE, 2).withItem(SCULK, 1).withItem(PURPLE_ESSENCE.get(), 2).withItem(TNT, 2));
+            recipes.add(get(SunFlare.INSTANCE).withItem(NETHERITE_INGOT, 2).withItem(ItemsRegistry.FIRE_ESSENCE).withItem(GLOWSTONE.asItem()).withItem(PURPLE_ESSENCE.get(), 4));
             recipes.add(get(FilterIsNotSelf.INSTANCE).withItem(FilterIsSelf.INSTANCE.glyphItem.asItem()).withItem(ItemsRegistry.MANIPULATION_ESSENCE, 4));
             recipes.add(get(FilterIsSelf.INSTANCE).withItem(GOLDEN_CARROT).withItem(ItemsRegistry.MANIPULATION_ESSENCE, 4));
             recipes.add(get(ManaBomb.INSTANCE).withItem(ItemsRegistry.CONJURATION_ESSENCE, 3).withItem(ItemsRegistry.MANIPULATION_ESSENCE, 2).withItem(PURPLE_ESSENCE.get(), 3));
             recipes.add(get(Devour.INSTANCE).withItem(NETHER_STAR, 3).withItem(ROTTEN_FLESH, 2).withItem(SacrificeHealth.INSTANCE.glyphItem.asItem()));
             recipes.add(get(DevourSoul.INSTANCE).withItem(NETHER_STAR, 3).withItem(WITHER_SKELETON_SKULL, 2).withItem(SacrificeExperience.INSTANCE.glyphItem.asItem()));
-            recipes.add(get(InspectSoul.INSTANCE).withItem(NETHER_STAR).withItem(WITHER_SKELETON_SKULL,1).withItem(SKELETON_SKULL,1).withItem(DRAGON_HEAD,1).withItem(ZOMBIE_HEAD,1).withItem(MANA_CORE_1));
+            recipes.add(get(InspectSoul.INSTANCE).withItem(NETHER_STAR).withItem(WITHER_SKELETON_SKULL, 1).withItem(SKELETON_SKULL, 1).withItem(DRAGON_HEAD, 1).withItem(ZOMBIE_HEAD, 1).withItem(MANA_CORE_1));
 
             recipes.add(get(FormMissile.INSTANCE).withItem(FIRE_CHARGE).withItem(ItemsRegistry.FIRE_ESSENCE, 2).withItem(ItemsRegistry.AIR_ESSENCE).withItem(GUNPOWDER, 2).withItem(ARROW));
             recipes.add(get(FormOverhead.INSTANCE).withItem(IRON_HELMET).withItem(STONE_PRESSURE_PLATE));
@@ -405,21 +405,110 @@ public class ArsProviders {
                     .withResult(MANA_CONDENSOR_10)
                     .build()
             );
-//            recipes.add(builder()
-//                    .withSourceCost(20000)
-//                    .withPedestalItem(4, PURPLE_ESSENCE.get())
-//                    .withPedestalItem(BlockRegistry.SOURCE_JAR.asItem())
-//                    .withReagent(RegistryHandler.ARCANE_APPLE_ITEM.get())
-//                    .withResult(BlockRegistry.CREATIVE_SOURCE_JAR.asItem())
-//                    .build()
-//            );
-//            recipes.add(builder()
-//                            .withSourceCost(100)
-//                            .withPedestalItem(4,)
-//
-//
-//                    .build()
-//            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_6)
+                    .withPedestalItem(2, PURPLE_ESSENCE)
+                    .withPedestalItem(SacrificeHealth.INSTANCE.glyphItem)
+                    .withPedestalItem(ENCHANTED_GOLDEN_APPLE)
+                    .withResult(HOLY_RUNE_LESSER)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_6)
+                    .withPedestalItem(2, PURPLE_ESSENCE)
+                    .withPedestalItem(InspectSoul.INSTANCE.glyphItem)
+                    .withPedestalItem(DevourSoul.INSTANCE.glyphItem)
+                    .withResult(SOUL_STEALER_RUNE_LESSER)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_6)
+                    .withPedestalItem(2, PURPLE_ESSENCE)
+                    .withPedestalItem(SunFlare.INSTANCE.glyphItem)
+                    .withPedestalItem(AirSword.INSTANCE.glyphItem)
+                    .withResult(WARRIOR_RUNE_LESSER)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_6)
+                    .withPedestalItem(2, PURPLE_ESSENCE)
+                    .withPedestalItem(SacrificeExperience.INSTANCE.glyphItem)
+                    .withPedestalItem(MONOCLE_10)
+                    .withPedestalItem(MANA_CONDENSOR_10)
+                    .withPedestalItem(ESSENCE_LOTUS_10)
+                    .withResult(MAGE_RUNE_LESSER)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_7)
+                    .withPedestalItem(4, HOLY_RUNE_LESSER)
+                    .withResult(HOLY_RUNE)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_7)
+                    .withPedestalItem(4, SOUL_STEALER_RUNE_LESSER)
+                    .withResult(SOUL_STEALER_RUNE)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_7)
+                    .withPedestalItem(4, WARRIOR_RUNE_LESSER)
+                    .withResult(WARRIOR_RUNE)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_7)
+                    .withPedestalItem(4, MAGE_RUNE_LESSER)
+                    .withResult(MAGE_RUNE)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_8)
+                    .withPedestalItem(4, HOLY_RUNE)
+                    .withResult(HOLY_RUNE_GREATER)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_8)
+                    .withPedestalItem(4, SOUL_STEALER_RUNE)
+                    .withResult(SOUL_STEALER_RUNE_GREATER)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_8)
+                    .withPedestalItem(4, WARRIOR_RUNE)
+                    .withResult(WARRIOR_RUNE_GREATER)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(10000)
+                    .withReagent(MANA_CORE_8)
+                    .withPedestalItem(4, MAGE_RUNE)
+                    .withResult(MAGE_RUNE_GREATER)
+                    .build()
+            );
+            recipes.add(builder()
+                    .withSourceCost(0)
+                            .withReagent(MANA_CORE_8)
+                            .withPedestalItem(MAGE_RUNE_GREATER)
+                            .withPedestalItem(HOLY_RUNE_GREATER)
+                            .withPedestalItem(WARRIOR_RUNE_GREATER)
+                            .withPedestalItem(SOUL_STEALER_RUNE_GREATER)
+                            .withResult(ETERNAL_RUNE)
+                    .build()
+            );
 
             Path output = this.generator.getPackOutput().getOutputFolder();
             for (EnchantingApparatusRecipe g : recipes) {
@@ -450,7 +539,7 @@ public class ArsProviders {
         public void collectJsons(CachedOutput cache) {
             System.out.println("started Imbument>collect jsons");
 
-            recipes.add(new ImbuementRecipe("gold_to_copper",Ingredient.of(GOLD_BLOCK), new ItemStack(COPPER_BLOCK),10000)
+            recipes.add(new ImbuementRecipe("gold_to_copper", Ingredient.of(GOLD_BLOCK), new ItemStack(COPPER_BLOCK), 10000)
                     .withPedestalItem(COPPER_ESSENCE)
                     .withPedestalItem(COPPER_ESSENCE)
                     .withPedestalItem(GOLD_ESSENCE)

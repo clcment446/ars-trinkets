@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import java.util.Set;
 
-import static alexthw.ars_elemental.ArsNouveauRegistry.NECROMANCY;
+
 
 public class InspectSoul extends AbstractEffect {
     public InspectSoul(ResourceLocation tag, String description) {
@@ -33,7 +33,7 @@ public class InspectSoul extends AbstractEffect {
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
-        return this.setOf(NECROMANCY);
+        return this.setOf(SpellSchools.MANIPULATION);
     }
 
 

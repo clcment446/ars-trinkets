@@ -2,12 +2,15 @@ package com.c446.ars_trinkets.capabilities;
 
 import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.util.Util;
+import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvider;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class ArcaneLevels implements IArcaneLevels {
@@ -22,19 +25,11 @@ public class ArcaneLevels implements IArcaneLevels {
     protected static final int maximum_level = 8;
     private boolean warning_2 = false;
     private boolean warning_3 = false;
-    private boolean cursed_chains = false;
     public boolean warned1 = false;
     public boolean warned2 = false;
     private int feeding_time = 600 * 20;
     private int last_feed;
-
-    public void setCursedChains(boolean bool) {
-        cursed_chains = bool;
-    }
-
-    public boolean getCursedChains() {
-        return cursed_chains;
-    }
+    private int mana_feathers = 0;
 
     public void setFed() {
         last_feed = 0;
@@ -46,6 +41,7 @@ public class ArcaneLevels implements IArcaneLevels {
         last_feed = time;
     }
 
+
     public int getLastFed() {
         return last_feed;
     }
@@ -54,9 +50,16 @@ public class ArcaneLevels implements IArcaneLevels {
         return feeding_time;
     }
 
+    private void setManaFeathers(int manaFeathers) {
+        this.mana_feathers = manaFeathers;
+    }
+
+    public int getManaFeathers() {
+        return this.mana_feathers;
+    }
+
     @Override
     public int getPlayerArcaneLevel() {
-//        System.out.println("player arcane level asked");
         return player_arcane_level;
     }
 
@@ -67,80 +70,61 @@ public class ArcaneLevels implements IArcaneLevels {
     @Override
     public void setPlayerArcaneLevel(int level) {
         this.player_arcane_level = level;
-//        System.out.println("Player arcane level modified");
     }
 
     @Override
     public int getPlayerSoulRefinement() {
-//        System.out.println("Player soul refinement asked");
         return player_soul_refinement;
     }
 
     @Override
     public void setPlayerSoulRefinement(int refinement) {
-//        System.out.println("Player soul refinement modified");
         this.player_soul_refinement = refinement;
     }
 
     @Override
     public int getPlayerCollectedSouls() {
-//        System.out.println("player collected souls asked");
         return player_collected_souls;
     }
 
     @Override
     public void setCollectedSouls(int i) {
-//        System.out.println("Collected souls modified");
         this.player_collected_souls = i;
     }
 
     @Override
     public boolean getProfane() {
-//        System.out.println("Profane Asked");
         return this.profane;
     }
 
     @Override
     public void setProfane(Boolean pr) {
-//        System.out.println("Profane Modified");
         this.profane = pr;
     }
 
     public float getCorruption() {
         if (this.last_feed / 600 * 20 > 1) {
             return 0.1F;
-        } else {return 1-this.last_feed / 600 * 20;}
+        } else {
+            return 1 - this.last_feed / 600 * 20;
+        }
     }
 
     @Override
-    public void calcProfane(Player player) {
+    public int calcProfane(Player player) {
         int severity = 0;
-        if (player_soul_refinement + 1000 - 2* player_collected_souls < 0) {
+        if (player_soul_refinement + 1000 - 2 * player_collected_souls < 0) {
             severity++;
         }
-        if (player_soul_refinement + 1000 -  player_collected_souls < 0) {
+        if (player_soul_refinement + 1000 - player_collected_souls < 0) {
             severity++;
         }
-//        System.out.println("Severity Calced");
-        switch (severity) {
-            case 0: {
-//                System.out.println("Severity 0");
-                return;
-            }
-            case 1: {
-                if (!profane) {
-//                    player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.approach_madness"), false);
-//                    System.out.println("Severity 2");
-                }
-            }
-            case 2: {
-                if (!profane) {
-                    setProfane(true);
-                    player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.madness"), false);
-//                    System.out.println("Severity 3");
-                }
-            }
-        }
+        if (severity == 2) {
+
+            if (!profane) {
+                setProfane(true);
+                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.madness"), false);}}
+        return severity;
     }
 
     @Override
@@ -148,7 +132,6 @@ public class ArcaneLevels implements IArcaneLevels {
         if (!profane) {
             return Component.translatable("text.ars_trinkets.titles.asc" + getPlayerArcaneLevel());
         }
-//        System.out.println("Title asked");
         return Component.translatable("text.ars_trinkets.titles.dsc" + getPlayerArcaneLevel());
     }
 
@@ -165,9 +148,9 @@ public class ArcaneLevels implements IArcaneLevels {
             case 6 -> x = 25000;
             case 7 -> x = 50000;
             case 8 -> x = 125000;
+            case 9 -> x = 250000;
             default -> x = 0;
         }
-//        System.out.println("MANA INTEROGATED" + player_cores * x * this.getCorruption());
         return (int) (player_cores * x * getCorruption());
     }
 
@@ -183,27 +166,22 @@ public class ArcaneLevels implements IArcaneLevels {
             case 6 -> x = 1000;
             case 7 -> x = 2000;
             case 8 -> x = 5000;
+            case 9 -> x = 7500;
             default -> x = 0;
         }
-//        System.out.println("Mana Regen bonus interrogated" + x * player_cores * getCorruption());
-        return (int) (x * player_cores * getCorruption());
+        return (int) (x * player_cores * getCorruption() * (1 + mana_feathers / 100));
     }
 
     @Override
     public int checkRefinement(Player player) {
-//        System.out.println("CheckRefinement triggered");
         float x = (float) player_soul_refinement / Util.getAllRefinementStages().get(this.getPlayerArcaneLevel());
         if (x < 0.5) {
-//            System.out.println("case 1");
             return 1;
         } else if (x > 0.5 && x < 0.75) {
-//            System.out.println("case 2");
             return 2;
         } else if (x > 0.75 && x < 0.99) {
-//            System.out.println("case 3");
             return 3;
         } else if (x > 0.99) {
-//            System.out.println("case 4");
             return 4;
         }
         return 0;
@@ -213,13 +191,15 @@ public class ArcaneLevels implements IArcaneLevels {
         player_arcane_level++;
     }
 
-    public void nextCore(Player player) {
+    public boolean nextCore(Player player) {
 
-        if (!(player_cores >=Config.MAX_PLAYER_CORE.get())) {
+        if (!(player_cores >= Config.MAX_PLAYER_CORE.get())) {
             player_cores++;
             player.displayClientMessage(Component.translatable("text.ars_trinkets.new_soul_core"), false);
+            return true;
         } else {
             player.displayClientMessage(Component.translatable("text.ars_trinkets.max_soul_core"), false);
+            return false;
         }
     }
 
@@ -237,13 +217,14 @@ public class ArcaneLevels implements IArcaneLevels {
             k /= 3.0;
 //            System.out.println("SRF = " + k);
             if (k > x) {
-                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.whispers"), false);
+//                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.whispers"), false);
                 if (a.profane) {
                     a.nextRank();
-                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_dsc_" + a.getPlayerArcaneLevel()), false);
+                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_" + a.getPlayerArcaneLevel()).append(a.getPlayerTitle()), false);
                 } else {
                     a.nextRank();
-                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_asc_" + a.getPlayerArcaneLevel()), false);
+
+                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_" + a.getPlayerArcaneLevel()).append(a.getPlayerTitle()), false);
                 }
             } else {
                 player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.shatter"), false);
@@ -287,11 +268,12 @@ public class ArcaneLevels implements IArcaneLevels {
                 this.player_soul_refinement += quantity;
                 this.player_collected_souls += 1.2 * quantity;
                 this.setFed();
-                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.warning_corruption"),true);
+                if (calcProfane(player) == 1) {
+                    player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.warning_corruption"), true);
+                }
             }
             this.calcProfane(player);
             playerMain(player);
-//            System.out.println("Soul Essence Updated");
         } else {
             if (!slain) {
                 player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.finished"), true);

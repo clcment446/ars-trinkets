@@ -7,23 +7,26 @@ import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvider;
 import com.c446.ars_trinkets.commands.CommandResetArcaneProgression;
 import com.c446.ars_trinkets.commands.SetArcaneProgression;
-import com.hollingsworth.arsnouveau.api.event.*;
-import net.minecraft.network.chat.Component;
+import com.c446.ars_trinkets.perks.PerkAttributes;
+import com.hollingsworth.arsnouveau.api.event.ManaRegenCalcEvent;
+import com.hollingsworth.arsnouveau.api.event.MaxManaCalcEvent;
+import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
+import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.event.entity.living.MobEffectEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.Objects;
 
 import static com.c446.ars_trinkets.capabilities.CapabilityRegistry.getArcaneLevels;
 
@@ -81,10 +84,12 @@ public class ModEvents {
 //                            }
 ////                            System.out.println("MANA ALTERED : irregular");
 //                        } else {
-                            event.setMax(event.getMax() + a.getPlayerManaBonus());
+                        event.setMax((int) ((event.getMax() + a.getPlayerManaBonus()) * Objects.requireNonNull(event.getEntity().getAttribute(PerkAttributes.TOTAL_MANA_BOOST.get())).getValue())
+
+                        );
+                    });
 //                            System.out.println("MANA ALTERED : regular");
 //                        }
-                    });
 //            System.out.println("max mana altered");
 //            player.displayClientMessage(Component.literal("mana regen altered"), false);
         }
@@ -106,7 +111,10 @@ public class ModEvents {
 //                            }
 ////                            System.out.println("MANA REGEN ALTERED : irregular");
 //                        } else {
-                            event.setRegen(event.getRegen() + a.getPlayerRegenBonus());
+                        event.setRegen(
+                                (event.getRegen() + a.getPlayerRegenBonus())
+                                        *
+                                        Objects.requireNonNull(event.getEntity().getAttribute(PerkAttributes.TOTAL_MANA_REGEN_BOOST.get())).getValue());
 //                            System.out.println("MANA REGEN ALTERED : regular");
 //                        }
                     });
@@ -120,22 +128,18 @@ public class ModEvents {
         if (!Config.IS_LEVELING_ENABLED.get()) {
             return;
         }
-        event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {event.damage *= Math.pow(1.7, a.getPlayerArcaneLevel() / 2);
-
-        });
-        Player p = (Player) event.caster;
-//        p.displayClientMessage(Component.literal("spell damage applied"), false);
+        event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> event.damage *= Objects.requireNonNull(event.caster.getAttribute(PerkAttributes.SOUL_STEALER.get())).getValue() * Math.pow(1.7, a.getPlayerArcaneLevel() / 2));
+        //        p.displayClientMessage(Component.literal("spell damage applied"), false);
     }
 
     @SubscribeEvent
     public static void PlayerKillRefineSoul(net.minecraftforge.event.entity.living.LivingDeathEvent deathEvent) {
         if (!Config.IS_LEVELING_ENABLED.get()) {
-
             return;
         }
         if (deathEvent.getSource().getEntity() instanceof Player player) {
             player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-                a.updateSoulEssence((int) (deathEvent.getEntity().getMaxHealth() / 2), true, player);
+                a.updateSoulEssence((int) (Objects.requireNonNull(player.getAttribute(PerkAttributes.SOUL_STEALER.get())).getValue() * deathEvent.getEntity().getMaxHealth() / 2), true, player);
                 a.updatePlayerCores(player);
             });
 //            System.out.println(player.getName() + " killed " + deathEvent.getEntity().getName() + " for " + (int) deathEvent.getEntity().getMaxHealth() / 10);
@@ -162,7 +166,7 @@ public class ModEvents {
         });
     }
 
-//    @SubscribeEvent
+    //    @SubscribeEvent
 //    public static void tickEntity(TickEvent.PlayerTickEvent event) {
 //        event.player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
 //            if (a.getProfane()) {
@@ -183,5 +187,26 @@ public class ModEvents {
 //                a.setLastFed(a.getLastFed() + 1);
 //            }
 //        });
+//    }
+//    @SubscribeEvent
+//    public static void potionEvent(MobEffectEvent. event) {
+//        LivingEntity target = event.getEntity();
+//        Entity applier = event.getEffectSource();
+//        if(target.level.isClientSide)
+//            return;
+//        double bonus_len = 0.0;
+//        double bonus_str = 0.0;
+//        if(event.getEffectInstance().getEffect().isBeneficial()){
+//            bonus_len = PerkUtil.valueOrZero(target, PerkAttributes.POTION_LENGTH.get());
+//            bonus_str = PerkUtil.valueOrZero(target, PerkAttributes.POTION_STRENGTH.get());
+//        }else if(applier instanceof LivingEntity living){
+//            bonus_len = PerkUtil.valueOrZero(target, PerkAttributes.POTION_LENGTH.get());
+//            bonus_str = PerkUtil.valueOrZero(target, PerkAttributes.POTION_STRENGTH.get());
+//        }
+//
+//        if(bonus_len > 0.0){
+//            event.getEffectInstance().duration *= bonus_len;
+//            event.getEffectInstance().strength *= bonus_len;
+//        }
 //    }
 }

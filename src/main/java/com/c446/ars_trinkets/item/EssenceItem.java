@@ -1,5 +1,6 @@
 package com.c446.ars_trinkets.item;
 
+import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.*;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.c446.ars_trinkets.util.Util;
@@ -20,10 +21,6 @@ import static com.c446.ars_trinkets.registry.ModRegistry.*;
 
 //unused for the moment
 public class EssenceItem extends RegularItems {
-
-
-
-
     boolean showEnch = false;
 
     public EssenceItem(Properties p) {
@@ -46,13 +43,15 @@ public class EssenceItem extends RegularItems {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
-        if (!pLevel.isClientSide && pUsedHand == InteractionHand.OFF_HAND) {
-            System.out.println("OFF HAND USE");
-            ConsumeMana(pPlayer, true, pPlayer.getOffhandItem(), pPlayer.getOffhandItem().getCount());
-        } else if (!pLevel.isClientSide) {
-            ItemStack held = pPlayer.getMainHandItem();
-            System.out.println("MAIN HAND USE");
-            ConsumeMana(pPlayer, false, held, held.getCount());
+        if (Config.IS_LEVELING_ENABLED.get()) {
+            if (!pLevel.isClientSide && pUsedHand == InteractionHand.OFF_HAND) {
+//            System.out.println("OFF HAND USE");
+                ConsumeMana(pPlayer, true, pPlayer.getOffhandItem(), pPlayer.getOffhandItem().getCount());
+            } else if (!pLevel.isClientSide) {
+                ItemStack held = pPlayer.getMainHandItem();
+//            System.out.println("MAIN HAND USE");
+                ConsumeMana(pPlayer, false, held, held.getCount());
+            }
         }
         return super.use(pLevel, pPlayer, pUsedHand);
     }
@@ -66,11 +65,11 @@ public class EssenceItem extends RegularItems {
         return 0;
     }
 
-    public void ConsumeMana(Player player, boolean slot_is_off_hand/* is offhand*/, ItemStack stack,int number) {
+    public void ConsumeMana(Player player, boolean slot_is_off_hand/* is offhand*/, ItemStack stack, int number) {
         int a = getExperienceValue(stack.getItem());
-        System.out.println("ArcaneLevelCap Called");
-        player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(arcaneLevels -> arcaneLevels.updateSoulEssence(a*number, false, player));
-        System.out.println("ConsumeMana triggered");
+//        System.out.println("ArcaneLevelCap Called");
+        player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(arcaneLevels -> arcaneLevels.updateSoulEssence(a * number, false, player));
+//        System.out.println("ConsumeMana triggered");
         if (slot_is_off_hand) {
             System.out.println("consuming in off hand");
             player.getInventory().removeItem(Inventory.SLOT_OFFHAND, 1);

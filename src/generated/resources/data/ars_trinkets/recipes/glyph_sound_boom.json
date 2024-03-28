@@ -20,21 +20,6 @@
     },
     {
       "item": {
-        "item": "ars_nouveau:air_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_nouveau:air_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "minecraft:sculk"
-      }
-    },
-    {
-      "item": {
         "item": "minecraft:sculk"
       }
     },
@@ -46,31 +31,6 @@
     {
       "item": {
         "item": "ars_trinkets:purple_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_trinkets:purple_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_trinkets:purple_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "minecraft:tnt"
-      }
-    },
-    {
-      "item": {
-        "item": "minecraft:tnt"
-      }
-    },
-    {
-      "item": {
-        "item": "minecraft:tnt"
       }
     },
     {

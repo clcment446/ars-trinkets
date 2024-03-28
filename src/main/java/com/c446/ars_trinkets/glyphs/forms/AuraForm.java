@@ -32,7 +32,7 @@ public class AuraForm extends AbstractCastMethod  {
 
     public static AuraForm INSTANCE = new AuraForm(prefix("glyph_aura"), "An aura that has effect 5 blocks around the player. Use AOE to increase the radius of the aura, extend time to increase the duration. Use amplify to make the aura cover every block around the player. Use dampen to make the aura a half sphere from where the player is standing upwards. Use sensitive to make the aura a half sphere from where the player is standing downwards. Use sensitive to affect entities instead of blocks.");
 
-    private final int baseDuration = 600; //600 ticks = 30s
+    private final int baseDuration = 100; //600 ticks = 30s
 
     public AuraForm(ResourceLocation tag, String description) {
         super(tag, description);
@@ -43,6 +43,7 @@ public class AuraForm extends AbstractCastMethod  {
         boolean isLowerHalfCircle = spellStats.hasBuff(AugmentPierce.INSTANCE);
         boolean isSolidSphere = spellStats.hasBuff(AugmentAmplify.INSTANCE);
         boolean targetsEntities = spellStats.hasBuff(AugmentSensitive.INSTANCE);
+        int targetDelay = 1+Math.abs((int) (spellStats.getAccMultiplier()));
 
         int finalDuration = baseDuration * (int)(1 + spellStats.getDurationMultiplier());
 
@@ -83,7 +84,7 @@ public class AuraForm extends AbstractCastMethod  {
                 }
 
 
-            }, 10, finalDuration);
+            }, 10/targetDelay, finalDuration);
         }else{ // target blocks with high tick rate
             ArsTrinkets.setInterval(()-> {
                 int radius = 5 + (int)spellStats.getAoeMultiplier();
@@ -153,7 +154,7 @@ public class AuraForm extends AbstractCastMethod  {
         //Dampen makes it a dome (upper half hemisphere)
         //Pierce makes it an inverted dome (lower half hemisphere)
         //Sensitive makes it target entities instead of blocks
-        return augmentSetOf(AugmentAOE.INSTANCE, AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE, AugmentSensitive.INSTANCE, AugmentExtendTime.INSTANCE, AugmentPierce.INSTANCE);
+        return augmentSetOf(AugmentAOE.INSTANCE, AugmentAmplify.INSTANCE, AugmentDampen.INSTANCE, AugmentSensitive.INSTANCE, AugmentExtendTime.INSTANCE, AugmentPierce.INSTANCE, AugmentAccelerate.INSTANCE);
     }
 
     @Override

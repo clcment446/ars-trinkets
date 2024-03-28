@@ -25,7 +25,7 @@ import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Set;
 
-import static alexthw.ars_elemental.ArsNouveauRegistry.NECROMANCY;
+
 
 
 public class ManaBomb extends AbstractEffect implements IDamageEffect {
@@ -75,6 +75,8 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
                 attemptDamage(level, shooter, spellStats, spellContext, resolver, e, DamageUtil.source(level, DamageTypes.MAGIC, shooter), damage);
                 level.sendParticles(ParticleTypes.WITCH, position.x, position.y, position.z, 50,
                         ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 3);
+                level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, living.getX(), living.getY(), living.getZ(), 100, 0, 0, 0, 1);
+
                 e.invulnerableTime = 40;
             }
             attemptDamage(level, shooter, spellStats, spellContext, resolver, living, DamageUtil.source(level, DamageTypes.MAGIC, shooter), damage);
@@ -108,7 +110,7 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
-        return this.setOf(NECROMANCY);
+        return this.setOf(SpellSchools.CONJURATION);
     }
     @Override
     public void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {

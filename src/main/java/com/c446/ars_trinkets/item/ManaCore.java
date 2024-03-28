@@ -1,5 +1,6 @@
 package com.c446.ars_trinkets.item;
 
+import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;
@@ -34,21 +35,23 @@ public class ManaCore extends RegularItems {
 
     @Override
     public @NotNull InteractionResultHolder<ItemStack> use(Level pLevel, @NotNull Player player, @NotNull InteractionHand pUsedHand) {
-        if (!pLevel.isClientSide && pUsedHand != InteractionHand.OFF_HAND) {
-            player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-                if (a.getPlayerArcaneLevel() <= this.core_level) {
-                    a.nextCore(player);
-                    for (int i = 0; i < 35; i++) {
-                        if (player.getMainHandItem() == player.getInventory().getItem(i)) {
-                            System.out.println("consuming in main Hand");
-                            player.getInventory().removeItem(i, 1);
+        if (Config.IS_LEVELING_ENABLED.get()) {
+            if (!pLevel.isClientSide && pUsedHand != InteractionHand.OFF_HAND) {
+                player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+                    if (a.getPlayerArcaneLevel() <= this.core_level) {
+                        if (a.nextCore(player)) {
+                            for (int i = 0; i < 35; i++) {
+                                if (player.getMainHandItem() == player.getInventory().getItem(i)) {
+                                    System.out.println("consuming in main Hand");
+                                    player.getInventory().removeItem(i, 1);
+                                }
+                            }
                         }
+                    } else {
+                        player.displayClientMessage(Component.literal("This core's level is too low !"), false);
                     }
-                } else {
-                    player.displayClientMessage(Component.literal("a"),false);
-                }
-            });
-        }
-        return super.use(pLevel, player, pUsedHand);
+                });
+            }
+        }return super.use(pLevel, player, pUsedHand);
     }
 }

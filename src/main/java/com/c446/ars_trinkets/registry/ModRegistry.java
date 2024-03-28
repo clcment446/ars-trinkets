@@ -4,12 +4,16 @@ import com.c446.ars_trinkets.ArsTrinkets;
 import com.c446.ars_trinkets.entities.EntityMissileSpell;
 import com.c446.ars_trinkets.entities.effects.AuraEffect;
 import com.c446.ars_trinkets.item.*;
+import com.c446.ars_trinkets.perks.PerkAttributes;
+import com.hollingsworth.arsnouveau.api.perk.IPerk;
+import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
 import com.hollingsworth.arsnouveau.api.sound.SpellSound;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.level.block.Block;
@@ -27,7 +31,7 @@ public class ModRegistry {
 
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ArsTrinkets.MOD_ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ArsTrinkets.MOD_ID);
-
+    public static final DeferredRegister<Attribute> PERKS = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, ArsTrinkets.MOD_ID);
 
 
     public static void registerRegistries(IEventBus bus) {
@@ -36,7 +40,10 @@ public class ModRegistry {
         SOUNDS.register(bus);
         ENTITIES.register(bus);
         EFFECTS.register(bus);
+        PerkAttributes.ATTRIBUTES.register(bus);
+
     }
+
     //    public static final RegistryObject<Item> EXAMPLE;
     public static final RegistryObject<Item> ESSENCE_LOTUS_3;
     public static final RegistryObject<Item> ESSENCE_LOTUS_4;
@@ -83,12 +90,36 @@ public class ModRegistry {
     public static final RegistryObject<Item> WHITE_ESSENCE;
     public static final RegistryObject<Item> YELLOW_ESSENCE;
     public static final RegistryObject<Item> PURPLE_ESSENCE;
+
+
+    public static final RegistryObject<Item> ETERNAL_RUNE;
+    public static RegistryObject<Item> WARRIOR_RUNE = null;
+    public static RegistryObject<Item> SOUL_STEALER_RUNE = null;
+    public static RegistryObject<Item> HOLY_RUNE = null;
+    public static RegistryObject<Item> MAGE_RUNE = null;
+    public static RegistryObject<Item> WARRIOR_RUNE_LESSER = null;
+    public static RegistryObject<Item> SOUL_STEALER_RUNE_LESSER = null;
+    public static RegistryObject<Item> HOLY_RUNE_LESSER = null;
+    public static RegistryObject<Item> MAGE_RUNE_LESSER = null;
+    public static RegistryObject<Item> WARRIOR_RUNE_GREATER = null;
+    public static RegistryObject<Item> SOUL_STEALER_RUNE_GREATER = null;
+    public static RegistryObject<Item> HOLY_RUNE_GREATER = null;
+    public static RegistryObject<Item> MAGE_RUNE_GREATER = null;
+
+    public static RegistryObject<Item> DEATH_RUNE = null;
+    public static RegistryObject<Item> LIFE_RUNE = null;
     public static final RegistryObject<EntityType<? extends EntityMissileSpell>> ENTITY_MISSILE = ENTITIES.register("missile_spell_proj", () -> EntityType.Builder.<EntityMissileSpell>of(EntityMissileSpell::new, MobCategory.MISC).sized(0.9F, 3.0F).build(new ResourceLocation(ArsTrinkets.MOD_ID, "missile_spell_proj").toString()));
+
+
     public static ResourceLocation getGlyphName(String name) {
-        return new ResourceLocation(ArsTrinkets.MOD_ID, ("glyph_"+name));
+        return new ResourceLocation(ArsTrinkets.MOD_ID, ("glyph_" + name));
     }
 
     public static final RegistryObject<MobEffect> AURA_EFFECT = EFFECTS.register("glyph_aura", AuraEffect::new);
+
+    public static void registerPerk(IPerk perk) {
+        PerkRegistry.registerPerk(perk);
+    }
 
     public static SpellSound EXAMPLE_SPELL_SOUND;
 
@@ -123,14 +154,14 @@ public class ModRegistry {
         MONOCLE_9 = ITEMS.register("monocle_9", () -> new MagicItems(new Item.Properties().rarity(Rarity.RARE).stacksTo(1), 500, 50, 0, 40));
         MONOCLE_10 = ITEMS.register("monocle_10", () -> new MagicItems(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), 1000, 100, 0, 80));
 
-        MANA_CORE_1 = ITEMS.register("mana_core_1", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,1));
-        MANA_CORE_2 = ITEMS.register("mana_core_2", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,2));
-        MANA_CORE_3 = ITEMS.register("mana_core_3", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,3));
-        MANA_CORE_4 = ITEMS.register("mana_core_4", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,4));
-        MANA_CORE_5 = ITEMS.register("mana_core_5", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,5));
-        MANA_CORE_6 = ITEMS.register("mana_core_6", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,6));
-        MANA_CORE_7 = ITEMS.register("mana_core_7", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,7));
-        MANA_CORE_8 = ITEMS.register("mana_core_8", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),true,8));
+        MANA_CORE_1 = ITEMS.register("mana_core_1", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), true, 1));
+        MANA_CORE_2 = ITEMS.register("mana_core_2", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), true, 2));
+        MANA_CORE_3 = ITEMS.register("mana_core_3", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), true, 3));
+        MANA_CORE_4 = ITEMS.register("mana_core_4", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), true, 4));
+        MANA_CORE_5 = ITEMS.register("mana_core_5", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), true, 5));
+        MANA_CORE_6 = ITEMS.register("mana_core_6", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), true, 6));
+        MANA_CORE_7 = ITEMS.register("mana_core_7", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), true, 7));
+        MANA_CORE_8 = ITEMS.register("mana_core_8", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), true, 8));
 
         COPPER_ESSENCE = ITEMS.register("copper_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)));
         IRON_ESSENCE = ITEMS.register("iron_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)));
@@ -142,5 +173,37 @@ public class ModRegistry {
         WHITE_ESSENCE = ITEMS.register("white_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.RARE), true));
         YELLOW_ESSENCE = ITEMS.register("yellow_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.EPIC), true));
         PURPLE_ESSENCE = ITEMS.register("purple_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.EPIC), true));
+
+        ETERNAL_RUNE = ITEMS.register("eternal_rune", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 50, 125, 60, 50, 40, 0, 60, 60, 65, 1));
+
+
+
+        HOLY_RUNE_GREATER = ITEMS.register("life_rune_greater", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 0, 0, 50, 0, 30, 0, 0, 0, 0, 0));
+        SOUL_STEALER_RUNE_GREATER = ITEMS.register("death_rune_greater", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 35, 100, 0, 0, 0, 0, 0, 0, 0, 0));
+        WARRIOR_RUNE_GREATER = ITEMS.register("warrior_rune_greater", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 0, 0, 0, 40, 0, 0, 0, 0, 0, 0.75));
+        MAGE_RUNE_GREATER = ITEMS.register("mage_rune_greater", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 0, 0, 0, 0, 0, 0, 50, 45, 45, 0));
+
+        /*
+        * GREATER RUNE = 4 RUNE
+        * */
+
+        HOLY_RUNE = ITEMS.register("life_rune", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant(), 0, 0, 40, 0, 20, 0, 0, 0, 0, 0));
+        SOUL_STEALER_RUNE = ITEMS.register("death_rune", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant(), 25, 75, 0, 0, 0, 0, 0, 0, 0, 0));
+        WARRIOR_RUNE = ITEMS.register("warrior_rune", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant(), 0, 0, 0, 30, 0, 0, 0, 0, 0, 0.5));
+        MAGE_RUNE = ITEMS.register("mage_rune", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.RARE).fireResistant(), 0, 0, 0, 0, 0, 0, 40, 35, 35, 0));
+
+        HOLY_RUNE_LESSER = ITEMS.register("life_rune_lesser", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 0, 0, 20, 0, 10, 0, 0, 0, 0, 0));
+        SOUL_STEALER_RUNE_LESSER = ITEMS.register("death_rune_lesser", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 15, 50, 0, 0, 0, 0, 0, 0, 0, 0));
+        WARRIOR_RUNE_LESSER = ITEMS.register("warrior_rune_lesser", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 0, 0, 0, 15, 0, 0, 0, 0, 0, 0.25));
+        MAGE_RUNE_LESSER = ITEMS.register("mage_rune_lesser", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.UNCOMMON), 0, 0, 0, 0, 0, 0, 20, 20, 20, 0));
+
+        /*
+         * LESSER HOLY RUNE = SAC LIFE + ENCHANTED GOLDEN APPLE (YELLOW HOLY SYMBOL)
+         * LESSER SOUL STEALER RUNE = DEVOUR SOUL + INSPECT SOUL (YELLOW CIRCLE)
+         * LESSER WARRIOR RUNE =  SONIC BOOM + SAC EXP
+         * MAGE RUNE LESSER = CORRUPTED BLESSING + MAGE BOMB
+         * */
+
+
     }
 }

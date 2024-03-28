@@ -1,7 +1,8 @@
 package com.c446.ars_trinkets.glyphs.effect_glyph;
 
-import alexthw.ars_elemental.util.ParticleUtil;
+
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.util.ParticleUtil;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
@@ -58,12 +59,12 @@ public class SacrificeHealth extends AbstractEffect implements IDamageEffect {
         if (entity instanceof LivingEntity living && world instanceof ServerLevel level && shooter instanceof Player player) {
             DamageSource source = DamageUtil.source(level, DamageTypes.PLAYER_ATTACK, shooter);;
             Vec3 pos = living.getEyePosition();
-            float health = (float) (0.33 * player.getHealth());
-            player.setHealth(player.getMaxHealth() - health);
-            float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier()*health);
+            float health = (float) (0.11* spellStats.getAmpMultiplier() * player.getHealth());
+            player.setHealth((player.getMaxHealth() - health)+1);
+            float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * health);
 
             attemptDamage(world, shooter, spellStats, spellContext, resolver, living, source, damage);
-            new ParticleUtil.ParticleBuilder(ParticleUtil.soulColor).spawn(level, pos.x,pos.y,pos.z );
+            level.sendParticles(ParticleUtil.CreateDustParticle(75,16,16),pos.x,pos.y,pos.z,20,0,0,0,0);
         }
     }
 

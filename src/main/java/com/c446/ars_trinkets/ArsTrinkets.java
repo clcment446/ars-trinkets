@@ -1,6 +1,7 @@
 package com.c446.ars_trinkets;
 
 import com.c446.ars_trinkets.event.ModEvents;
+import com.c446.ars_trinkets.perks.PerkAttributes;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.c446.ars_trinkets.util.SetInterval;
 import com.hollingsworth.arsnouveau.setup.registry.CreativeTabRegistry;
@@ -31,6 +32,7 @@ public class ArsTrinkets {
     public ArsTrinkets() {
         IEventBus modbus = FMLJavaModLoadingContext.get().getModEventBus();
         ModRegistry.registerRegistries(modbus);
+        ;
         ArsNouveauRegistry.registerGlyphs();
         modbus.addListener(this::setup);
         modbus.addListener(this::doClientStuff);

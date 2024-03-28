@@ -1,6 +1,6 @@
 package com.c446.ars_trinkets.glyphs.effect_glyph;
 
-import alexthw.ars_elemental.ArsNouveauRegistry;
+
 
 import com.c446.ars_trinkets.ArsTrinkets;
 import com.hollingsworth.arsnouveau.api.spell.*;
@@ -12,7 +12,7 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.damagesource.DamageSource;
+
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -79,7 +79,7 @@ public class SacrificeExperience extends AbstractEffect implements IDamageEffect
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
-        return this.setOf(ArsNouveauRegistry.NECROMANCY);
+        return this.setOf(SpellSchools.CONJURATION);
     }
 
     @Override

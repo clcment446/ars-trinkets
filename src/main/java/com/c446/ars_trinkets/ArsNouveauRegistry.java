@@ -10,6 +10,7 @@ import com.hollingsworth.arsnouveau.api.registry.GlyphRegistry;
 import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
+import net.minecraft.world.entity.monster.Giant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +33,11 @@ public class ArsNouveauRegistry {
         register(InspectSoul.INSTANCE);
         register(Devour.INSTANCE);
         register(DevourSoul.INSTANCE);
+        register(WitherShield.INSTANCE);
+        register(GiantStrength.INSTANCE);
+//        register(Random25.INSTANCE);
+//        register(Random50.INSTANCE);
+//        register(Random75.INSTANCE);
 
         // register omega glyphs
         register(FormMissile.INSTANCE);
@@ -39,9 +45,7 @@ public class ArsNouveauRegistry {
         register(PropagateOverhead.INSTANCE);
         register(PropagateMissile.INSTANCE);
         register(AuraForm.INSTANCE);
-//            register(PropagateProjectile.INSTANCE);
-//            register(PropagateUnderfoot.INSTANCE);
-//            register(PropagateSelf.INSTANCE);
+
 
 
     }

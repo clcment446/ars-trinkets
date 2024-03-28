@@ -19,18 +19,10 @@ public class Config {
 
         SERVER_BUILDER.comment("SERVER CONFIGURATION");
         IS_LEVELING_ENABLED = SERVER_BUILDER.comment("can players level up").define("LevelingSystemEnabled", false);
-        ARE_OMEGA_GLYPHS_ENABLED = SERVER_BUILDER.comment("are the ars omega forms/propagators enabled (DEPRECATED !)").define("ArsOmegaFormsEnabled", false);
-        MAX_PLAYER_LEVEL = SERVER_BUILDER.comment("the maximum level that a player can get to.").defineInRange("LevelingMaxLevel",7,1,7);
-        MAX_PLAYER_CORE = SERVER_BUILDER.comment("the maximum number of cores that a player can have.").defineInRange("LevelingMaxCore",7,1,777);
+        ARE_OMEGA_GLYPHS_ENABLED = SERVER_BUILDER.comment("(/! DEPRECATED /!) are the ars omega forms/propagators enabled (/!DEPRECATED /!)").define("ArsOmegaFormsEnabled", false);
+        MAX_PLAYER_LEVEL = SERVER_BUILDER.comment("the maximum level that a player can get to.").defineInRange("LevelingMaxLevel",8,1,9);
+        MAX_PLAYER_CORE = SERVER_BUILDER.comment("the maximum number of cores that a player can have.").defineInRange("LevelingMaxCore",9,1,777);
 
         SERVER_CONFIG = SERVER_BUILDER.build();
     }
-
-//    @SubscribeEvent
-//    public static void onLoad(final ModConfigEvent.Loading configEvent) {
-//    }
-//
-//    @SubscribeEvent
-//    public static void onReload(final ModConfigEvent.Reloading configEvent) {
-//    }
 }

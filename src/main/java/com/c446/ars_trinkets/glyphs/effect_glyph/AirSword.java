@@ -78,8 +78,8 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
     @Override
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
-        addDamageConfig(builder, 7);
-        addAmpConfig(builder, 3.33);
+        addDamageConfig(builder, 17);
+        addAmpConfig(builder, 10);
     }
 
     @Nonnull
@@ -95,7 +95,7 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
 
     @Override
     public int getDefaultManaCost() {
-        return 6000;
+        return 3000;
     }
 
     @Override

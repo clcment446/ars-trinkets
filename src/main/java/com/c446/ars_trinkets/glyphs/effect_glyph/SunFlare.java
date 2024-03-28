@@ -39,8 +39,8 @@ public class SunFlare extends AbstractEffect implements IDamageEffect {
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (world instanceof ServerLevel level && rayTraceResult.getEntity() instanceof LivingEntity living) {
-            double range = 1 + 1.5 * spellStats.getAoeMultiplier();
-            int bonus = 0;
+            double range = 1 + 1.7 * spellStats.getAoeMultiplier();
+            int bonus = 1;
             DamageSource source = DamageUtil.source(level, DamageTypes.FIREBALL, shooter);
 
             if (living.isOnFire()) {
@@ -112,7 +112,7 @@ public class SunFlare extends AbstractEffect implements IDamageEffect {
 
     @Override
     public int getDefaultManaCost() {
-        return 8000;
+        return 3000;
     }
 
     @Override

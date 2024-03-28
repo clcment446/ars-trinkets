@@ -1,0 +1,27 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "output": {
+    "item": "ars_trinkets:death_rune_lesser"
+  },
+  "pedestalItems": [
+    {
+      "item": "ars_trinkets:purple_essence"
+    },
+    {
+      "item": "ars_trinkets:purple_essence"
+    },
+    {
+      "item": "ars_trinkets:glyph_soul_inspector"
+    },
+    {
+      "item": "ars_trinkets:glyph_devour_soul"
+    }
+  ],
+  "reagent": [
+    {
+      "item": "ars_trinkets:mana_core_6"
+    }
+  ],
+  "sourceCost": 10000
+}

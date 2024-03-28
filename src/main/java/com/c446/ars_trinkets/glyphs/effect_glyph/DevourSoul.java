@@ -48,7 +48,7 @@ public class DevourSoul extends AbstractEffect implements IDamageEffect {
                 if (soulRef > health * health) {
                     Vec3 pos = living.getEyePosition();
                     attemptDamage(level, shooter, spellStats, spellContext, resolver, living, DamageUtil.source(level, DamageTypes.MAGIC, shooter), (float) (health * 100.0));
-                    level.sendParticles(ParticleTypes.ENCHANTED_HIT, pos.x, pos.y, pos.z, 100, 0, 0, 0, 2);
+                    level.sendParticles(ParticleTypes.SCULK_SOUL, pos.x, pos.y, pos.z, 100, 0, 0, 0, 2);
                     player.setHealth(player.getMaxHealth()/3);
                     player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.devour"), true);
                     player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {

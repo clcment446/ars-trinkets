@@ -1,4 +1,4 @@
-// 1.20.1	2024-01-21T13:55:52.8043745	Example Glyph Recipes
+// 1.20.1	2024-03-07T14:22:06.1261081	Example Glyph Recipes
 d31baeb0e73eba94d4588ae3dbdb7eead478cf5c data/ars_trinkets/recipes/glyph_aura.json
 c8803337e9afbde0236e3b96692d7466641f13b0 data/ars_trinkets/recipes/glyph_devour.json
 e208e0923ee85ea3ec4ebbcc56a23a4cf43f50af data/ars_trinkets/recipes/glyph_devour_soul.json
@@ -13,7 +13,7 @@ e978d7cadeeeb00922b529a889044c088afd324d data/ars_trinkets/recipes/glyph_propaga
 083348ccab012e5753a2b1b23c35d6d1a06c155e data/ars_trinkets/recipes/glyph_sacrifice.json
 5781416906d88ceb5c7ffbd2f9427e6a630a3a12 data/ars_trinkets/recipes/glyph_shadow_veil.json
 cc0533f5235f2f112c2cd9b51e7b04367009533c data/ars_trinkets/recipes/glyph_soul_inspector.json
-1ccb8d7965a7590458893f3b4b3254695858fd7a data/ars_trinkets/recipes/glyph_sound_boom.json
-9887b6706c3d4e5f38568c54d561f972dd34e1cd data/ars_trinkets/recipes/glyph_sun_flare.json
+c50e0bfcd1bc2de97c997e4eceff074aa1ae220f data/ars_trinkets/recipes/glyph_sound_boom.json
+964915ef2ebc9c1448a798b2e6f05331078d2b26 data/ars_trinkets/recipes/glyph_sun_flare.json
 c462f1ae0b08da37ee4851db1ea241209a81bfe2 data/ars_trinkets/recipes/glyph_sword.json
 92bd2ee8f62f6e70b43c2eef13ad2cc8945a6f37 data/ars_trinkets/recipes/glyph_water_spear.json

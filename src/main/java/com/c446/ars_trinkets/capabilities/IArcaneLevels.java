@@ -46,7 +46,8 @@ public interface IArcaneLevels {
     public default void setProfane(Boolean pr) {
     }
 
-    default void calcProfane(Player player) {
+    default int calcProfane(Player player) {
+        return 0;
     }
 
 

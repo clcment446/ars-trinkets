@@ -34,16 +34,7 @@ public class SonicBoom extends AbstractEffect implements IDamageEffect {
 
     double damage;
     double damageBonusTimes;
-    float AMP_DAMAGE = 10f;
-
-    @Override
-    public void buildConfig(ForgeConfigSpec.Builder builder) {
-        super.buildConfig(builder);
-        addDamageConfig(builder, 7);
-        addAmpConfig(builder, 3.33);
-    }
-
-
+    float AMP_DAMAGE = 13.3f;
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {
@@ -69,7 +60,7 @@ public class SonicBoom extends AbstractEffect implements IDamageEffect {
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         Entity entity = rayTraceResult.getEntity();
         if (world instanceof ServerLevel level && entity instanceof LivingEntity living) {
-            int range = (int) (1+2 * spellStats.getAoeMultiplier());
+            int range = (int) (3+2 * spellStats.getAoeMultiplier());
             damage = 1+DAMAGE.get() + spellStats.getAmpMultiplier() * this.AMP_DAMAGE;
             Vec3 eyesPosTar = living.getEyePosition();
             Vec3 eyesPosPla = shooter.getEyePosition();
@@ -92,5 +83,11 @@ public class SonicBoom extends AbstractEffect implements IDamageEffect {
     public void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
         defaults.put(AugmentAmplify.INSTANCE.getRegistryName(),4);
         defaults.put(AugmentAOE.INSTANCE.getRegistryName(),4);
+    }
+    @Override
+    public void buildConfig(ForgeConfigSpec.Builder builder) {
+        super.buildConfig(builder);
+        addDamageConfig(builder, 16);
+        addAmpConfig(builder, 10);
     }
 }
