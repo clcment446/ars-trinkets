@@ -33,16 +33,6 @@ public class ArcaneLevels implements IArcaneLevels {
         warned1 = false;
         warned2 = false;
     }
-
-    public void setLastFed(int time) {
-        feast = time;
-    }
-
-
-    public int getLastFed() {
-        return feast;
-    }
-
     public int getFeedingTime() {
         return feeding_time;
     }
@@ -99,13 +89,7 @@ public class ArcaneLevels implements IArcaneLevels {
         this.profane = pr;
     }
 
-    public float getCorruption() {
-        if (this.feast / 600 * 20 > 1) {
-            return 0.1F;
-        } else {
-            return 1 - this.feast / 600 * 20;
-        }
-    }
+
 
     @Override
     public int calcProfane(Player player) {
@@ -150,7 +134,7 @@ public class ArcaneLevels implements IArcaneLevels {
             case 9 -> x = 250000;
             default -> x = 0;
         }
-        return (int) (player_cores * x * getCorruption());
+        return (int) (player_cores * x);
     }
 
     @Override
@@ -168,7 +152,7 @@ public class ArcaneLevels implements IArcaneLevels {
             case 9 -> x = 7500;
             default -> x = 0;
         }
-        return (int) (x * player_cores * getCorruption() * (1 + mana_feathers / 100));
+        return (int) (x * player_cores * (1 + mana_feathers / 100));
     }
 
     @Override
