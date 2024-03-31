@@ -33,7 +33,7 @@ public class Devour extends AbstractEffect implements IDamageEffect {
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (world instanceof ServerLevel level && shooter instanceof Player player && rayTraceResult.getEntity() instanceof LivingEntity living) {
-            float damage = (float) (10+5* spellStats.getAmpMultiplier());
+            float damage = (float) (DAMAGE.get()+ AMP_VALUE.get()* spellStats.getAmpMultiplier());
             player.setHealth(player.getHealth()+living.getHealth()/100*damage);
             attemptDamage(level,player,spellStats,spellContext,resolver,living, DamageUtil.source(level, DamageTypes.STARVE, player),damage);
         }

@@ -45,21 +45,23 @@ public class SacrificeExperience extends AbstractEffect implements IDamageEffect
         if (world instanceof ServerLevel level && entity instanceof LivingEntity living && shooter instanceof Player player) {
 
             int range = (int) (1.5 * (1 + spellStats.getAoeMultiplier()));
-            long exp = (long) (5 * Math.log((long) ((0.3 * player.experienceLevel) * (1 + spellStats.getAmpMultiplier()))));
+            long exp = (long) (5 * Math.log((long) ((0.3*(1+spellStats.getAmpMultiplier())*player.experienceLevel))));
             player.giveExperiencePoints(-(int) exp);
             damage = (float) (DAMAGE.get() + AMP_VALUE.get() * spellStats.getAmpMultiplier()) * exp;
 
             Vec3 position = safelyGetHitPos(rayTraceResult);
+            level.sendParticles(ParticleTypes.SOUL_FIRE_FLAME, position.x, position.y, position.z, 20, ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.3);
+            level.sendParticles(ParticleTypes.SCULK_SOUL, position.x, position.y, position.z, 100, ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 0.6);
+            living.setSecondsOnFire((int) (3*(1+spellStats.getDurationMultiplier())));
             attemptDamage(world, shooter, spellStats, spellContext, resolver, living, DamageUtil.source(level, DamageTypes.MAGIC, shooter), damage);
-            level.sendParticles(ParticleTypes.ENCHANT, position.x, position.y, position.z, 100, ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 3);
-//            level.sendParticles(ParticleTypes.WITCH, position.x, position.y, position.z, 100, ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 3);
 
+//            level.sendParticles(ParticleTypes.WITCH, position.x, position.y, position.z, 100, ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 3);
 
             for (Entity e : world.getEntities(shooter, new AABB(
                     living.position().add(range, range, range), living.position().subtract(range, range, range)))) {
                 if (e.equals(living) || !(e instanceof LivingEntity))
                     continue;
-                attemptDamage(world, shooter, spellStats, spellContext, resolver, e, buildDamageSource(world, shooter), damage *= 0.8);
+                attemptDamage(world, shooter, spellStats, spellContext, resolver, e, buildDamageSource(world, shooter), damage *= 0.7);
                 level.sendParticles(ParticleTypes.ENCHANT, position.x, position.y, position.z, 100,
                         ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), ParticleUtil.inRange(-0.1, 0.1), 3);
             }
@@ -92,6 +94,7 @@ public class SacrificeExperience extends AbstractEffect implements IDamageEffect
         super.buildConfig(builder);
         addDamageConfig(builder, 13.0);
         addAmpConfig(builder, 9.0);
+        addExtendTimeConfig(builder,10);
     }
 
     @Override

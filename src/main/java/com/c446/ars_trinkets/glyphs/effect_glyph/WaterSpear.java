@@ -1,6 +1,7 @@
 package com.c446.ars_trinkets.glyphs.effect_glyph;
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.util.ParticleUtil;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.datagen.DamageTypesProvider;
@@ -48,33 +49,32 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
         Entity entity = rayTraceResult.getEntity();
         if (entity instanceof LivingEntity living && world instanceof ServerLevel level) {
             Vec3 vecTar = entity.position();
-            double damageBonusTimes = 1;
+            double bonus = 1;
             float AMP_DAMAGE = 15f;
-            double DAMAGE = 30;
+            double damage = 30;
             if (living.hasEffect(ModPotions.FREEZING_EFFECT.get())) {
                 int s = Objects.requireNonNull(living.getEffect(ModPotions.FREEZING_EFFECT.get())).getAmplifier();
                 s /= 2;
-                damageBonusTimes += s;
+                bonus += s;
             }
             if (living.hasEffect(ModPotions.SHOCKED_EFFECT.get())) {
                 int s = Objects.requireNonNull(living.getEffect(ModPotions.SHOCKED_EFFECT.get())).getAmplifier();
                 s /= 2.5;
-                damageBonusTimes += s;
+                bonus += s;
             }
             if (living.hasEffect(ModPotions.HEX_EFFECT.get())) {
                 int s = Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier();
                 s /= 2;
-                damageBonusTimes += s;
+                bonus += s;
             }
             if (living.isOnFire()) {
-                damageBonusTimes *= 1.5;
+                bonus *= 1.5;
             }
-            damageBonusTimes/=4;
-            DAMAGE += (spellStats.getAmpMultiplier() * AMP_DAMAGE);
-            DAMAGE *= damageBonusTimes;
+            bonus/=1.5;
+            damage = (this.DAMAGE.get() + ((this.AMP_VALUE.get())/1.5 * (spellStats.getAmpMultiplier())))*(1 + bonus)/ 1.5;
 
-            level.sendParticles(ParticleTypes.SPLASH,vecTar.x, vecTar.y, vecTar.z,20,0,0,0,1);
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageUtil.source(level, DamageTypes.MAGIC,shooter), (float) (DAMAGE));
+            level.sendParticles(ParticleUtil.CreateDustParticle(30,100,200),vecTar.x, vecTar.y, vecTar.z,20,0,0,0,1);
+            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageUtil.source(level, DamageTypes.MAGIC,shooter), (float) (damage));
             living.invulnerableTime = 3;
         }
         com.hollingsworth.arsnouveau.api.util.DamageUtil.source((LevelAccessor) world, DamageTypes.DROWN);
@@ -98,8 +98,8 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
     @Override
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
-        addDamageConfig(builder, 10.0);
-        addAmpConfig(builder, 2.0);
+        addDamageConfig(builder, 9.0);
+        addAmpConfig(builder, 9.0);
     }
 
     @Override

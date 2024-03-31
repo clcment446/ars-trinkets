@@ -8,9 +8,7 @@ import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvi
 import com.c446.ars_trinkets.commands.CommandResetArcaneProgression;
 import com.c446.ars_trinkets.commands.SetArcaneProgression;
 import com.c446.ars_trinkets.perks.PerkAttributes;
-import com.hollingsworth.arsnouveau.api.event.ManaRegenCalcEvent;
-import com.hollingsworth.arsnouveau.api.event.MaxManaCalcEvent;
-import com.hollingsworth.arsnouveau.api.event.SpellDamageEvent;
+import com.hollingsworth.arsnouveau.api.event.*;
 import com.hollingsworth.arsnouveau.api.util.PerkUtil;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -96,6 +94,24 @@ public class ModEvents {
     }
 
     @SubscribeEvent
+    public static void ManaReductionEvent(SpellCostCalcEvent event) {
+        if (!Config.IS_LEVELING_ENABLED.get()) {
+            return;
+        }
+        if (event.context.getCaster() instanceof Player player && player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).isPresent()) {
+            player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(
+                    a -> {
+                        if (a.getProfane()) {
+                            event.currentCost *= (3 * a.getCores()) / (Math.pow(a.getPlayerArcaneLevel() / 1.3, 1.5));
+                        } else {
+                            event.currentCost /= a.getPlayerArcaneLevel() * 1.5;
+                        }
+                    }
+            );
+        }
+    }
+
+    @SubscribeEvent
     public static void ManaRegenCalcEvent(ManaRegenCalcEvent event) {
         if (!Config.IS_LEVELING_ENABLED.get()) {
             return;
@@ -128,7 +144,7 @@ public class ModEvents {
         if (!Config.IS_LEVELING_ENABLED.get()) {
             return;
         }
-        event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> event.damage *= Objects.requireNonNull(event.caster.getAttribute(PerkAttributes.SOUL_STEALER.get())).getValue() * Math.pow(1.7, a.getPlayerArcaneLevel() / 2));
+        event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> event.damage *= Objects.requireNonNull(event.caster.getAttribute(PerkAttributes.SPELL_DAMAGE_PCT.get())).getValue() * Math.pow(1.7, a.getPlayerArcaneLevel() / 2));
         //        p.displayClientMessage(Component.literal("spell damage applied"), false);
     }
 

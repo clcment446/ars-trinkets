@@ -49,14 +49,17 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
             }
         }
     }
-
+    /*
+    damage = (this.DAMAGE.get() * ((this.AMP_VALUE.get())/1.5 * (spellStats.getAmpMultiplier())))*(1 + bonus)/ 1.5;
+    damage = (this.DAMAGE.get() * (this.AMP_VALUE.get() * (spellStats.getAmpMultiplier())))*(1 + bonus);
+    * */
     public static final ManaBomb INSTANCE = new ManaBomb(new ResourceLocation(ArsTrinkets.MOD_ID, "glyph_mana_bomb"), "Mana Explosion");
     private int mana = 0;
+    float bonus;
     float damage;
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        int amp = (int) spellStats.getAmpMultiplier();
         int range = 2 + (int) (2 * spellStats.getAoeMultiplier());
         Entity entity = rayTraceResult.getEntity();
         if ((entity instanceof LivingEntity living && world instanceof ServerLevel level)) {
@@ -65,7 +68,9 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
                 mana = (int) a.getCurrentMana()/280;
                 a.setMana(0);
             });
-            damage = (float) ((float) mana/2.0+Math.log(mana));
+            bonus = (float) ((float) mana/2.0+Math.log(mana));
+            damage = (float) ((this.DAMAGE.get() + ((this.AMP_VALUE.get())/1.5 * (spellStats.getAmpMultiplier())))+(1 + bonus)/ 1.5);
+
             for (Entity e : world.getEntities(shooter, new AABB(
                     living.position().add(range, range, range), living.position().subtract(range, range, range)))) {
                 if (e.equals(living) || e.equals(shooter) ||!(e instanceof LivingEntity)) {
@@ -88,8 +93,8 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
     @Override
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
-        addDamageConfig(builder, 0);
-//        addAmpConfig(builder, 1);
+        addDamageConfig(builder, 1);
+        addAmpConfig(builder, 1);
     }
 
     @Nonnull

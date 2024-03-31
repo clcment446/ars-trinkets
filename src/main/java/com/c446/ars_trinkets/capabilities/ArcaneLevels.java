@@ -2,15 +2,12 @@ package com.c446.ars_trinkets.capabilities;
 
 import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.util.Util;
-import net.minecraft.client.gui.components.ChatComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.entity.player.Player;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvider;
 
-import java.util.ArrayList;
 import java.util.Random;
 
 public class ArcaneLevels implements IArcaneLevels {
@@ -28,22 +25,22 @@ public class ArcaneLevels implements IArcaneLevels {
     public boolean warned1 = false;
     public boolean warned2 = false;
     private int feeding_time = 600 * 20;
-    private int last_feed;
+    private boolean feast;
     private int mana_feathers = 0;
 
     public void setFed() {
-        last_feed = 0;
+        feast = false;
         warned1 = false;
         warned2 = false;
     }
 
     public void setLastFed(int time) {
-        last_feed = time;
+        feast = time;
     }
 
 
     public int getLastFed() {
-        return last_feed;
+        return feast;
     }
 
     public int getFeedingTime() {
@@ -103,10 +100,10 @@ public class ArcaneLevels implements IArcaneLevels {
     }
 
     public float getCorruption() {
-        if (this.last_feed / 600 * 20 > 1) {
+        if (this.feast / 600 * 20 > 1) {
             return 0.1F;
         } else {
-            return 1 - this.last_feed / 600 * 20;
+            return 1 - this.feast / 600 * 20;
         }
     }
 
@@ -123,7 +120,9 @@ public class ArcaneLevels implements IArcaneLevels {
 
             if (!profane) {
                 setProfane(true);
-                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.madness"), false);}}
+                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.madness"), false);
+            }
+        }
         return severity;
     }
 
@@ -189,6 +188,7 @@ public class ArcaneLevels implements IArcaneLevels {
 
     public void nextRank() {
         player_arcane_level++;
+        feast = false;
     }
 
     public boolean nextCore(Player player) {
@@ -267,9 +267,9 @@ public class ArcaneLevels implements IArcaneLevels {
             } else {
                 this.player_soul_refinement += quantity;
                 this.player_collected_souls += 1.2 * quantity;
-                this.setFed();
-                if (calcProfane(player) == 1) {
+                if (calcProfane(player) == 1 && !this.feast) {
                     player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.warning_corruption"), true);
+                    this.feast = true;
                 }
             }
             this.calcProfane(player);
@@ -340,7 +340,7 @@ public class ArcaneLevels implements IArcaneLevels {
         this.warning_3 = source.warning_3;
         this.player_cores = source.player_cores;
         this.feeding_time = source.feeding_time;
-        this.last_feed = source.last_feed;
+        this.feast = source.feast;
 //        System.out.println("Arcane Cap Copied");
     }
 
@@ -354,7 +354,7 @@ public class ArcaneLevels implements IArcaneLevels {
         nbt.putInt("player_soul_refinement", player_soul_refinement);
         nbt.putInt("player_slain_souls", player_collected_souls);
         nbt.putInt("player_feeding_time", feeding_time);
-        nbt.putInt("player_last_fed", last_feed);
+        nbt.putBoolean("player_last_fed", feast);
         nbt.putBoolean("player_profane_soul", profane);
         nbt.putBoolean("warning_2", warning_2);
         nbt.putBoolean("warning_3", warning_3);
@@ -372,7 +372,7 @@ public class ArcaneLevels implements IArcaneLevels {
         player_soul_refinement = nbt.getInt("player_soul_refinement");
         player_collected_souls = nbt.getInt("player_slain_souls");
         feeding_time = nbt.getInt("player_feeding_time");
-        last_feed = nbt.getInt("player_last_feed");
+        feast = nbt.getBoolean("player_last_feed");
         profane = nbt.getBoolean("player_profane_soul");
         warning_2 = nbt.getBoolean("player_warning_2");
         warning_3 = nbt.getBoolean("player_warning_3");
@@ -389,6 +389,6 @@ public class ArcaneLevels implements IArcaneLevels {
         profane = false;
         player_cores = 1;
         feeding_time = 600 * 20;
-        last_feed = 0;
+        feast = false;
     }
 }

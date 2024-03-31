@@ -7,6 +7,7 @@ import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -59,20 +60,24 @@ public class SacrificeHealth extends AbstractEffect implements IDamageEffect {
         if (entity instanceof LivingEntity living && world instanceof ServerLevel level && shooter instanceof Player player) {
             DamageSource source = DamageUtil.source(level, DamageTypes.PLAYER_ATTACK, shooter);;
             Vec3 pos = living.getEyePosition();
-            float health = (float) (0.11* spellStats.getAmpMultiplier() * player.getHealth());
+            float health = (float) (0.11* spellStats.getAmpMultiplier() * player.getMaxHealth());
             player.setHealth((player.getMaxHealth() - health)+1);
             float damage = (float) (DAMAGE.get() + AMP_VALUE.get() * health);
-
+/*
+damage = (this.DAMAGE.get() * ((this.AMP_VALUE.get())/1.5 * (spellStats.getAmpMultiplier())))*(1 + bonus)/ 1.5;
+damage = (this.DAMAGE.get() * (this.AMP_VALUE.get() * (spellStats.getAmpMultiplier())))*(1 + bonus);
+* */
             attemptDamage(world, shooter, spellStats, spellContext, resolver, living, source, damage);
-            level.sendParticles(ParticleUtil.CreateDustParticle(75,16,16),pos.x,pos.y,pos.z,20,0,0,0,0);
+            level.sendParticles(ParticleUtil.CreateDustParticle(75,16,16),pos.x,pos.y,pos.z,20,0,0,0,0.3);
+            level.sendParticles(ParticleTypes.CRIMSON_SPORE,pos.x,pos.y,pos.z,20,0,0,0,1);
         }
     }
 
     @Override
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
-        addDamageConfig(builder, 1.0);
-        addAmpConfig(builder, 2.0);
+        addDamageConfig(builder, 10.0);
+        addAmpConfig(builder, 2.5);
     }
     @Override
     public void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {

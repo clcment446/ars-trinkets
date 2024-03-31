@@ -53,13 +53,13 @@ public class SunFlare extends AbstractEffect implements IDamageEffect {
                 bonus += 10;
             }
 
-            damage = 18 + (6 * (1 + bonus)) + (6 * spellStats.getAmpMultiplier() * (2 + spellStats.getAoeMultiplier() / 2));
+            damage = this.DAMAGE.get() + (6 * (1 + bonus)) + (this.AMP_VALUE.get() * spellStats.getAmpMultiplier());
             if (living instanceof Player player) {
                 player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> attemptDamage(level, shooter, spellStats, spellContext, resolver, player, source, (float) ((float) damage * 1.5)));
             }
             attemptDamage(level, shooter, spellStats, spellContext, resolver, living, source, (float) damage);
 
-            level.sendParticles(ParticleTypes.END_ROD, living.getX(), living.getY(), living.getZ(), 10, 0, 0, 0, 1);
+            level.sendParticles(ParticleTypes.GLOW, living.getX(), living.getY(), living.getZ(), 10, 0, 0, 0, 1);
             level.sendParticles(ParticleTypes.FLAME, living.getX(), living.getY(), living.getZ(), 50, 0, 0, 0, 1);
 //            level.sendParticles(new DustParticle.Provider((SpriteSet) ParticleTypes.DUST).createParticle().setColor(1,1,1), 0,0,0,1,0,0, 0,1);
 
@@ -68,7 +68,7 @@ public class SunFlare extends AbstractEffect implements IDamageEffect {
                 if (e.equals(living) || !(e instanceof LivingEntity l))
                     continue;
 
-                level.sendParticles(ParticleTypes.END_ROD, l.getX(), l.getY(), l.getZ(), 20, 0, 0, 0, 1);
+                level.sendParticles(ParticleTypes.GLOW, l.getX(), l.getY(), l.getZ(), 20, 0, 0, 0, 1);
                 level.sendParticles(ParticleTypes.FLAME, l.getX(), l.getY(), l.getZ(), 100, 0, 0, 0, 1);
 
                 bonus = 0;
@@ -82,21 +82,27 @@ public class SunFlare extends AbstractEffect implements IDamageEffect {
                 if (l.getMobType() == MobType.UNDEAD || l.getMobType() == MobType.ARTHROPOD || l.getMobType() == MobType.ILLAGER) {
                     bonus += 10;
                 }
-                damage = 18 + (1 + bonus / 2.0) * (4 * (1 + spellStats.getAmpMultiplier()) * (1 + spellStats.getAoeMultiplier() / 2));
-
+                damage = (this.DAMAGE.get() + ((this.AMP_VALUE.get()) / 1.5 * (spellStats.getAmpMultiplier()))) * (1 + bonus) / 1.5;
                 if (l instanceof Player player) {
-                    player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> attemptDamage(level, shooter, spellStats, spellContext, resolver, player, source, (float) ((float) damage * 1.5)));
+                    player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+                        if (a.getProfane()) {
+                            attemptDamage(level, shooter, spellStats, spellContext, resolver, player, source, (float) ((float) damage * 1.5));
+                        } else {
+                            attemptDamage(level, shooter, spellStats, spellContext, resolver, player, source, (float) ((float) damage));
+                        }
+                    });
                 }
                 attemptDamage(level, shooter, spellStats, spellContext, resolver, l, source, (float) damage);
             }
         }
     }
 
+
     @Override
     public void buildConfig(ForgeConfigSpec.Builder builder) {
         super.buildConfig(builder);
-        addDamageConfig(builder, 18);
-        addAmpConfig(builder, 9);
+        addDamageConfig(builder, 13);
+        addAmpConfig(builder, 7);
     }
 
     @Nonnull

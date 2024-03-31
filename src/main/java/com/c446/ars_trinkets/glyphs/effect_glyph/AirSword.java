@@ -55,22 +55,20 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
 
             level.sendParticles(ParticleTypes.SWEEP_ATTACK, x, y, z, 1, 0, 0, 0.5, 1);
 
-            double damageBonusTimes = 1;
-            float AMP_DAMAGE = 2f;
-            double DAMAGE = 6;
+            double bonus = 1;
             if (living.hasEffect(ModPotions.HEX_EFFECT.get())) {
                 int multiplier = Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier();
-                damageBonusTimes += multiplier / 8.0;
+                bonus += multiplier / 4.0;
             }
             if (living.hasEffect(ModPotions.SNARE_EFFECT.get())) {
 
                 int s = Objects.requireNonNull(living.getEffect(ModPotions.SNARE_EFFECT.get())).getAmplifier();
-                damageBonusTimes += s / 5.0;
+                bonus += s / 3.0;
             }
-            DAMAGE += (spellStats.getAmpMultiplier() * AMP_DAMAGE);
-            DAMAGE *= damageBonusTimes/2;
+            float damage = (float) ((this.DAMAGE.get() + ((this.AMP_VALUE.get())/1.5 * (spellStats.getAmpMultiplier())))*(1 + bonus));
+
             DamageSource source = DamageUtil.source(level, DamageTypes.PLAYER_ATTACK, shooter);
-            attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, source, (float) DAMAGE);
+            attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, source, damage);
             living.invulnerableTime = 0;
         }
     }
