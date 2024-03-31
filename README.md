@@ -1,11 +1,10 @@
-# Ars-Nouveau-Example-Addon
+# Ars Nouveau Trinkets
+Here is the Ars Trinkets project repo.
+Use the code here as you wish
+If you want to integrate it please tell me
+If you have feature requests or bug reports, send it to https://discord.com/channels/743298050222587978/1189292470631141376
 
-An example repository for making an addon for Ars Nouveau! See the wiki for more info.
-
-**Getting Started**
-
-* Fork this repo for a ready to build work space.
-* Join the Ars Nouveau discord to ask questions, get help, or get ideas.
+# Developer part
 
 Some useful links for beginners:
 * https://mcforge.readthedocs.io/en/latest/
