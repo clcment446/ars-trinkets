@@ -5,12 +5,10 @@ import com.c446.ars_trinkets.glyphs.forms.FormMissile;
 import com.c446.ars_trinkets.glyphs.forms.FormOverhead;
 import com.c446.ars_trinkets.glyphs.propagators.*;
 import com.c446.ars_trinkets.glyphs.effect_glyph.*;
-import com.c446.ars_trinkets.item.SoulsInspector;
 import com.hollingsworth.arsnouveau.api.registry.GlyphRegistry;
 import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractSpellPart;
-import net.minecraft.world.entity.monster.Giant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +33,6 @@ public class ArsNouveauRegistry {
         register(DevourSoul.INSTANCE);
         register(WitherShield.INSTANCE);
         register(GiantStrength.INSTANCE);
-//        register(Random25.INSTANCE);
-//        register(Random50.INSTANCE);
-//        register(Random75.INSTANCE);
 
         // register omega glyphs
         register(FormMissile.INSTANCE);
@@ -45,9 +40,8 @@ public class ArsNouveauRegistry {
         register(PropagateOverhead.INSTANCE);
         register(PropagateMissile.INSTANCE);
         register(AuraForm.INSTANCE);
-
-
-
+//        register(FilterIsShifting.INSTANCE);
+//        register(FilterIsNotShifting.INSTANCE);
     }
 
     public static void registerSounds() {

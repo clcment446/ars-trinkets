@@ -1,49 +1,58 @@
 package com.c446.ars_trinkets.capabilities;
 
 import com.c446.ars_trinkets.Config;
+import com.c446.ars_trinkets.event.PlayerCoresUpdated;
+import com.c446.ars_trinkets.event.PlayerLevelUpdated;
+import com.c446.ars_trinkets.perks.PerkAttributes;
 import com.c446.ars_trinkets.util.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvider;
+import net.minecraftforge.common.MinecraftForge;
 
+import java.util.Objects;
 import java.util.Random;
+import java.util.Set;
+import java.util.UUID;
 
 public class ArcaneLevels implements IArcaneLevels {
+    private static boolean firstLogin = false;
     // counts as the player's level.
-    private int player_arcane_level = 1;
+    public int player_arcane_level = 1;
     // counts as the player's experience.
-    private int player_soul_refinement = 100;
-    private int player_collected_souls = 0;
-    private int player_cores = 1;
+    public int player_soul_refinement = 100;
+    public int player_collected_souls = 0;
+    public int player_cores = 1;
     private boolean profane = false;
-    protected static final int minimum_level = 0;
-    protected static final int maximum_level = 8;
     private boolean warning_2 = false;
     private boolean warning_3 = false;
     public boolean warned1 = false;
     public boolean warned2 = false;
     private int feeding_time = 600 * 20;
     private boolean feast;
-    private int mana_feathers = 0;
 
     public void setFed() {
         feast = false;
         warned1 = false;
         warned2 = false;
     }
+
     public int getFeedingTime() {
         return feeding_time;
     }
 
-    private void setManaFeathers(int manaFeathers) {
-        this.mana_feathers = manaFeathers;
+    public boolean getLoginFirst() {
+        return firstLogin;
     }
 
-    public int getManaFeathers() {
-        return this.mana_feathers;
+    public void setLoginFirst(boolean b) {
+        firstLogin = b;
     }
+
 
     @Override
     public int getPlayerArcaneLevel() {
@@ -89,8 +98,6 @@ public class ArcaneLevels implements IArcaneLevels {
         this.profane = pr;
     }
 
-
-
     @Override
     public int calcProfane(Player player) {
         int severity = 0;
@@ -121,38 +128,91 @@ public class ArcaneLevels implements IArcaneLevels {
     @Override
     public int getPlayerManaBonus() {
         //        System.out.println("Max Mana bonus questioned");
-        int x;
+        int bonus = 0;
         switch (player_arcane_level) {
-            case 1 -> x = 1000;
-            case 2 -> x = 2500;
-            case 3 -> x = 5000;
-            case 4 -> x = 12500;
-            case 5 -> x = 18750;
-            case 6 -> x = 25000;
-            case 7 -> x = 50000;
-            case 8 -> x = 125000;
-            case 9 -> x = 250000;
-            default -> x = 0;
+            case 0 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_0.get();
+            case 1 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_1.get();
+            case 2 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_2.get();
+            case 3 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_3.get();
+            case 4 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_4.get();
+            case 5 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_5.get();
+            case 6 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_6.get();
+            case 7 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_7.get();
+            case 8 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_8.get();
+            case 9 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_9.get();
         }
-        return (int) (player_cores * x);
+        return (int) (player_cores * Config.CORE_FLAT_BONUS.get() * bonus);
     }
 
     @Override
     public int getPlayerRegenBonus() {
-        int x;
+        int bonus = 0;
         switch (player_arcane_level) {
-            case 1 -> x = 20;
-            case 2 -> x = 100;
-            case 3 -> x = 200;
-            case 4 -> x = 500;
-            case 5 -> x = 750;
-            case 6 -> x = 1000;
-            case 7 -> x = 2000;
-            case 8 -> x = 5000;
-            case 9 -> x = 7500;
-            default -> x = 0;
+            case 0 -> bonus = Config.MANA_REGEN_BONUS_LVL_0.get();
+            case 1 -> bonus = Config.MANA_REGEN_BONUS_LVL_1.get();
+            case 2 -> bonus = Config.MANA_REGEN_BONUS_LVL_2.get();
+            case 3 -> bonus = Config.MANA_REGEN_BONUS_LVL_3.get();
+            case 4 -> bonus = Config.MANA_REGEN_BONUS_LVL_4.get();
+            case 5 -> bonus = Config.MANA_REGEN_BONUS_LVL_5.get();
+            case 6 -> bonus = Config.MANA_REGEN_BONUS_LVL_6.get();
+            case 7 -> bonus = Config.MANA_REGEN_BONUS_LVL_7.get();
+            case 8 -> bonus = Config.MANA_REGEN_BONUS_LVL_8.get();
+            case 9 -> bonus = Config.MANA_REGEN_BONUS_LVL_9.get();
         }
-        return (int) (x * player_cores * (1 + mana_feathers / 100));
+        return (int) (bonus * player_cores * Config.CORE_REGEN_BONUS.get());
+    }
+
+    @Override
+    public float getPlayerDefense() {
+        int bonus = 0;
+        switch (player_arcane_level) {
+            case 0 -> bonus = Config.DEFENSE_0.get();
+            case 1 -> bonus = Config.DEFENSE_1.get();
+            case 2 -> bonus = Config.DEFENSE_2.get();
+            case 3 -> bonus = Config.DEFENSE_3.get();
+            case 4 -> bonus = Config.DEFENSE_4.get();
+            case 5 -> bonus = Config.DEFENSE_5.get();
+            case 6 -> bonus = Config.DEFENSE_6.get();
+            case 7 -> bonus = Config.DEFENSE_7.get();
+            case 8 -> bonus = Config.DEFENSE_8.get();
+            case 9 -> bonus = Config.DEFENSE_9.get();
+
+        }
+        return (float) ((double) 1+(bonus/100));
+    }
+    @Override
+    public double getSpellDmg() {
+        int bonus = 0;
+        switch (player_arcane_level) {
+            case 0 -> bonus = Config.SPELL_DMG_0.get();
+            case 1 -> bonus = Config.SPELL_DMG_1.get();
+            case 2 -> bonus = Config.SPELL_DMG_2.get();
+            case 3 -> bonus = Config.SPELL_DMG_3.get();
+            case 4 -> bonus = Config.SPELL_DMG_4.get();
+            case 5 -> bonus = Config.SPELL_DMG_5.get();
+            case 6 -> bonus = Config.SPELL_DMG_6.get();
+            case 7 -> bonus = Config.SPELL_DMG_7.get();
+            case 8 -> bonus = Config.SPELL_DMG_8.get();
+            case 9 -> bonus = Config.SPELL_DMG_9.get();
+        }
+        return (double) 1+(bonus/100);
+    }
+    @Override
+    public double getPhysDmg() {
+        int bonus = 0;
+        switch (player_arcane_level) {
+            case 0 -> bonus = Config.PHYS_DAMAGE_0.get();
+            case 1 -> bonus = Config.PHYS_DAMAGE_1.get();
+            case 2 -> bonus = Config.PHYS_DAMAGE_2.get();
+            case 3 -> bonus = Config.PHYS_DAMAGE_3.get();
+            case 4 -> bonus = Config.PHYS_DAMAGE_4.get();
+            case 5 -> bonus = Config.PHYS_DAMAGE_5.get();
+            case 6 -> bonus = Config.PHYS_DAMAGE_6.get();
+            case 7 -> bonus = Config.PHYS_DAMAGE_7.get();
+            case 8 -> bonus = Config.PHYS_DAMAGE_8.get();
+            case 9 -> bonus = Config.PHYS_DAMAGE_9.get();
+        }
+        return (double) 1+(bonus/100);
     }
 
     @Override
@@ -170,21 +230,30 @@ public class ArcaneLevels implements IArcaneLevels {
         return 0;
     }
 
-    public void nextRank() {
+    public void nextRank(Player player) {
         player_arcane_level++;
         feast = false;
-    }
+        MinecraftForge.EVENT_BUS.post(new PlayerLevelUpdated.Post(player_arcane_level, player));
 
+    }
+    public boolean canPlayerFormCores() {
+        return player_cores < Config.MAX_PLAYER_CORE.get();
+    }
     public boolean nextCore(Player player) {
 
-        if (!(player_cores >= Config.MAX_PLAYER_CORE.get())) {
+        if ((player_cores < Config.MAX_PLAYER_CORE.get())) {
             player_cores++;
+            System.out.println("gate 2")    ;
             player.displayClientMessage(Component.translatable("text.ars_trinkets.new_soul_core"), false);
-            return true;
+            ;
         } else {
+            System.out.println("gate 3")    ;
             player.displayClientMessage(Component.translatable("text.ars_trinkets.max_soul_core"), false);
-            return false;
+            ;
         }
+        MinecraftForge.EVENT_BUS.post(new PlayerCoresUpdated.Post(player_cores, player));
+        if (profane) return true;
+        else return false;
     }
 
     @Override
@@ -203,10 +272,10 @@ public class ArcaneLevels implements IArcaneLevels {
             if (k > x) {
 //                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.whispers"), false);
                 if (a.profane) {
-                    a.nextRank();
+                    a.nextRank(player);
                     player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_" + a.getPlayerArcaneLevel()).append(a.getPlayerTitle()), false);
                 } else {
-                    a.nextRank();
+                    a.nextRank(player);
 
                     player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_" + a.getPlayerArcaneLevel()).append(a.getPlayerTitle()), false);
                 }
@@ -219,10 +288,10 @@ public class ArcaneLevels implements IArcaneLevels {
             a.warning_2 = false;
             a.warning_3 = false;
         });
+
     }
 
     public void updatePlayerCores(Player player) {
-
         player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
 
             if (!a.profane) {
@@ -342,6 +411,7 @@ public class ArcaneLevels implements IArcaneLevels {
         nbt.putBoolean("player_profane_soul", profane);
         nbt.putBoolean("warning_2", warning_2);
         nbt.putBoolean("warning_3", warning_3);
+        nbt.putBoolean("player_first_login", firstLogin);
 
 //        System.out.println("Arcane Cap Saved");
     }
@@ -360,6 +430,7 @@ public class ArcaneLevels implements IArcaneLevels {
         profane = nbt.getBoolean("player_profane_soul");
         warning_2 = nbt.getBoolean("player_warning_2");
         warning_3 = nbt.getBoolean("player_warning_3");
+        firstLogin = nbt.getBoolean("player_first_login");
 //        System.out.println("Arcane Cap loaded");
     }
 
@@ -375,4 +446,116 @@ public class ArcaneLevels implements IArcaneLevels {
         feeding_time = 600 * 20;
         feast = false;
     }
+
+    public void setCores(int number) {
+        this.player_cores = number;
+    }
+
+    public static AttributeModifier getFlatManaBoostAttributeModifier(int i) {
+        return new AttributeModifier(UUID.fromString("2a947a4e-01dc-42d8-8cf3-fd971bf723a6"), "ars_trinkets.leveling_system.mana_capacity", i, AttributeModifier.Operation.ADDITION);
+    }
+
+    public static AttributeModifier getRegenManaBoostAttributeModifier(int i) {
+        return new AttributeModifier(UUID.fromString("ee141509-487f-4d09-adde-234ca9d58911"), "ars_trinkets.leveling_system.mana_regen", i, AttributeModifier.Operation.ADDITION);
+    }
+
+    public static AttributeModifier getSpellDamageImprovmentAttributeModifier(double i) {
+        return new AttributeModifier(UUID.fromString("520626e0-ed4a-43cd-973a-934e29f7baac"), "ars_trinkets.leveling_system.spell_dmg", i, AttributeModifier.Operation.ADDITION);
+    }
+
+    public static AttributeModifier getDamageReducAttributeModifier(double i) {
+        return new AttributeModifier(UUID.fromString("683b68a8-5f25-41dc-a90c-764e61e4082c"), "ars_trinkets.leveling_system.dmg_reduc", i/100, AttributeModifier.Operation.ADDITION);
+    }
+
+    public static AttributeModifier getPhysDamageImprovmentAttributeModifier(double i) {
+        return new AttributeModifier(UUID.fromString("7267ff97-e2d8-43f8-b7ce-efde6a1c361a"), "ars_trinkets.leveling_system.phys_dmg", 1+i/100, AttributeModifier.Operation.ADDITION);
+    }
+
+    public static AttributeModifier searchAttributeModifier(Set<AttributeModifier> modifiers, AttributeModifier target) {
+        for (AttributeModifier modifier : modifiers) {
+            if (modifier.getId() == target.getId()) {
+                return modifier;
+            }
+        }
+        return null;
+    }
+
+    public static void addModifiers(Player player) {
+        Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_MANA_BOOST.get())).addPermanentModifier(getFlatManaBoostAttributeModifier(0));
+        Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_REGEN_BOOST.get())).addPermanentModifier(getRegenManaBoostAttributeModifier(0));
+        Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.SPELL_DAMAGE_PCT.get())).addPermanentModifier(getSpellDamageImprovmentAttributeModifier(0));
+        Objects.requireNonNull(player.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).addPermanentModifier(getPhysDamageImprovmentAttributeModifier(0));
+        Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.ALL_DAMAGE_REDUCTION.get())).addPermanentModifier(getDamageReducAttributeModifier(0));
+    }
+
+//    public static void updateModifiers(Player player) {
+//        System.out.println("attempting to update modifiers");
+//        final int[] reg = {0};
+//        final int[] cap = {0};
+//        final double[] dmg_reduc = {0};
+//        final double[] attck_dmg = {0};
+//        final double[] spell_dmg = {0};
+//
+//        player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+//            reg[0] = a.getPlayerRegenBonus();
+//            cap[0] = a.getPlayerManaBonus();
+//            dmg_reduc[0] = a.getPlayerDefense();
+//            attck_dmg[0] = a.getPhysDmg();
+//            spell_dmg[0] = a.getSpellDmg();
+//        });
+//
+//        // The modifiers that will be appended.
+//
+//        final AttributeModifier mana_capacity_attr = getFlatManaBoostAttributeModifier(cap[0]);
+//        final AttributeModifier mana_regen_attr = getRegenManaBoostAttributeModifier(reg[0]);
+//        final AttributeModifier dmg_reduc_attr = getDamageReducAttributeModifier(dmg_reduc[0]);
+//        final AttributeModifier spell_dmg_attr = getSpellDamageImprovmentAttributeModifier(spell_dmg[0]);
+//        final AttributeModifier attck_dmg_attr = getPhysDamageImprovmentAttributeModifier(attck_dmg[0]);
+//
+//        Set<AttributeModifier> modifiers_flat_list = Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_MANA_BOOST.get())).getModifiers();
+//        Set<AttributeModifier> modifiers_regen_list = Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_REGEN_BOOST.get())).getModifiers();
+//        Set<AttributeModifier> damage_reduc_list = Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.ALL_DAMAGE_REDUCTION.get())).getModifiers();
+//        Set<AttributeModifier> spell_damage_list = Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.SPELL_DAMAGE_PCT.get())).getModifiers();
+//        Set<AttributeModifier> attack_damage_list = Objects.requireNonNull(player.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).getModifiers();
+//
+//        AttributeModifier modif_flat = searchAttributeModifier(modifiers_flat_list, mana_capacity_attr);
+//        AttributeModifier modif_regen = searchAttributeModifier(modifiers_regen_list, mana_regen_attr);
+//        AttributeModifier modif_reduc = searchAttributeModifier(damage_reduc_list, dmg_reduc_attr);
+//        AttributeModifier modif_spell_dmg = searchAttributeModifier(spell_damage_list, spell_dmg_attr);
+//        AttributeModifier modif_attck_dmg = searchAttributeModifier(attack_damage_list, dmg_reduc_attr);
+//
+//
+//        if (modif_flat != null) {
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_MANA_BOOST.get())).removePermanentModifier(UUID.fromString("2a947a4e-01dc-42d8-8cf3-fd971bf723a6"));
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_MANA_BOOST.get())).addPermanentModifier(mana_capacity_attr);
+//        } else {
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_MANA_BOOST.get())).addPermanentModifier(mana_capacity_attr);
+//        }
+//
+//
+//        if (modif_regen != null) {
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_REGEN_BOOST.get())).removePermanentModifier(UUID.fromString("ee141509-487f-4d09-adde-234ca9d58911"));
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_REGEN_BOOST.get())).addPermanentModifier(mana_regen_attr);
+//        } else {
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_REGEN_BOOST.get())).addPermanentModifier(mana_regen_attr);
+//        }
+//        if (modif_reduc != null) {
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.ALL_DAMAGE_REDUCTION.get())).removePermanentModifier(UUID.fromString("683b68a8-5f25-41dc-a90c-764e61e4082c"));
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.ALL_DAMAGE_REDUCTION.get())).addPermanentModifier(dmg_reduc_attr);
+//        } else {
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.ALL_DAMAGE_REDUCTION.get())).addPermanentModifier(dmg_reduc_attr);
+//        }if (modif_spell_dmg != null) {
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.SPELL_DAMAGE_PCT.get())).removePermanentModifier(UUID.fromString("520626e0-ed4a-43cd-973a-934e29f7baac"));
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.SPELL_DAMAGE_PCT.get())).addPermanentModifier(spell_dmg_attr);
+//        } else {
+//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.SPELL_DAMAGE_PCT.get())).addPermanentModifier(spell_dmg_attr);
+//        }if (modif_attck_dmg != null) {
+//            Objects.requireNonNull(player.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).removePermanentModifier(UUID.fromString("7267ff97-e2d8-43f8-b7ce-efde6a1c361a"));
+//            Objects.requireNonNull(player.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).addPermanentModifier(attck_dmg_attr);
+//        } else {
+//            Objects.requireNonNull(player.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).addPermanentModifier(attck_dmg_attr);
+//        }
+//    }
+
+
 }

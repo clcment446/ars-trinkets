@@ -28,12 +28,14 @@ public class FormMissile extends AbstractCastMethod {
     /**
      * Shamelessly stolen from DKMK's code
      * */
-    public static FormMissile INSTANCE = new FormMissile("missile","Missile");
+    public static FormMissile INSTANCE = new FormMissile(new ResourceLocation(ArsTrinkets.MOD_ID+"missile"),"Missile");
 
     private FormMissile(String tag, String description) {
         super(ModRegistry.getGlyphName(tag),description);
     }
-
+    public FormMissile(ResourceLocation tag, String description) {
+        super(tag, description);
+    }
     public int getDefaultManaCost() {
         return 20;
     }

@@ -4,6 +4,7 @@ import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.*;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.c446.ars_trinkets.util.Util;
+import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Inventory;
@@ -81,6 +82,7 @@ public class EssenceItem extends RegularItems {
                 }
             }
         }
+        player.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(mana ->{mana.setMana(mana.getCurrentMana() + Util.getAllEssencesValues().get(stack.getItem())*number);});
         player.getInventory().removeItem(player.getMainHandItem());
     }
 }

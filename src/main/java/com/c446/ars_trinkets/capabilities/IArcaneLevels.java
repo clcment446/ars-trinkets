@@ -65,6 +65,12 @@ public interface IArcaneLevels {
     }
 
 
+    float getPlayerDefense();
+
+    double getSpellDmg();
+
+    double getPhysDmg();
+
     public default int checkRefinement(Player player) {
 
         return 0;

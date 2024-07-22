@@ -5,24 +5,29 @@ import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.capabilities.ArcaneLevels;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvider;
+import com.c446.ars_trinkets.commands.BECOME_GOD;
 import com.c446.ars_trinkets.commands.CommandResetArcaneProgression;
 import com.c446.ars_trinkets.commands.SetArcaneProgression;
+import com.c446.ars_trinkets.item.ManaCore;
+import com.c446.ars_trinkets.item.ThatItemToChangeClassLol;
 import com.c446.ars_trinkets.perks.PerkAttributes;
+import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.event.*;
-import com.hollingsworth.arsnouveau.api.util.PerkUtil;
-import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
-import net.minecraftforge.event.entity.living.MobEffectEvent;
+import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.config.ModConfigEvent;
+import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.Objects;
 
@@ -30,9 +35,12 @@ import static com.c446.ars_trinkets.capabilities.CapabilityRegistry.getArcaneLev
 
 @Mod.EventBusSubscriber(modid = ArsTrinkets.MOD_ID)
 public class ModEvents {
+
+
     @SubscribeEvent
     public static void commandRegister(RegisterCommandsEvent event) {
         CommandResetArcaneProgression.register(event.getDispatcher());
+        BECOME_GOD.register(event.getDispatcher());
         SetArcaneProgression.register(event.getDispatcher());
     }
 
@@ -61,6 +69,7 @@ public class ModEvents {
             newArcaneLevels.setPlayerArcaneLevel(oldArcane.getPlayerArcaneLevel());
             newArcaneLevels.setProfane(oldArcane.getProfane());
             newArcaneLevels.setCollectedSouls(oldArcane.getPlayerCollectedSouls());
+            newArcaneLevels.setCores(oldArcane.getPlayerCollectedSouls());
         }));
         event.getOriginal().invalidateCaps();
 //        System.out.println("Arcane Cap Cloned");
@@ -74,42 +83,29 @@ public class ModEvents {
         if (event.getEntity() instanceof Player player && player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).isPresent()) {
             player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(
                     a -> {
-//                        if (a.getProfane()) {
-//                            if (a.getLastFed() > a.getFeedingTime()) {
-//                                event.setMax(event.getMax() + a.getPlayerManaBonus()/5);
-//                            } else {
-//                                event.setMax(event.getMax() + a.getPlayerManaBonus());
-//                            }
-////                            System.out.println("MANA ALTERED : irregular");
-//                        } else {
                         event.setMax((int) ((event.getMax() + a.getPlayerManaBonus()) * Objects.requireNonNull(event.getEntity().getAttribute(PerkAttributes.TOTAL_MANA_BOOST.get())).getValue())
-
                         );
                     });
-//                            System.out.println("MANA ALTERED : regular");
-//                        }
-//            System.out.println("max mana altered");
-//            player.displayClientMessage(Component.literal("mana regen altered"), false);
         }
     }
 
-    @SubscribeEvent
-    public static void ManaReductionEvent(SpellCostCalcEvent event) {
-        if (!Config.IS_LEVELING_ENABLED.get()) {
-            return;
-        }
-        if (event.context.getCaster() instanceof Player player && player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).isPresent()) {
-            player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(
-                    a -> {
-                        if (a.getProfane()) {
-                            event.currentCost *= (3 * a.getCores()) / (Math.pow(a.getPlayerArcaneLevel() / 1.3, 1.5));
-                        } else {
-                            event.currentCost /= a.getPlayerArcaneLevel() * 1.5;
-                        }
-                    }
-            );
-        }
-    }
+//    @SubscribeEvent
+//    public static void ManaReductionEvent(SpellCostCalcEvent event) {
+//        if (!Config.IS_LEVELING_ENABLED.get()) {
+//            return;
+//        }
+//        if (event.context.getCaster() instanceof Player player && player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).isPresent()) {
+//            player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(
+//                    a -> {
+//                        if (a.getProfane()) {
+//                            event.currentCost *= (3 * a.getCores()) / (Math.pow(a.getPlayerArcaneLevel() / 1.3, 1.5));
+//                        } else {
+//                            event.currentCost /= a.getPlayerArcaneLevel() * 1.5;
+//                        }
+//                    }
+//            );
+//        }
+//    }
 
     @SubscribeEvent
     public static void ManaRegenCalcEvent(ManaRegenCalcEvent event) {
@@ -119,23 +115,9 @@ public class ModEvents {
         if (event.getEntity() instanceof Player player && player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).isPresent()) {
             player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(
                     a -> {
-//                        if (a.getProfane()) {
-//                            if (a.getLastFed() > a.getFeedingTime()) {
-//                                event.setRegen(event.getRegen() + a.getPlayerRegenBonus()/5);
-//                            } else {
-//                                event.setRegen(event.getRegen() + a.getPlayerRegenBonus());
-//                            }
-////                            System.out.println("MANA REGEN ALTERED : irregular");
-//                        } else {
-                        event.setRegen(
-                                (event.getRegen() + a.getPlayerRegenBonus())
-                                        *
-                                        Objects.requireNonNull(event.getEntity().getAttribute(PerkAttributes.TOTAL_MANA_REGEN_BOOST.get())).getValue());
-//                            System.out.println("MANA REGEN ALTERED : regular");
-//                        }
+//
+                        event.setRegen((event.getRegen() + a.getPlayerRegenBonus() * Objects.requireNonNull(event.getEntity().getAttribute(PerkAttributes.TOTAL_MANA_REGEN_BOOST.get())).getValue()));
                     });
-//            System.out.println("mana regen altered");
-//            player.displayClientMessage(Component.literal("mana regen altered"), false);
         }
     }
 
@@ -144,7 +126,7 @@ public class ModEvents {
         if (!Config.IS_LEVELING_ENABLED.get()) {
             return;
         }
-        event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> event.damage *= Objects.requireNonNull(event.caster.getAttribute(PerkAttributes.SPELL_DAMAGE_PCT.get())).getValue() * Math.pow(1.7, a.getPlayerArcaneLevel() / 2));
+        event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> event.damage *= a.getSpellDmg());
         //        p.displayClientMessage(Component.literal("spell damage applied"), false);
     }
 
@@ -164,14 +146,57 @@ public class ModEvents {
     }
 
     @SubscribeEvent
+    public static void playerDeathEvent(PlayerEvent.PlayerRespawnEvent event) {
+        Player p = event.getEntity();
+        if (Objects.equals(p.getUUID().toString(), "2980a99e-8582-4f63-9b82-f7117bc8be2c") && !CuriosApi.getCurio(new ItemStack(ModRegistry.THEARCH_CROWN.get())).isPresent()) {
+            p.getInventory().setItem(p.getInventory().getFreeSlot(), new ItemStack(ModRegistry.THEARCH_CROWN.get()));
+
+
+        }
+    }
+
+    @SubscribeEvent
     public static void onPlayerReceiveDamage(net.minecraftforge.event.entity.living.LivingDamageEvent event) {
         event.getEntity().getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-            event.setAmount((float) (event.getAmount() / Math.pow(1.9, a.getPlayerArcaneLevel() / 1.2)));
+            event.setAmount((float) (event.getAmount() * a.getPlayerDefense()));
             if (a.getProfane()) {
                 event.setAmount((float) (event.getAmount() * 1.5));
             }
         });
     }
+
+    @SubscribeEvent
+    public static void onPlayerFinishEating(LivingEntityUseItemEvent.Finish event) {
+        if (event.getItem().getItem() instanceof ManaCore core && event.getEntity() instanceof Player player) {
+            player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+                if (a.getPlayerArcaneLevel() / 3 <= core.core_level) {
+                    System.out.println("gate 1")    ;
+                    a.nextCore(player);
+                }
+            });
+        }
+        if (event.getItem().getItem() instanceof ThatItemToChangeClassLol relic && event.getEntity() instanceof Player player) {
+            player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+                if (a.getProfane() != relic.turnsPlayerProfane) {
+                    if (relic.turnsPlayerProfane) {
+                        player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.going_to_madness_item"), false);
+                    } else {
+                        player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.back_from_madness"), false);
+                    }
+                    a.setProfane(relic.turnsPlayerProfane);
+                }
+            });
+        }
+    }
+
+//    @SubscribeEvent
+//    public static void playerEquipCurio(CurioEquipEvent event){
+//        if (event.getStack().getItem().asItem() == ModRegistry.THEARCH_CROWN.get() && event.getEntity() instanceof Player player && player.getStringUUID().equals("2980a99e-8582-4f63-9b82-f7117bc8be2c")) {
+//            return;
+//        } else{
+//            Event.Result.DENY;
+//        }
+//    }
 
     @SubscribeEvent
     public static void expPickupEvent(PlayerXpEvent.PickupXp event) {
@@ -182,47 +207,36 @@ public class ModEvents {
         });
     }
 
-    //    @SubscribeEvent
-//    public static void tickEntity(TickEvent.PlayerTickEvent event) {
-//        event.player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-//            if (a.getProfane()) {
-//                Player player = event.player;
-//                if (a.getLastFed() > a.getFeedingTime() / 2) {
-//                    player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.hunger1"), true);
-//                    a.warned1 = true;
-//                } else if (a.getLastFed() > a.getFeedingTime()) {
-//                    a.warned2 = true;
-//                    player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.hunger2"), true);
-//                    player.addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 5, 3));
-//                    player.addEffect(new MobEffectInstance(MobEffects.HUNGER, 5, 3));
-//                    player.addEffect(new MobEffectInstance(MobEffects.CONFUSION, 5, 1));
-//                    player.addEffect(new MobEffectInstance(MobEffects.WITHER, 5, 1));
-//                    player.addEffect(new MobEffectInstance(MobEffects.DIG_SLOWDOWN,5,1));
-//                                    System.out.println("PLAYER FAMISHED !");
-//                }
-//                a.setLastFed(a.getLastFed() + 1);
-//            }
-//        });
-//    }
-//    @SubscribeEvent
-//    public static void potionEvent(MobEffectEvent. event) {
-//        LivingEntity target = event.getEntity();
-//        Entity applier = event.getEffectSource();
-//        if(target.level.isClientSide)
-//            return;
-//        double bonus_len = 0.0;
-//        double bonus_str = 0.0;
-//        if(event.getEffectInstance().getEffect().isBeneficial()){
-//            bonus_len = PerkUtil.valueOrZero(target, PerkAttributes.POTION_LENGTH.get());
-//            bonus_str = PerkUtil.valueOrZero(target, PerkAttributes.POTION_STRENGTH.get());
-//        }else if(applier instanceof LivingEntity living){
-//            bonus_len = PerkUtil.valueOrZero(target, PerkAttributes.POTION_LENGTH.get());
-//            bonus_str = PerkUtil.valueOrZero(target, PerkAttributes.POTION_STRENGTH.get());
-//        }
-//
-//        if(bonus_len > 0.0){
-//            event.getEffectInstance().duration *= bonus_len;
-//            event.getEffectInstance().strength *= bonus_len;
-//        }
-//    }
+    @SubscribeEvent
+    public static void playerLogin(PlayerEvent.PlayerLoggedInEvent event) {
+        event.getEntity().getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+            if (a.getLoginFirst()) {
+                if (Objects.equals(event.getEntity().getUUID().toString(), "2980a99e-8582-4f63-9b82-f7117bc8be2c")) {
+                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.MANA_RING_10.get(), 2));
+                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.ESSENCE_LOTUS_10.get(), 1));
+                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.MONOCLE_10.get(), 1));
+                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.ETERNAL_RUNE.get(), 5));
+
+                    a.player_arcane_level = 9;
+                    a.player_cores = Config.MAX_PLAYER_CORE.get() * 5;
+                } else {
+                    a.setLoginFirst(false);
+                }
+            }
+
+        });
+    }
+
+    @SubscribeEvent
+    public static void coresUpdated(PlayerCoresUpdated event) {
+//        ArcaneLevels.updateModifiers(event.player);
+
+    }
+
+    @SubscribeEvent
+    public static void levelsUpdated(PlayerLevelUpdated event) {
+//        ArcaneLevels.updateModifiers(event.player);
+    }
 }
+
+

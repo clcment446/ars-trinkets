@@ -1,0 +1,19 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "output": {
+    "item": "ars_trinkets:holy_heart"
+  },
+  "pedestalItems": [
+    {
+      "item": "ars_trinkets:mana_core_1"
+    },
+    {
+      "item": "minecraft:enchanted_golden_apple"
+    }
+  ],
+  "reagent": [
+    []
+  ],
+  "sourceCost": 0
+}

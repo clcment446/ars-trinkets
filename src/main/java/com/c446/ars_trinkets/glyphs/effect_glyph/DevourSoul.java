@@ -33,27 +33,25 @@ public class DevourSoul extends AbstractEffect implements IDamageEffect {
 
     @Override
     protected int getDefaultManaCost() {
-        return 0;
+        return 3000;
     }
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity living && world instanceof ServerLevel level) {
             if (living != shooter) {
-
-
                 float health = living.getHealth();
                 Player player = (Player) shooter;
                 player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> soulRef = a.getPlayerSoulRefinement());
-                if (soulRef > health * health) {
+                if (soulRef > health * health * health*5) {
                     Vec3 pos = living.getEyePosition();
-                    attemptDamage(level, shooter, spellStats, spellContext, resolver, living, DamageUtil.source(level, DamageTypes.MAGIC, shooter), (float) (health * 100.0));
+                    attemptDamage(level, shooter, spellStats, spellContext, resolver, living, DamageUtil.source(level, DamageTypes.MAGIC, shooter), (health));
                     level.sendParticles(ParticleTypes.SCULK_SOUL, pos.x, pos.y, pos.z, 100, 0, 0, 0, 2);
-                    player.setHealth(player.getMaxHealth()/3);
+                    player.setHealth(player.getHealth()/5+1);
                     player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.devour"), true);
                     player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
                         a.setPlayerSoulRefinement((int) (a.getPlayerSoulRefinement() + 20 * health));
-                        a.setCollectedSouls((int) (a.getPlayerCollectedSouls() + 10 * health));
+                        a.setCollectedSouls((int) (a.getPlayerCollectedSouls() + 20 * health));
                     });
                 }
 //                else {

@@ -2,7 +2,10 @@ package com.c446.ars_trinkets.perks;
 
 import com.c446.ars_trinkets.ArsTrinkets;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -24,8 +27,12 @@ public class PerkAttributes {
     public static final RegistryObject<Attribute> TOTAL_MANA_BOOST;
     public static final RegistryObject<Attribute> TOTAL_MANA_REGEN_BOOST;
     public static final RegistryObject<Attribute> SOUL_STEALER;
-    public static final RegistryObject<Attribute> POTION_LENGTH;
-    public static final RegistryObject<Attribute> POTION_STRENGTH;
+    public static final RegistryObject<Attribute> FLAT_REGEN_BOOST;
+    public static final RegistryObject<Attribute> FLAT_MANA_BOOST;
+    public static final RegistryObject<Attribute> ALL_DAMAGE_REDUCTION;
+
+
+
 
 
     public PerkAttributes() {
@@ -78,19 +85,31 @@ public class PerkAttributes {
                 },
                 "9937214c-3a59-4573-8dfd-c9c17eda283b"
         );
-        POTION_LENGTH = registerAttribute("ars_trinkets.perk.potion_length", (id) ->
+        FLAT_REGEN_BOOST = registerAttribute("ars_trinkets.perk.mana_boost_flat", (id) ->
                 {
-                    return (new RangedAttribute(id, 1.0, 1.0, 1024.0)).setSyncable(true);
+                    return (new RangedAttribute(id, 0, -Integer.MAX_VALUE, Integer.MAX_VALUE)).setSyncable(true);
                 },
                 "223f95c1-2c6d-4e04-92b9-8f3e6351d343"
         );
 
 
-        POTION_STRENGTH = registerAttribute("ars_trinkets.perk.potion_strength", (id) ->
+        FLAT_MANA_BOOST = registerAttribute("ars_trinkets.perk.mana_regen_flat", (id) ->
                 {
-                    return (new RangedAttribute(id, 1.0, 1.0, 1024.0)).setSyncable(true);
+                    return (new RangedAttribute(id, 0.0, -Integer.MAX_VALUE, Integer.MAX_VALUE)).setSyncable(true);
                 },
                 "e0f6483e-92b4-48d5-b67d-90e552147743"
         );
+        ALL_DAMAGE_REDUCTION = registerAttribute("ars_trinkets.perk.damage_reduction_global", (id) ->
+                {
+                    return (new RangedAttribute(id, 0, 0, 100)).setSyncable(true);
+                },
+                "a73e41ae-2a90-4e44-84e5-1abba980ce11"
+        );
+    }
+    public static double getAttributeValue(LivingEntity entity, Attribute attribute){
+        AttributeInstance inst = entity.getAttribute(attribute);
+        if (inst == null) return -Integer.MAX_VALUE;
+        else return inst.getValue();
     }
 }
+

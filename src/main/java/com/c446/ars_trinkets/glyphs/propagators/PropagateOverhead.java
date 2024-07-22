@@ -1,10 +1,12 @@
 package com.c446.ars_trinkets.glyphs.propagators;
 
+import com.c446.ars_trinkets.ArsTrinkets;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
@@ -19,10 +21,13 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class PropagateOverhead extends AbstractEffect implements IPropagator {
-    public static PropagateOverhead INSTANCE = new PropagateOverhead("propagate_overhead","Propagate Overhead");
-
+    public static PropagateOverhead INSTANCE = new PropagateOverhead(new ResourceLocation(ArsTrinkets.MOD_ID+"propagate_overhead"),"Propagate Overhead");
     private PropagateOverhead(String tag, String description) {
         super(ModRegistry.getGlyphName(tag),description);
+    }
+
+    public PropagateOverhead(ResourceLocation resourceLocation, String name) {
+        super(resourceLocation, name);
     }
 
     @Override

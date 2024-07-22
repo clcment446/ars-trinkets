@@ -1,8 +1,10 @@
 package com.c446.ars_trinkets.glyphs.forms;
 
+import com.c446.ars_trinkets.ArsTrinkets;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
@@ -19,10 +21,14 @@ import java.util.Objects;
 import java.util.Set;
 
 public class FormOverhead extends AbstractCastMethod {
-    public static FormOverhead INSTANCE = new FormOverhead("overhead","overhead");
+    public static FormOverhead INSTANCE = new FormOverhead(new ResourceLocation(ArsTrinkets.MOD_ID+"overhead"),"Overhead");;
 
     public FormOverhead(String tag, String description) {
         super(ModRegistry.getGlyphName(tag),description);
+    }
+
+    public FormOverhead(ResourceLocation resourceLocation, String name) {
+        super(resourceLocation, name);
     }
 
     public CastResolveType onCast(@Nullable ItemStack stack, LivingEntity caster, Level world, SpellStats stats, SpellContext context, SpellResolver resolver) {

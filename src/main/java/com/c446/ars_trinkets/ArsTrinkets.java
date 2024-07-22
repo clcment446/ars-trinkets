@@ -39,8 +39,6 @@ public class ArsTrinkets {
         modbus.addListener(this::doTabThings);
         modbus.addListener(ModEvents::registerCapabilities);
         ModLoadingContext.get().registerConfig(ModConfig.Type.SERVER, Config.SERVER_CONFIG);
-
-
         MinecraftForge.EVENT_BUS.register(this);
     }
 

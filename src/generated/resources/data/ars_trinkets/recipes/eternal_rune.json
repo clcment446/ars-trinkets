@@ -6,6 +6,18 @@
   },
   "pedestalItems": [
     {
+      "item": "ars_trinkets:mana_core_3"
+    },
+    {
+      "item": "ars_trinkets:mana_core_3"
+    },
+    {
+      "item": "ars_trinkets:mana_core_3"
+    },
+    {
+      "item": "ars_trinkets:mana_core_3"
+    },
+    {
       "item": "ars_trinkets:mage_rune_greater"
     },
     {
@@ -20,7 +32,7 @@
   ],
   "reagent": [
     {
-      "item": "ars_trinkets:mana_core_8"
+      "item": "minecraft:crying_obsidian"
     }
   ],
   "sourceCost": 0

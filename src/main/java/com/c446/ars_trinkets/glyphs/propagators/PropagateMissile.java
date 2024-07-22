@@ -1,5 +1,6 @@
 package com.c446.ars_trinkets.glyphs.propagators;
 
+import com.c446.ars_trinkets.ArsTrinkets;
 import com.c446.ars_trinkets.entities.EntityMissileSpell;
 import com.c446.ars_trinkets.glyphs.forms.FormMissile;
 import com.c446.ars_trinkets.registry.ModRegistry;
@@ -8,6 +9,7 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAccelerate;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSplit;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -24,12 +26,12 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class PropagateMissile extends AbstractEffect implements IPropagator{
-    public static PropagateMissile INSTANCE = new PropagateMissile("propagate_missile","Propagate Missile");
+    public static PropagateMissile INSTANCE = new PropagateMissile(new ResourceLocation(ArsTrinkets.MOD_ID+"propagate_missile"),"Propagate Missile");;
 /**
  * Code stolen from the Ars Omega project as it has not yet updated from 1.19.2
  * */
-    private PropagateMissile(String tag, String description) {
-        super(ModRegistry.getGlyphName(tag),description);
+    private PropagateMissile(ResourceLocation tag, String description) {
+        super(tag,description);
     }
 
     @Override

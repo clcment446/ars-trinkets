@@ -18,18 +18,46 @@ public class ArcaneRunes extends RegularItems implements ICurioItem, IManaEquipm
     double health;
     double damage;
     double luck;
-    double all_stats;
+    double toughness;
     double damage_boost;
     double totalmanaboostpct;
     double totalmanaregenboostpct;
     double attack_speed;
+    boolean thearch_crown;
     public ArcaneRunes(Properties properties,
                        double armor,
                        double soul_steal,
                        double health,
                        double damage,
                        double luck,
-                       double all_stats,
+                       double toughness,
+                       double damage_boost,
+                       double total_mana_boost_pct,
+                       double total_mana_regen_boost_pct,
+                       double attack_speed,
+                       boolean thearch_crown
+
+    ) {
+        super(properties);
+        this.armor = armor;
+        this.soulsteal = soul_steal;
+        this.health = health;
+        this.damage = damage;
+        this.luck = luck;
+        this.toughness = toughness;
+        this.damage_boost = damage_boost;
+        this.totalmanaboostpct = total_mana_boost_pct;
+        this.totalmanaregenboostpct = total_mana_regen_boost_pct;
+        this.attack_speed = attack_speed;
+        this.thearch_crown = thearch_crown;
+    }
+    public ArcaneRunes(Properties properties,
+                       double armor,
+                       double soul_steal,
+                       double health,
+                       double damage,
+                       double luck,
+                       double toughness,
                        double damage_boost,
                        double total_mana_boost_pct,
                        double total_mana_regen_boost_pct,
@@ -41,7 +69,7 @@ public class ArcaneRunes extends RegularItems implements ICurioItem, IManaEquipm
         this.health = health;
         this.damage = damage;
         this.luck = luck;
-        this.all_stats = all_stats;
+        this.toughness = toughness;
         this.damage_boost = damage_boost;
         this.totalmanaboostpct = total_mana_boost_pct;
         this.totalmanaregenboostpct = total_mana_regen_boost_pct;
@@ -56,7 +84,7 @@ public class ArcaneRunes extends RegularItems implements ICurioItem, IManaEquipm
     public double getHealth(ItemStack stack){return health/100;}
     public double getBonusDamage(ItemStack stack){return damage/100;}
     public double getLuck(ItemStack stack){return luck/100;}
-    public double getAllStats(ItemStack stack){return all_stats/100;}
+    public double getToighness(ItemStack stack){return toughness;}
     public double getDamage_boost(ItemStack stack){return damage_boost/100;}
     public double getTotalManaBoostPCT(ItemStack stack){return totalmanaboostpct/100;}
     public double getTotalManaRegenBoostPCT(ItemStack stack){return totalmanaregenboostpct/100;}
@@ -78,14 +106,15 @@ public class ArcaneRunes extends RegularItems implements ICurioItem, IManaEquipm
         attributes.put((Attribute) Attributes.LUCK, new AttributeModifier(uuid, "runestone_luck_curio", (double) this.getLuck(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
 
         attributes.put((Attribute)  Attributes.ARMOR, new AttributeModifier(uuid, "runestone_armor_curio", (double) this.getArmor(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put((Attribute) Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "runestone_toughness_curio", (double) this.getToighness(stack), AttributeModifier.Operation.ADDITION));
+        attributes.put((Attribute) Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "runestone_toughness_curio", (double) this.getToighness(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
         attributes.put((Attribute) PerkAttributes.SOUL_STEALER.get(), new AttributeModifier(uuid, "runestone_soul_stealer_curio", (double) this.getSoulsteal(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+
 
         attributes.put((Attribute) PerkAttributes.SPELL_DAMAGE_PCT.get(), new AttributeModifier(uuid, "runestone_spell_damage_pct_curio", (double) this.getDamage_boost(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
         attributes.put((Attribute) PerkAttributes.TOTAL_MANA_BOOST.get(), new AttributeModifier(uuid, "runestone_mana_boost_curio", (double) this.getTotalManaBoostPCT(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
         attributes.put((Attribute) PerkAttributes.TOTAL_MANA_REGEN_BOOST.get(), new AttributeModifier(uuid, "runestone_mana_regen_boost_curio", (double) this.getTotalManaRegenBoostPCT(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
         return attributes;
-
-
     }
 }
 
