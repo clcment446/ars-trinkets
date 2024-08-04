@@ -2,6 +2,7 @@ package com.c446.ars_trinkets.glyphs.effect_glyph;
 
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.registry.ModRegistry;
 import com.c446.ars_trinkets.util.ParticleUtil;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
@@ -10,6 +11,7 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
@@ -56,9 +58,14 @@ public class SacrificeHealth extends AbstractEffect implements IDamageEffect {
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+
+        if (resolver.hasFocus(ModRegistry.UNHOLY_FOCUS.get())) {
+            spellStats.setAmpMultiplier(spellStats.getAmpMultiplier() + 2);
+            spellStats.setDurationMultiplier(spellStats.getDurationMultiplier() + 2);
+        }
         Entity entity = rayTraceResult.getEntity();
         if (entity instanceof LivingEntity living && world instanceof ServerLevel level && shooter instanceof Player player) {
-            DamageSource source = DamageUtil.source(level, DamageTypes.PLAYER_ATTACK, shooter);;
+            DamageSource source = DamageUtil.source(level, DamageTypes.IN_FIRE, shooter);;
             Vec3 pos = living.getEyePosition();
             float health = (float) (0.11* spellStats.getAmpMultiplier() * player.getMaxHealth());
             player.setHealth((player.getMaxHealth() - health)+1);

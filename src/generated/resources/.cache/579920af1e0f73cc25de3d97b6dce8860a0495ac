@@ -1,4 +1,4 @@
-// 1.20.1	2024-07-10T22:32:33.3369261	Example Apparatus
+// 1.20.1	2024-07-27T11:21:13.9697434	Example Apparatus
 3663132a8a40d6dd7da8b123e9f23691ff1c0177 data/ars_trinkets/recipes/death_rune.json
 347556c2909cdce75e5e96136b820b525daeedec data/ars_trinkets/recipes/death_rune_greater.json
 7f343c97493d7ade812c6b153d09a432a32300c2 data/ars_trinkets/recipes/death_rune_lesser.json
@@ -19,8 +19,8 @@ baff1ef2f22a7670bef4ba2f5621e80b74427c38 data/ars_trinkets/recipes/mage_rune.jso
 808c60fc5f9b4640eb182fa88c65a5059bae22a2 data/ars_trinkets/recipes/mage_rune_greater.json
 6c46d6d7918b51b56ddf39c364549a22af3dd685 data/ars_trinkets/recipes/mage_rune_lesser.json
 cc3c1cc1c79d7b3713f8ab599fdb1033b06daab1 data/ars_trinkets/recipes/mana_core_1.json
-c2da2d60bc5b612454eb9dc5207f86d0bd45cd19 data/ars_trinkets/recipes/mana_core_2.json
-3ff8d57524cd0ee4232a68a827c50521822a78ef data/ars_trinkets/recipes/mana_core_3.json
+5e8008fe4bb2b00543ab74994918e7e1e003f7ff data/ars_trinkets/recipes/mana_core_2.json
+d1dc58c0ec55f6d1c0a9d36d032547ccb7f6e5d9 data/ars_trinkets/recipes/mana_core_3.json
 36d11480f6c52cb8402b50db0f6aadaf1d0e0429 data/ars_trinkets/recipes/mana_stone_10.json
 84cf61e5e93cbe020cbd03aeffb325c011c2d6c9 data/ars_trinkets/recipes/mana_stone_3.json
 c7550c98b9361154e353fbf2e88a14587d0569e0 data/ars_trinkets/recipes/mana_stone_4.json
@@ -40,6 +40,7 @@ c4fcbc4b78e6953610d532caa2902cde8bd53ff4 data/ars_trinkets/recipes/monocle_7.jso
 e854d55b376fca67c272c63da2c6f0b279d245c2 data/ars_trinkets/recipes/monocle_8.json
 c3b6b2b0f4e059cb54b75c7d2e469099aac533c1 data/ars_trinkets/recipes/monocle_9.json
 c72fc8d803ef82a201c8ef818f775250ee733fb2 data/ars_trinkets/recipes/putrid_heart.json
+99021623849bcee314223d147c37367c07c99c2a data/ars_trinkets/recipes/unholy_focus.json
 673e6375222089fd3e1138dcd10a722cf2074b7b data/ars_trinkets/recipes/warrior_rune.json
 53e10422b70e853fcec55f2534b3c88009c0666f data/ars_trinkets/recipes/warrior_rune_greater.json
 d5b7b306b21afec23a0bf84a2c04bc0a2d568cec data/ars_trinkets/recipes/warrior_rune_lesser.json

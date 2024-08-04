@@ -1,38 +1,52 @@
 package com.c446.ars_trinkets.registry;
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.entities.EntityMissileSpell;
 import com.c446.ars_trinkets.entities.effects.AuraEffect;
 import com.c446.ars_trinkets.item.*;
 import com.c446.ars_trinkets.perks.PerkAttributes;
+import com.c446.ars_trinkets.util.ParticleUtil;
 import com.hollingsworth.arsnouveau.api.perk.IPerk;
 import com.hollingsworth.arsnouveau.api.registry.PerkRegistry;
 import com.hollingsworth.arsnouveau.api.sound.SpellSound;
+import com.hollingsworth.arsnouveau.api.spell.SpellSchool;
+import com.hollingsworth.arsnouveau.common.potions.PublicEffect;
+import com.hollingsworth.arsnouveau.setup.config.ServerConfig;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.alchemy.Potion;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.UUID;
+
 
 public class ModRegistry {
-
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, ArsTrinkets.MOD_ID);
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, ArsTrinkets.MOD_ID);
     public static final DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, ArsTrinkets.MOD_ID);
-
     public static final DeferredRegister<MobEffect> EFFECTS = DeferredRegister.create(ForgeRegistries.MOB_EFFECTS, ArsTrinkets.MOD_ID);
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITY_TYPES, ArsTrinkets.MOD_ID);
     public static final DeferredRegister<Attribute> PERKS = DeferredRegister.create(ForgeRegistries.ATTRIBUTES, ArsTrinkets.MOD_ID);
+
     public static void registerRegistries(IEventBus bus) {
         BLOCKS.register(bus);
         ITEMS.register(bus);
@@ -40,10 +54,11 @@ public class ModRegistry {
         ENTITIES.register(bus);
         EFFECTS.register(bus);
         PerkAttributes.ATTRIBUTES.register(bus);
-
     }
 
     //    public static final RegistryObject<Item> EXAMPLE;
+    public static final RegistryObject<MobEffect> WITHER_SHIELD_EFFECT;
+
     public static final RegistryObject<Item> ESSENCE_LOTUS_3;
     public static final RegistryObject<Item> ESSENCE_LOTUS_4;
     public static final RegistryObject<Item> ESSENCE_LOTUS_5;
@@ -101,6 +116,7 @@ public class ModRegistry {
     public static RegistryObject<Item> HOLY_HEART = null;
     public static RegistryObject<Item> PUTRID_HEART = null;
     public static RegistryObject<Item> THEARCH_CROWN = null;
+    public static RegistryObject<Item> UNHOLY_FOCUS = null;
     public static final RegistryObject<EntityType<? extends EntityMissileSpell>> ENTITY_MISSILE = ENTITIES.register("missile_spell_proj", () -> EntityType.Builder.<EntityMissileSpell>of(EntityMissileSpell::new, MobCategory.MISC).sized(0.9F, 3.0F).build(new ResourceLocation(ArsTrinkets.MOD_ID, "missile_spell_proj").toString()));
 
 
@@ -108,15 +124,29 @@ public class ModRegistry {
         return new ResourceLocation(ArsTrinkets.MOD_ID, ("glyph_" + name));
     }
 
+    public static SpellSchool UNHOLY = new SpellSchool("void");
     public static final RegistryObject<MobEffect> AURA_EFFECT = EFFECTS.register("glyph_aura", AuraEffect::new);
 
     public static void registerPerk(IPerk perk) {
         PerkRegistry.registerPerk(perk);
     }
 
-    public static SpellSound EXAMPLE_SPELL_SOUND;
+
 
     static {
+        WITHER_SHIELD_EFFECT = EFFECTS.register("glyph_wither_shield", () -> {
+            return new PublicEffect(MobEffectCategory.BENEFICIAL, ParticleUtil.createIntColor(10, 30, 70)) {
+                public void addAttributeModifiers(LivingEntity pLivingEntity, AttributeMap pAttributeMap, int pAmplifier) {
+                    AttributeModifier toughnessMod = new AttributeModifier(UUID.fromString("ad9665ac-3a34-49e4-a7d7-795b6639ecd2"), this::getDescriptionId, (double) ((Integer) Config.WITHER_SHIELD_TOUGHNESS.get() * (0.2 + pAmplifier)), AttributeModifier.Operation.MULTIPLY_TOTAL);
+                    AttributeModifier armorMod = new AttributeModifier(UUID.fromString("fe256933-d73d-4947-a911-4d4cb3eac81c"), this::getDescriptionId, (double) ((Integer) Config.WITHER_SHIELD_ARMOR.get() * (0.2 + pAmplifier)), AttributeModifier.Operation.MULTIPLY_TOTAL);
+                    this.getAttributeModifiers().put((Attribute) Attributes.ARMOR_TOUGHNESS, toughnessMod);
+                    this.getAttributeModifiers().put((Attribute) Attributes.ARMOR, armorMod);
+                    super.addAttributeModifiers(pLivingEntity, pAttributeMap, pAmplifier);
+                }
+            };
+        });
+
+        UNHOLY_FOCUS = ITEMS.register("unholy_focus", () -> new UnholyFocus(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1).fireResistant()));
         //trinkets
         ESSENCE_LOTUS_3 = ITEMS.register("essence_lotus_3", () -> new MagicItems(new Item.Properties()/*.tab(...)*/.rarity(Rarity.COMMON).stacksTo(1), 15, 10, 0, 0));
         ESSENCE_LOTUS_4 = ITEMS.register("essence_lotus_4", () -> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).stacksTo(1), 30, 20, 0, 0));
@@ -126,7 +156,194 @@ public class ModRegistry {
         ESSENCE_LOTUS_8 = ITEMS.register("essence_lotus_8", () -> new MagicItems(new Item.Properties().rarity(Rarity.RARE).stacksTo(1), 90, 320, 0, 0));
         ESSENCE_LOTUS_9 = ITEMS.register("essence_lotus_9", () -> new MagicItems(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), 105, 640, 0, 0));
         ESSENCE_LOTUS_10 = ITEMS.register("essence_lotus_10", () -> new MagicItems(new Item.Properties().rarity(Rarity.EPIC).stacksTo(1), 250, 1250, 0, 0));
+// FORMAT : ... = ITEMS.register(path_name, () -> new MagicItems(properties, $mana_boost, $regen_boost, mana_total_boost, $damage_%_boost);
 
+
+        /*
+        * ESSENCE_LOTUS_3 = ITEMS.register("essence_lotus_3", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.COMMON).stacksTo(1),
+                Config.essence_lotus_3_mana_boost.get(),
+                Config.essence_lotus_3_regen_boost.get(),
+                Config.essence_lotus_3_mana_total_boost.get(),
+                Config.essence_lotus_3_damage_total_boost.get()
+        ));
+        ESSENCE_LOTUS_4 = ITEMS.register("essence_lotus_4", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.COMMON).stacksTo(1),
+                Config.essence_lotus_4_mana_boost.get(),
+                Config.essence_lotus_4_regen_boost.get(),
+                Config.essence_lotus_4_mana_total_boost.get(),
+                Config.essence_lotus_4_damage_total_boost.get()
+        ));
+        ESSENCE_LOTUS_5 = ITEMS.register("essence_lotus_5", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1),
+                Config.essence_lotus_5_mana_boost.get(),
+                Config.essence_lotus_5_regen_boost.get(),
+                Config.essence_lotus_5_mana_total_boost.get(),
+                Config.essence_lotus_5_damage_total_boost.get()
+        ));
+        ESSENCE_LOTUS_6 = ITEMS.register("essence_lotus_6", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1),
+                Config.essence_lotus_6_mana_boost.get(),
+                Config.essence_lotus_6_regen_boost.get(),
+                Config.essence_lotus_6_mana_total_boost.get(),
+                Config.essence_lotus_6_damage_total_boost.get()
+        ));
+        ESSENCE_LOTUS_7 = ITEMS.register("essence_lotus_7", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.RARE).stacksTo(1),
+                Config.essence_lotus_7_mana_boost.get(),
+                Config.essence_lotus_7_regen_boost.get(),
+                Config.essence_lotus_7_mana_total_boost.get(),
+                Config.essence_lotus_7_damage_total_boost.get()
+        ));
+        ESSENCE_LOTUS_8 = ITEMS.register("essence_lotus_8", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.RARE).stacksTo(1),
+                Config.essence_lotus_8_mana_boost.get(),
+                Config.essence_lotus_8_regen_boost.get(),
+                Config.essence_lotus_8_mana_total_boost.get(),
+                Config.essence_lotus_8_damage_total_boost.get()
+        ));
+        ESSENCE_LOTUS_9 = ITEMS.register("essence_lotus_9", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),
+                Config.essence_lotus_9_mana_boost.get(),
+                Config.essence_lotus_9_regen_boost.get(),
+                Config.essence_lotus_9_mana_total_boost.get(),
+                Config.essence_lotus_9_damage_total_boost.get()
+        ));
+        ESSENCE_LOTUS_10 = ITEMS.register("essence_lotus_10", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),
+                Config.essence_lotus_10_mana_boost.get(),
+                Config.essence_lotus_10_regen_boost.get(),
+                Config.essence_lotus_10_mana_total_boost.get(),
+                Config.essence_lotus_10_damage_total_boost.get()
+        ));
+        MANA_RING_3 = ITEMS.register("mana_ring_3", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.COMMON).stacksTo(1),
+                Config.mana_ring_3_mana_boost.get(),
+                Config.mana_ring_3_regen_boost.get(),
+                Config.mana_ring_3_mana_total_boost.get(),
+                Config.mana_ring_3_damage_total_boost.get()
+        ));
+        MANA_RING_4 = ITEMS.register("mana_ring_4", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.COMMON).stacksTo(1),
+                Config.mana_ring_4_mana_boost.get(),
+                Config.mana_ring_4_regen_boost.get(),
+                Config.mana_ring_4_mana_total_boost.get(),
+                Config.mana_ring_4_damage_total_boost.get()
+        ));
+        MANA_RING_5 = ITEMS.register("mana_ring_5", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1),
+                Config.mana_ring_5_mana_boost.get(),
+                Config.mana_ring_5_regen_boost.get(),
+                Config.mana_ring_5_mana_total_boost.get(),
+                Config.mana_ring_5_damage_total_boost.get()
+        ));
+        MANA_RING_6 = ITEMS.register("mana_ring_6", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1),
+                Config.mana_ring_6_mana_boost.get(),
+                Config.mana_ring_6_regen_boost.get(),
+                Config.mana_ring_6_mana_total_boost.get(),
+                Config.mana_ring_6_damage_total_boost.get()
+        ));
+        MANA_RING_7 = ITEMS.register("mana_ring_7", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.RARE).stacksTo(1),
+                Config.mana_ring_7_mana_boost.get(),
+                Config.mana_ring_7_regen_boost.get(),
+                Config.mana_ring_7_mana_total_boost.get(),
+                Config.mana_ring_7_damage_total_boost.get()
+        ));
+        MANA_RING_8 = ITEMS.register("mana_ring_8", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.RARE).stacksTo(1),
+                Config.mana_ring_8_mana_boost.get(),
+                Config.mana_ring_8_regen_boost.get(),
+                Config.mana_ring_8_mana_total_boost.get(),
+                Config.mana_ring_8_damage_total_boost.get()
+        ));
+        MANA_RING_9 = ITEMS.register("mana_ring_9", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),
+                Config.mana_ring_9_mana_boost.get(),
+                Config.mana_ring_9_regen_boost.get(),
+                Config.mana_ring_9_mana_total_boost.get(),
+                Config.mana_ring_9_damage_total_boost.get()
+        ));
+        MANA_RING_10 = ITEMS.register("mana_ring_10", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),
+                Config.mana_ring_10_mana_boost.get(),
+                Config.mana_ring_10_regen_boost.get(),
+                Config.mana_ring_10_mana_total_boost.get(),
+                Config.mana_ring_10_damage_total_boost.get()
+        ));
+        MONOCLE_1 = ITEMS.register("monocle_1", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.COMMON).stacksTo(1),
+                Config.monocle_1_mana_boost.get(),
+                Config.monocle_1_regen_boost.get(),
+                Config.monocle_1_mana_total_boost.get(),
+                Config.monocle_1_damage_total_boost.get()
+        ));
+        MONOCLE_2 = ITEMS.register("monocle_2", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.COMMON).stacksTo(1),
+                Config.monocle_2_mana_boost.get(),
+                Config.monocle_2_regen_boost.get(),
+                Config.monocle_2_mana_total_boost.get(),
+                Config.monocle_2_damage_total_boost.get()
+        ));
+        MONOCLE_3 = ITEMS.register("monocle_3", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.COMMON).stacksTo(1),
+                Config.monocle_3_mana_boost.get(),
+                Config.monocle_3_regen_boost.get(),
+                Config.monocle_3_mana_total_boost.get(),
+                Config.monocle_3_damage_total_boost.get()
+        ));
+        MONOCLE_4 = ITEMS.register("monocle_4", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.COMMON).stacksTo(1),
+                Config.monocle_4_mana_boost.get(),
+                Config.monocle_4_regen_boost.get(),
+                Config.monocle_4_mana_total_boost.get(),
+                Config.monocle_4_damage_total_boost.get()
+        ));
+        MONOCLE_5 = ITEMS.register("monocle_5", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.COMMON).stacksTo(1),
+                Config.monocle_5_mana_boost.get(),
+                Config.monocle_5_regen_boost.get(),
+                Config.monocle_5_mana_total_boost.get(),
+                Config.monocle_5_damage_total_boost.get()
+        ));
+        MONOCLE_6 = ITEMS.register("monocle_6", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1),
+                Config.monocle_6_mana_boost.get(),
+                Config.monocle_6_regen_boost.get(),
+                Config.monocle_6_mana_total_boost.get(),
+                Config.monocle_6_damage_total_boost.get()
+        ));
+        MONOCLE_7 = ITEMS.register("monocle_7", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1),
+                Config.monocle_7_mana_boost.get(),
+                Config.monocle_7_regen_boost.get(),
+                Config.monocle_7_mana_total_boost.get(),
+                Config.monocle_7_damage_total_boost.get()
+        ));
+        MONOCLE_8 = ITEMS.register("monocle_8", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.RARE).stacksTo(1),
+                Config.monocle_8_mana_boost.get(),
+                Config.monocle_8_regen_boost.get(),
+                Config.monocle_8_mana_total_boost.get(),
+                Config.monocle_8_damage_total_boost.get()
+        ));
+        MONOCLE_9 = ITEMS.register("monocle_9", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.RARE).stacksTo(1),
+                Config.monocle_9_mana_boost.get(),
+                Config.monocle_9_regen_boost.get(),
+                Config.monocle_9_mana_total_boost.get(),
+                Config.monocle_9_damage_total_boost.get()
+        ));
+        MONOCLE_10 = ITEMS.register("monocle_10", () -> new MagicItems(
+                new Item.Properties().rarity(Rarity.EPIC).stacksTo(1),
+                Config.monocle_10_mana_boost.get(),
+                Config.monocle_10_regen_boost.get(),
+                Config.monocle_10_mana_total_boost.get(),
+                Config.monocle_10_damage_total_boost.get()
+        ));
+        *
+        * */
         MANA_RING_3 = ITEMS.register("mana_stone_3", () -> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).stacksTo(1), 25, -5, 0, 0));
         MANA_RING_4 = ITEMS.register("mana_stone_4", () -> new MagicItems(new Item.Properties().rarity(Rarity.COMMON).stacksTo(1), 50, -10, 0, 0));
         MANA_RING_5 = ITEMS.register("mana_stone_5", () -> new MagicItems(new Item.Properties().rarity(Rarity.UNCOMMON).stacksTo(1), 75, -15, 0, 0));
@@ -151,22 +368,75 @@ public class ModRegistry {
         MANA_CORE_2 = ITEMS.register("mana_core_2", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(16), new FoodProperties.Builder().fast().saturationMod(100).nutrition(100).alwaysEat().build(), true, 2));
         MANA_CORE_3 = ITEMS.register("mana_core_3", () -> new ManaCore(new Item.Properties().rarity(Rarity.EPIC).stacksTo(16), new FoodProperties.Builder().fast().saturationMod(150).nutrition(150).alwaysEat().build(), true, 3));
 
-        COPPER_ESSENCE = ITEMS.register("copper_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)));
-        IRON_ESSENCE = ITEMS.register("iron_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)));
-        SILVER_ESSENCE = ITEMS.register("silver_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)));
-        GOLD_ESSENCE = ITEMS.register("gold_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)));
-        CRYSTAL_ESSENCE = ITEMS.register("crystal_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.UNCOMMON)));
-        GREEN_ESSENCE = ITEMS.register("green_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.UNCOMMON), true));
-        RED_ESSENCE = ITEMS.register("red_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.RARE), true));
-        WHITE_ESSENCE = ITEMS.register("white_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.RARE), true));
-        YELLOW_ESSENCE = ITEMS.register("yellow_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.EPIC), true));
-        PURPLE_ESSENCE = ITEMS.register("purple_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.EPIC), true));
+        COPPER_ESSENCE = ITEMS.register("copper_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)
+                .food(new FoodProperties.Builder().nutrition(0)
+                        .saturationMod(0)
+                        .alwaysEat()
+                        .fast()
+                        .build()), 50)
+        );
+        IRON_ESSENCE = ITEMS.register("iron_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)
+                .food(new FoodProperties.Builder().nutrition(0)
+                        .saturationMod(0)
+                        .alwaysEat()
+                        .fast()
+                        .build()), 75)
+        );
+        SILVER_ESSENCE = ITEMS.register("silver_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)
+                .food(new FoodProperties.Builder().nutrition(0)
+                        .saturationMod(0)
+                        .alwaysEat()
+                        .fast()
+                        .build()), 100)
+        );
+        GOLD_ESSENCE = ITEMS.register("gold_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.COMMON)
+                .food(new FoodProperties.Builder().nutrition(2)
+                        .saturationMod(0.05F)
+                        .alwaysEat()
+                        .fast()
+                        .build()), 50)
+        );
+        CRYSTAL_ESSENCE = ITEMS.register("crystal_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).rarity(Rarity.UNCOMMON)
+                .food(new FoodProperties.Builder().nutrition(5)
+                        .saturationMod(0.1F)
+                        .alwaysEat()
+                        .fast()
+                        .build()), 250));
+        GREEN_ESSENCE = ITEMS.register("green_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.UNCOMMON)
+                .food(new FoodProperties.Builder().nutrition(10)
+                        .saturationMod(0.2F)
+                        .alwaysEat()
+                        .fast()
+                        .build()), 500, true));
+        RED_ESSENCE = ITEMS.register("red_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.RARE)
+                .food(new FoodProperties.Builder().nutrition(15)
+                        .saturationMod(0.3F)
+                        .alwaysEat()
+                        .fast()
+                        .build()), 1000, true));
+        WHITE_ESSENCE = ITEMS.register("white_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.RARE)
+                .food(new FoodProperties.Builder().nutrition(20)
+                        .saturationMod(0.5F)
+                        .alwaysEat()
+                        .fast()
+                        .build()), 1500, true));
+        YELLOW_ESSENCE = ITEMS.register("yellow_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.EPIC)
+                .food(new FoodProperties.Builder().nutrition(35)
+                        .saturationMod(0.75F)
+                        .alwaysEat()
+                        .fast()
+                        .build()), 2500, true));
+        PURPLE_ESSENCE = ITEMS.register("purple_essence", () -> new EssenceItem(new Item.Properties().stacksTo(64).fireResistant().rarity(Rarity.EPIC)
+                .food(new FoodProperties.Builder().nutrition(50)
+                        .saturationMod(1)
+                        .alwaysEat()
+                        .fast()
+                        .build()), 5000, true));
 
         ETERNAL_RUNE = ITEMS.register("eternal_rune", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 50, 125, 60, 50, 50, 0, 60, 60, 60, 1));
 
-
-        HOLY_HEART = ITEMS.register("holy_heart",() -> new ThatItemToChangeClassLol(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), new FoodProperties.Builder().alwaysEat().nutrition(20).saturationMod(20).build() ,false));
-        PUTRID_HEART = ITEMS.register("putrid_heart",() -> new ThatItemToChangeClassLol(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC),new FoodProperties.Builder().alwaysEat().nutrition(0).saturationMod(0).build(), true));
+        HOLY_HEART = ITEMS.register("holy_heart", () -> new ThatItemToChangeClassLol(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), new FoodProperties.Builder().alwaysEat().nutrition(20).saturationMod(20).build(), false));
+        PUTRID_HEART = ITEMS.register("putrid_heart", () -> new ThatItemToChangeClassLol(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), new FoodProperties.Builder().alwaysEat().nutrition(0).saturationMod(0).build(), true));
 
         HOLY_RUNE_GREATER = ITEMS.register("life_rune_greater", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 0, 0, 50, 0, 30, 0, 0, 0, 0, 0));
         SOUL_STEALER_RUNE_GREATER = ITEMS.register("death_rune_greater", () -> new ArcaneRunes(new Item.Properties().stacksTo(1).rarity(Rarity.EPIC), 35, 100, 0, 0, 0, 0, 0, 0, 0, 0));

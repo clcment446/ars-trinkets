@@ -9,8 +9,10 @@ import com.c446.ars_trinkets.glyphs.forms.FormMissile;
 import com.c446.ars_trinkets.glyphs.forms.FormOverhead;
 import com.c446.ars_trinkets.glyphs.propagators.PropagateMissile;
 import com.c446.ars_trinkets.glyphs.propagators.PropagateOverhead;
+import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.enchanting_apparatus.EnchantingApparatusRecipe;
 import com.hollingsworth.arsnouveau.api.familiar.AbstractFamiliarHolder;
+import com.hollingsworth.arsnouveau.api.registry.GlyphRegistry;
 import com.hollingsworth.arsnouveau.api.registry.RitualRegistry;
 import com.hollingsworth.arsnouveau.api.ritual.AbstractRitual;
 import com.hollingsworth.arsnouveau.api.spell.AbstractCastMethod;
@@ -44,7 +46,7 @@ import java.nio.file.Path;
 import java.util.function.Consumer;
 
 import static com.c446.ars_trinkets.registry.ModRegistry.*;
-import static com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry.MANIPULATION_ESSENCE;
+import static com.hollingsworth.arsnouveau.setup.registry.ItemsRegistry.*;
 import static com.hollingsworth.arsnouveau.setup.registry.RegistryHelper.getRegistryName;
 import static net.minecraft.world.item.Items.*;
 
@@ -89,24 +91,26 @@ public class ArsProviders {
 
         @Override
         public void collectJsons(CachedOutput cache) {
-
             Path output = this.generator.getPackOutput().getOutputFolder();
-            recipes.add(get(FilterIsShifting.INSTANCE).withItem(MANIPULATION_ESSENCE).withItem(FilterIsSelf.INSTANCE.glyphItem));
-            recipes.add(get(FilterIsShifting.INSTANCE).withItem(MANIPULATION_ESSENCE).withItem(FilterIsShifting.INSTANCE.glyphItem));
+
+//            recipes.add(get(FilterIsShifting.INSTANCE).withItem(MANIPULATION_ESSENCE).withItem(FilterIsSelf.INSTANCE.getGlyph().asItem()));
+//            recipes.add(get(FilterIsNotShifting.INSTANCE).withItem(MANIPULATION_ESSENCE).withItem(FilterIsShifting.INSTANCE.getGlyph().asItem(),1));
             recipes.add(get(AuraForm.INSTANCE).withItem(MANIPULATION_ESSENCE).withItem(Items.DIAMOND_BLOCK).withItem(Items.NETHERITE_BLOCK).withItem(Items.NETHER_STAR, 7));
             recipes.add(get(WaterSpear.INSTANCE).withItem(ItemsRegistry.WATER_ESSENCE, 4).withItem(PURPLE_ESSENCE.get(), 4).withItem(DIAMOND_BLOCK, 1));
             recipes.add(get(AirSword.INSTANCE).withItem(ItemsRegistry.AIR_ESSENCE, 4).withItem(PURPLE_ESSENCE.get(), 4).withItem(NETHERITE_BLOCK, 1));
             recipes.add(get(SacrificeHealth.INSTANCE).withItem(Items.DIAMOND_SWORD).withItem(RED_ESSENCE.get(), 4).withItem(NETHERITE_INGOT, 1));
             recipes.add(get(SacrificeExperience.INSTANCE).withItem(DIAMOND_BLOCK).withItem(WHITE_ESSENCE.get(), 3).withItem(ENCHANTED_BOOK, 3).withItem(EXPERIENCE_BOTTLE, 2));
             recipes.add(get(ShadowVeil.INSTANCE).withItem(NETHERITE_INGOT).withItem(WHITE_ESSENCE.get(), 4).withItem(SCULK, 2));
-            recipes.add(get(SonicBoom.INSTANCE).withItem(DIAMOND_BLOCK).withItem(ItemsRegistry.AIR_ESSENCE, 2).withItem(SCULK, 1).withItem(PURPLE_ESSENCE.get(), 2).withItem(TNT, 2));
+            recipes.add(get(SonicBoom.INSTANCE).withItem(ItemsRegistry.AIR_ESSENCE, 2).withItem(PUTRID_HEART, 1).withItem(PURPLE_ESSENCE.get(), 2).withItem(MANA_CORE_1, 2));
             recipes.add(get(SunFlare.INSTANCE).withItem(NETHERITE_INGOT, 2).withItem(ItemsRegistry.FIRE_ESSENCE).withItem(GLOWSTONE.asItem()).withItem(PURPLE_ESSENCE.get(), 4));
-            recipes.add(get(FilterIsNotSelf.INSTANCE).withItem(FilterIsSelf.INSTANCE.glyphItem.asItem()).withItem(MANIPULATION_ESSENCE, 4));
+            recipes.add(get(FilterIsNotSelf.INSTANCE).withItem(FilterIsSelf.INSTANCE.getGlyph().asItem()).withItem(MANIPULATION_ESSENCE, 4));
             recipes.add(get(FilterIsSelf.INSTANCE).withItem(GOLDEN_CARROT).withItem(MANIPULATION_ESSENCE, 4));
-            recipes.add(get(ManaBomb.INSTANCE).withItem(ItemsRegistry.CONJURATION_ESSENCE, 3).withItem(MANIPULATION_ESSENCE, 2).withItem(PURPLE_ESSENCE.get(), 3));
-            recipes.add(get(Devour.INSTANCE).withItem(NETHER_STAR, 3).withItem(ROTTEN_FLESH, 2).withItem(SacrificeHealth.INSTANCE.glyphItem.asItem()));
-            recipes.add(get(DevourSoul.INSTANCE).withItem(NETHER_STAR, 3).withItem(WITHER_SKELETON_SKULL, 2).withItem(SacrificeExperience.INSTANCE.glyphItem.asItem()));
+            recipes.add(get(ManaBomb.INSTANCE).withItem(MANA_CORE_3, 3).withItem(PUTRID_HEART, 2).withItem(PURPLE_ESSENCE.get(), 3));
+            recipes.add(get(Devour.INSTANCE).withItem(NETHER_STAR, 3).withItem(ROTTEN_FLESH, 2).withItem(SacrificeHealth.INSTANCE.getGlyph().asItem()));
+            recipes.add(get(DevourSoul.INSTANCE).withItem(NETHER_STAR, 3).withItem(WITHER_SKELETON_SKULL).withItem(PUTRID_HEART).withItem(SacrificeExperience.INSTANCE.getGlyph().asItem(),1));
             recipes.add(get(InspectSoul.INSTANCE).withItem(NETHER_STAR).withItem(WITHER_SKELETON_SKULL, 1).withItem(SKELETON_SKULL, 1).withItem(DRAGON_HEAD, 1).withItem(ZOMBIE_HEAD, 1).withItem(MANA_CORE_1));
+            recipes.add(get(BlackFlame.INSTANCE).withItem(PURPLE_ESSENCE,5).withItem(MANA_CORE_3).withItem(PUTRID_HEART).withItem(SunFlare.INSTANCE.glyphItem.asItem(),1));
+            recipes.add(get(WitherShield.INSTANCE).withItem(PURPLE_ESSENCE,5).withItem(MANA_CORE_3).withItem(PUTRID_HEART).withItem(ENCHANTERS_SHIELD));
 
             recipes.add(get(FormMissile.INSTANCE).withItem(FIRE_CHARGE).withItem(ItemsRegistry.FIRE_ESSENCE, 2).withItem(ItemsRegistry.AIR_ESSENCE).withItem(GUNPOWDER, 2).withItem(ARROW));
             recipes.add(get(FormOverhead.INSTANCE).withItem(IRON_HELMET).withItem(STONE_PRESSURE_PLATE));
@@ -149,6 +153,12 @@ public class ArsProviders {
                     .withPedestalItem(WITHER_SKELETON_SKULL)
                     .withResult(PUTRID_HEART).build()
             );
+
+            recipes.add(builder()
+                            .withReagent(SUMMONING_FOCUS).withPedestalItem(8, MANA_CORE_3)
+                            .withResult(UNHOLY_FOCUS.get())
+                    .build()
+            );
             recipes.add(builder()
                     .withReagent(NETHER_STAR)
                     .withPedestalItem(YELLOW_ESSENCE.get())
@@ -159,16 +169,12 @@ public class ArsProviders {
                     .build());
             recipes.add(builder()
                     .withReagent(MANA_CORE_1)
-                    .withPedestalItem(PURPLE_ESSENCE.get())
-                    .withPedestalItem(PURPLE_ESSENCE.get())
-                    .withPedestalItem(PURPLE_ESSENCE.get())
-                    .withPedestalItem(PURPLE_ESSENCE.get())
+                    .withPedestalItem(8,PURPLE_ESSENCE.get())
                     .withResult(MANA_CORE_2)
                     .build());
             recipes.add(builder()
                     .withReagent(MANA_CORE_2)
-                    .withPedestalItem(MANA_CORE_1)
-                    .withPedestalItem(MANA_CORE_1)
+                    .withPedestalItem(4,MANA_CORE_1)
                     .withResult(MANA_CORE_3)
                     .build());
             // # TRINKETS RECIPES
@@ -300,12 +306,6 @@ public class ArsProviders {
                     .withResult(ESSENCE_LOTUS_10)
                     .build()
             );
-//            recipes.add(builder()
-//                    .withSourceCost(16000)
-//                    .withPedestalItem(8, YELLOW_ESSENCE)
-//                    .withResult(BlockRegistry.CREATIVE_SOURCE_JAR.asItem())
-//                    .build()
-//            );
             recipes.add(builder()
                     .withSourceCost(1000)
                     .withPedestalItem(4, SILVER_ESSENCE)

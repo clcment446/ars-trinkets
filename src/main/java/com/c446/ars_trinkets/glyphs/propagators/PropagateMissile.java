@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class PropagateMissile extends AbstractEffect implements IPropagator{
-    public static PropagateMissile INSTANCE = new PropagateMissile(new ResourceLocation(ArsTrinkets.MOD_ID+"propagate_missile"),"Propagate Missile");;
+    public static PropagateMissile INSTANCE = new PropagateMissile(new ResourceLocation(ArsTrinkets.MOD_ID,"glyph_propagate_missile"),"Propagate Missile");;
 /**
  * Code stolen from the Ars Omega project as it has not yet updated from 1.19.2
  * */

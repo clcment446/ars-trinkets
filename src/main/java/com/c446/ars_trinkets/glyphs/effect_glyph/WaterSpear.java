@@ -62,23 +62,18 @@ public class WaterSpear extends AbstractEffect implements IDamageEffect {
                 s /= 2.5;
                 bonus += s;
             }
-            if (living.hasEffect(ModPotions.HEX_EFFECT.get())) {
-                int s = Objects.requireNonNull(living.getEffect(ModPotions.HEX_EFFECT.get())).getAmplifier();
-                s /= 2;
-                bonus += s;
-            }
             if (living.isOnFire()) {
-                bonus *= 1.5;
+                bonus *= 1.2;
             }
             bonus/=1.5;
             damage = (this.DAMAGE.get() + ((this.AMP_VALUE.get())/1.5 * (spellStats.getAmpMultiplier())))*(1 + bonus)/ 1.5;
 
             level.sendParticles(ParticleUtil.CreateDustParticle(30,100,200),vecTar.x, vecTar.y, vecTar.z,20,0,0,0,1);
-            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageUtil.source(level, DamageTypes.MAGIC,shooter), (float) (damage));
+            this.attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, DamageUtil.source(world, DamageTypes.DROWN), (float) (damage));
             living.invulnerableTime = 3;
         }
-        com.hollingsworth.arsnouveau.api.util.DamageUtil.source((LevelAccessor) world, DamageTypes.DROWN);
     }
+
     @Nonnull
     @Override
     public Set<AbstractAugment> getCompatibleAugments() {

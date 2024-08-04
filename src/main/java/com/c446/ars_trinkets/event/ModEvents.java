@@ -8,12 +8,23 @@ import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvi
 import com.c446.ars_trinkets.commands.BECOME_GOD;
 import com.c446.ars_trinkets.commands.CommandResetArcaneProgression;
 import com.c446.ars_trinkets.commands.SetArcaneProgression;
+import com.c446.ars_trinkets.glyphs.effect_glyph.GiantStrength;
+import com.c446.ars_trinkets.item.EssenceItem;
 import com.c446.ars_trinkets.item.ManaCore;
 import com.c446.ars_trinkets.item.ThatItemToChangeClassLol;
 import com.c446.ars_trinkets.perks.PerkAttributes;
 import com.c446.ars_trinkets.registry.ModRegistry;
+import com.github.jarva.arsadditions.setup.config.CommonConfig;
 import com.hollingsworth.arsnouveau.api.event.*;
+import com.hollingsworth.arsnouveau.common.capability.ManaCap;
+import com.hollingsworth.arsnouveau.common.capability.ManaCapAttacher;
+import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
+import net.minecraft.advancements.critereon.PlayerHurtEntityTrigger;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -22,16 +33,22 @@ import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.config.ModConfigEvent;
+import net.minecraftforge.fml.loading.FMLConfig;
 import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.Objects;
 
 import static com.c446.ars_trinkets.capabilities.CapabilityRegistry.getArcaneLevels;
+import static com.c446.ars_trinkets.item.EssenceItem.getExperienceValue;
+import static com.c446.ars_trinkets.perks.PerkAttributes.ALL_DAMAGE_REDUCTION;
+import static com.c446.ars_trinkets.perks.PerkAttributes.SPELL_DAMAGE_PCT;
 
 @Mod.EventBusSubscriber(modid = ArsTrinkets.MOD_ID)
 public class ModEvents {
@@ -67,7 +84,7 @@ public class ModEvents {
         getArcaneLevels(oldPlayer).ifPresent(oldArcane -> getArcaneLevels(event.getEntity()).ifPresent(newArcaneLevels -> {
             newArcaneLevels.setPlayerSoulRefinement(oldArcane.getPlayerSoulRefinement());
             newArcaneLevels.setPlayerArcaneLevel(oldArcane.getPlayerArcaneLevel());
-            newArcaneLevels.setProfane(oldArcane.getProfane());
+            newArcaneLevels.setProfane(oldArcane.getProfane(), false);
             newArcaneLevels.setCollectedSouls(oldArcane.getPlayerCollectedSouls());
             newArcaneLevels.setCores(oldArcane.getPlayerCollectedSouls());
         }));
@@ -107,6 +124,7 @@ public class ModEvents {
 //        }
 //    }
 
+
     @SubscribeEvent
     public static void ManaRegenCalcEvent(ManaRegenCalcEvent event) {
         if (!Config.IS_LEVELING_ENABLED.get()) {
@@ -121,13 +139,16 @@ public class ModEvents {
         }
     }
 
+    static TagKey<DamageType> FORGE_MAGIC = TagKey.create(Registries.DAMAGE_TYPE, new ResourceLocation("forge:is_magic"));
+
     @SubscribeEvent
-    public static void SpellDamageApplied(SpellDamageEvent event) {
-        if (!Config.IS_LEVELING_ENABLED.get()) {
-            return;
+    public static void levelBonusDamageEvent(SpellDamageEvent event) {
+        if (Config.IS_LEVELING_ENABLED.get()) {
+            event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> event.damage *= a.getSpellDmg());
         }
-        event.caster.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> event.damage *= a.getSpellDmg());
-        //        p.displayClientMessage(Component.literal("spell damage applied"), false);
+        if (event.caster.getAttributes().hasAttribute(SPELL_DAMAGE_PCT.get())) {
+            event.damage *= event.caster.getAttributes().getValue(PerkAttributes.SPELL_DAMAGE_PCT.get());
+        }
     }
 
     @SubscribeEvent
@@ -146,23 +167,28 @@ public class ModEvents {
     }
 
     @SubscribeEvent
-    public static void playerDeathEvent(PlayerEvent.PlayerRespawnEvent event) {
-        Player p = event.getEntity();
-        if (Objects.equals(p.getUUID().toString(), "2980a99e-8582-4f63-9b82-f7117bc8be2c") && !CuriosApi.getCurio(new ItemStack(ModRegistry.THEARCH_CROWN.get())).isPresent()) {
-            p.getInventory().setItem(p.getInventory().getFreeSlot(), new ItemStack(ModRegistry.THEARCH_CROWN.get()));
-
-
+    public static void onPlayerReceiveDamage(net.minecraftforge.event.entity.living.LivingHurtEvent event) {
+        if (Config.IS_LEVELING_ENABLED.get()) {
+            event.getEntity().getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+                event.setAmount((float) (event.getAmount() * a.getPlayerDefense()));
+                if (a.getProfane()) {
+                    event.setAmount((float) (event.getAmount() * 1.5));
+                }
+            });
         }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerReceiveDamage(net.minecraftforge.event.entity.living.LivingDamageEvent event) {
-        event.getEntity().getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-            event.setAmount((float) (event.getAmount() * a.getPlayerDefense()));
-            if (a.getProfane()) {
-                event.setAmount((float) (event.getAmount() * 1.5));
-            }
-        });
+        if ((event.getEntity().getAttributes().hasAttribute(ALL_DAMAGE_REDUCTION.get()))) {
+            event.setAmount(
+                    (
+                            (float) (
+                                    event.getAmount() * (
+                                            1 - event.getEntity().getAttributeValue(ALL_DAMAGE_REDUCTION.get()
+                                            )
+                                    )
+                            )
+                    )
+            );
+        }
+        return;
     }
 
     @SubscribeEvent
@@ -170,7 +196,7 @@ public class ModEvents {
         if (event.getItem().getItem() instanceof ManaCore core && event.getEntity() instanceof Player player) {
             player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
                 if (a.getPlayerArcaneLevel() / 3 <= core.core_level) {
-                    System.out.println("gate 1")    ;
+                    //System.out.println("gate 1")    ;
                     a.nextCore(player);
                 }
             });
@@ -178,25 +204,28 @@ public class ModEvents {
         if (event.getItem().getItem() instanceof ThatItemToChangeClassLol relic && event.getEntity() instanceof Player player) {
             player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
                 if (a.getProfane() != relic.turnsPlayerProfane) {
-                    if (relic.turnsPlayerProfane) {
-                        player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.going_to_madness_item"), false);
-                    } else {
-                        player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.back_from_madness"), false);
-                    }
-                    a.setProfane(relic.turnsPlayerProfane);
+
+                    a.setProfane(relic.turnsPlayerProfane, true, player);
                 }
             });
         }
-    }
 
-//    @SubscribeEvent
-//    public static void playerEquipCurio(CurioEquipEvent event){
-//        if (event.getStack().getItem().asItem() == ModRegistry.THEARCH_CROWN.get() && event.getEntity() instanceof Player player && player.getStringUUID().equals("2980a99e-8582-4f63-9b82-f7117bc8be2c")) {
-//            return;
-//        } else{
-//            Event.Result.DENY;
-//        }
-//    }
+        if (event.getItem().getItem() instanceof EssenceItem essenceItem && event.getEntity() instanceof Player player) {
+            player.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(a -> {
+                int max = a.getMaxMana();
+                int next = a.getMaxMana() + essenceItem.getMana();
+
+                a.setMana(Math.min(next, max));
+
+                //a.setMana(a.getCurrentMana() + essenceItem.getMana());
+            });
+            if (Config.IS_LEVELING_ENABLED.get()) {
+                player.getCapability(com.c446.ars_trinkets.capabilities.CapabilityRegistry.arcane_cap).ifPresent(a -> {
+                    a.updateSoulEssence(getExperienceValue(essenceItem), false, player);
+                });
+            }
+        }
+    }
 
     @SubscribeEvent
     public static void expPickupEvent(PlayerXpEvent.PickupXp event) {
@@ -210,19 +239,19 @@ public class ModEvents {
     @SubscribeEvent
     public static void playerLogin(PlayerEvent.PlayerLoggedInEvent event) {
         event.getEntity().getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-            if (a.getLoginFirst()) {
-                if (Objects.equals(event.getEntity().getUUID().toString(), "2980a99e-8582-4f63-9b82-f7117bc8be2c")) {
-                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.MANA_RING_10.get(), 2));
-                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.ESSENCE_LOTUS_10.get(), 1));
-                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.MONOCLE_10.get(), 1));
-                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.ETERNAL_RUNE.get(), 5));
-
-                    a.player_arcane_level = 9;
-                    a.player_cores = Config.MAX_PLAYER_CORE.get() * 5;
-                } else {
-                    a.setLoginFirst(false);
-                }
-            }
+//            if (a.getLoginFirst()) {
+//                if (Objects.equals(event.getEntity().getUUID().toString(), "2980a99e-8582-4f63-9b82-f7117bc8be2c")) {
+//                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.MANA_RING_10.get(), 2));
+//                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.ESSENCE_LOTUS_10.get(), 1));
+//                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.MONOCLE_10.get(), 1));
+//                    event.getEntity().getInventory().setItem(event.getEntity().getInventory().getFreeSlot(), new ItemStack(ModRegistry.ETERNAL_RUNE.get(), 5));
+//
+//                    a.player_arcane_level = 9;
+//                    a.player_cores = Config.MAX_PLAYER_CORE.get() * 5;
+//                } else {
+//                    a.setLoginFirst(false);
+//                }
+//            }
 
         });
     }

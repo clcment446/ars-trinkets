@@ -6,12 +6,13 @@ import com.hollingsworth.arsnouveau.client.registry.ModParticles;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.world.phys.Vec3;
-import org.w3c.dom.css.RGBColor;
 
 public class ParticleUtil {
+    public static int createIntColor(int red, int green, int blue){
+        return ((red << 16) | (green << 8) | blue);
+    }
     public static DustParticleOptions CreateDustParticle(int red, int green, int blue){
-        int color = ((red << 16) | (green << 8) | blue);
-        return new DustParticleOptions(Vec3.fromRGB24(color).toVector3f(), 1.0F);
+        return new DustParticleOptions(Vec3.fromRGB24(createIntColor(red,green,blue)).toVector3f(), 1.0F);
     }
 
     public class GlowParticleData {

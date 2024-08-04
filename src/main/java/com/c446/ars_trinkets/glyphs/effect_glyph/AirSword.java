@@ -6,11 +6,15 @@ import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentSensitive;
+import com.hollingsworth.arsnouveau.setup.registry.DamageTypesRegistry;
 import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -67,8 +71,9 @@ public class AirSword extends AbstractEffect implements IDamageEffect {
             }
             float damage = (float) ((this.DAMAGE.get() + ((this.AMP_VALUE.get())/1.5 * (spellStats.getAmpMultiplier())))*(1 + bonus));
 
-            DamageSource source = DamageUtil.source(level, DamageTypes.PLAYER_ATTACK, shooter);
+            DamageSource source = DamageUtil.source(level, DamageTypesRegistry.WINDSHEAR, shooter);
             attemptDamage(world, shooter, spellStats, spellContext, resolver, entity, source, damage);
+
             living.invulnerableTime = 0;
         }
     }

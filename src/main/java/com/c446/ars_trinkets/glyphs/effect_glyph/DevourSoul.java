@@ -3,6 +3,7 @@ package com.c446.ars_trinkets.glyphs.effect_glyph;
 import com.c446.ars_trinkets.ArsTrinkets;
 import com.c446.ars_trinkets.capabilities.ArcaneLevels;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher;
+import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.api.util.SourceUtil;
@@ -39,6 +40,11 @@ public class DevourSoul extends AbstractEffect implements IDamageEffect {
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (rayTraceResult.getEntity() instanceof LivingEntity living && world instanceof ServerLevel level) {
+
+            if (resolver.hasFocus(ModRegistry.UNHOLY_FOCUS.get())){
+                spellStats.setAmpMultiplier(spellStats.getAmpMultiplier()+2);
+                spellStats.setDurationMultiplier(spellStats.getDurationMultiplier()+2);
+            }
             if (living != shooter) {
                 float health = living.getHealth();
                 Player player = (Player) shooter;
@@ -68,4 +74,9 @@ public class DevourSoul extends AbstractEffect implements IDamageEffect {
     @Override
     public SpellTier defaultTier() {
         return SpellTier.THREE;}
+
+    @Override
+    protected @NotNull Set<SpellSchool> getSchools() {
+        return this.setOf(ModRegistry.UNHOLY);
+    }
 }

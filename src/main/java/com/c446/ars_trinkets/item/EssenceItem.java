@@ -24,13 +24,17 @@ import static com.c446.ars_trinkets.registry.ModRegistry.*;
 public class EssenceItem extends RegularItems {
     boolean showEnch = false;
 
-    public EssenceItem(Properties p) {
+    int manaGiven = 0;
+
+    public EssenceItem(Properties p, int manaGiven) {
         super(p);
+        this.manaGiven = manaGiven;
     }
 
-    public EssenceItem(Properties p, boolean showEnch) {
+    public EssenceItem(Properties p, int manaGiven, boolean showEnch) {
         super(p);
         this.showEnch = showEnch;
+        this.manaGiven = manaGiven;
     }
 
     @Override
@@ -42,23 +46,14 @@ public class EssenceItem extends RegularItems {
         }
     }
 
-    @Override
-    public @NotNull InteractionResultHolder<ItemStack> use(Level pLevel, @NotNull Player pPlayer, @NotNull InteractionHand pUsedHand) {
-        if (Config.IS_LEVELING_ENABLED.get()) {
-            if (!pLevel.isClientSide && pUsedHand == InteractionHand.OFF_HAND) {
-//            System.out.println("OFF HAND USE");
-                ConsumeMana(pPlayer, true, pPlayer.getOffhandItem(), pPlayer.getOffhandItem().getCount());
-            } else if (!pLevel.isClientSide) {
-                ItemStack held = pPlayer.getMainHandItem();
-//            System.out.println("MAIN HAND USE");
-                ConsumeMana(pPlayer, false, held, held.getCount());
-            }
-        }
-        return super.use(pLevel, pPlayer, pUsedHand);
+    public int getMana() {
+        return this.manaGiven;
+    }
+    public void setMana(int i) {
+        this.manaGiven = i;
     }
 
     public static int getExperienceValue(Item item) {
-        System.out.println("getExperienceValue triggered");
         if (Util.getAllEssences().contains(item)) {
             System.out.println(Util.getAllEssencesValues().get(item));
             return Util.getAllEssencesValues().get(item);
@@ -66,25 +61,7 @@ public class EssenceItem extends RegularItems {
         return 0;
     }
 
-    public void ConsumeMana(Player player, boolean slot_is_off_hand/* is offhand*/, ItemStack stack, int number) {
-        int a = getExperienceValue(stack.getItem());
-//        System.out.println("ArcaneLevelCap Called");
-        player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(arcaneLevels -> arcaneLevels.updateSoulEssence(a * number, false, player));
-//        System.out.println("ConsumeMana triggered");
-        if (slot_is_off_hand) {
-            System.out.println("consuming in off hand");
-            player.getInventory().removeItem(Inventory.SLOT_OFFHAND, 1);
-        } else {
-            for (int i = 0; i < 35; i++) {
-                if (player.getInventory().getItem(i) == stack) {
-                    System.out.println("consuming in main Hand");
-                    player.getInventory().removeItem(i, 1);
-                }
-            }
-        }
-        player.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(mana ->{mana.setMana(mana.getCurrentMana() + Util.getAllEssencesValues().get(stack.getItem())*number);});
-        player.getInventory().removeItem(player.getMainHandItem());
-    }
+
 }
 
 

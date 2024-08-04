@@ -5,6 +5,7 @@ import com.c446.ars_trinkets.event.PlayerCoresUpdated;
 import com.c446.ars_trinkets.event.PlayerLevelUpdated;
 import com.c446.ars_trinkets.perks.PerkAttributes;
 import com.c446.ars_trinkets.util.Util;
+import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvider;
+import net.minecraft.world.item.Item;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.util.Objects;
@@ -110,8 +112,8 @@ public class ArcaneLevels implements IArcaneLevels {
         if (severity == 2) {
 
             if (!profane) {
-                setProfane(true);
-                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.madness"), false);
+                setProfane(true, false);
+                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.madness"), true);
             }
         }
         return severity;
@@ -178,8 +180,9 @@ public class ArcaneLevels implements IArcaneLevels {
             case 9 -> bonus = Config.DEFENSE_9.get();
 
         }
-        return (float) ((double) 1+(bonus/100));
+        return (float) ((double) 1 + (bonus / 100));
     }
+
     @Override
     public double getSpellDmg() {
         int bonus = 0;
@@ -195,8 +198,9 @@ public class ArcaneLevels implements IArcaneLevels {
             case 8 -> bonus = Config.SPELL_DMG_8.get();
             case 9 -> bonus = Config.SPELL_DMG_9.get();
         }
-        return (double) 1+(bonus/100);
+        return (double) 1 + (bonus / 100);
     }
+
     @Override
     public double getPhysDmg() {
         int bonus = 0;
@@ -212,7 +216,7 @@ public class ArcaneLevels implements IArcaneLevels {
             case 8 -> bonus = Config.PHYS_DAMAGE_8.get();
             case 9 -> bonus = Config.PHYS_DAMAGE_9.get();
         }
-        return (double) 1+(bonus/100);
+        return (double) 1 + (bonus / 100);
     }
 
     @Override
@@ -236,19 +240,21 @@ public class ArcaneLevels implements IArcaneLevels {
         MinecraftForge.EVENT_BUS.post(new PlayerLevelUpdated.Post(player_arcane_level, player));
 
     }
+
     public boolean canPlayerFormCores() {
         return player_cores < Config.MAX_PLAYER_CORE.get();
     }
+
     public boolean nextCore(Player player) {
 
         if ((player_cores < Config.MAX_PLAYER_CORE.get())) {
             player_cores++;
-            System.out.println("gate 2")    ;
-            player.displayClientMessage(Component.translatable("text.ars_trinkets.new_soul_core"), false);
+            System.out.println("gate 2");
+            player.displayClientMessage(Component.translatable("text.ars_trinkets.new_soul_core"), true);
             ;
         } else {
-            System.out.println("gate 3")    ;
-            player.displayClientMessage(Component.translatable("text.ars_trinkets.max_soul_core"), false);
+            System.out.println("gate 3");
+            player.displayClientMessage(Component.translatable("text.ars_trinkets.max_soul_core"), true);
             ;
         }
         MinecraftForge.EVENT_BUS.post(new PlayerCoresUpdated.Post(player_cores, player));
@@ -273,16 +279,16 @@ public class ArcaneLevels implements IArcaneLevels {
 //                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.whispers"), false);
                 if (a.profane) {
                     a.nextRank(player);
-                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_" + a.getPlayerArcaneLevel()).append(a.getPlayerTitle()), false);
+                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_" + a.getPlayerArcaneLevel()).append(a.getPlayerTitle()), true);
                 } else {
                     a.nextRank(player);
 
-                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_" + a.getPlayerArcaneLevel()).append(a.getPlayerTitle()), false);
+                    player.displayClientMessage(Component.translatable("text.ars_trinkets.ritual_" + a.getPlayerArcaneLevel()).append(a.getPlayerTitle()), true);
                 }
             } else {
-                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.shatter"), false);
+                player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.shatter"), true);
                 a.player_arcane_level--;
-                a.setProfane(true);
+                a.setProfane(true, false);
                 a.setPlayerSoulRefinement((int) (a.getPlayerSoulRefinement() * 0.3));
             }
             a.warning_2 = false;
@@ -299,7 +305,7 @@ public class ArcaneLevels implements IArcaneLevels {
             } else {
                 int souls = (int) Math.pow(a.getPlayerArcaneLevel() + 1, player_cores) + 1500 * player_cores;
                 if (a.getPlayerCollectedSouls() > souls) {
-                    a.nextCore(player);
+//                    a.nextCore(player);
                     a.setCollectedSouls(a.getPlayerCollectedSouls() / 5);
                 }
             }
@@ -365,10 +371,10 @@ public class ArcaneLevels implements IArcaneLevels {
                 }
                 case 4 -> {
                     if (a.getProfane()) {
-//                    player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.breakthrough.unholy"), false);
+                        player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.breakthrough.unholy"), true);
                         a.triggerPlayerBreakthrough(player);
                     } else {
-//                    player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.breakthrough.holy"), false);
+                        player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.breakthrough.holy"), true);
                         a.triggerPlayerBreakthrough(player);
                     }
 //                    System.out.println("Player main accessed with success");
@@ -464,98 +470,27 @@ public class ArcaneLevels implements IArcaneLevels {
     }
 
     public static AttributeModifier getDamageReducAttributeModifier(double i) {
-        return new AttributeModifier(UUID.fromString("683b68a8-5f25-41dc-a90c-764e61e4082c"), "ars_trinkets.leveling_system.dmg_reduc", i/100, AttributeModifier.Operation.ADDITION);
+        return new AttributeModifier(UUID.fromString("683b68a8-5f25-41dc-a90c-764e61e4082c"), "ars_trinkets.leveling_system.dmg_reduc", i / 100, AttributeModifier.Operation.ADDITION);
     }
 
     public static AttributeModifier getPhysDamageImprovmentAttributeModifier(double i) {
-        return new AttributeModifier(UUID.fromString("7267ff97-e2d8-43f8-b7ce-efde6a1c361a"), "ars_trinkets.leveling_system.phys_dmg", 1+i/100, AttributeModifier.Operation.ADDITION);
+        return new AttributeModifier(UUID.fromString("7267ff97-e2d8-43f8-b7ce-efde6a1c361a"), "ars_trinkets.leveling_system.phys_dmg", 1 + i / 100, AttributeModifier.Operation.ADDITION);
     }
 
-    public static AttributeModifier searchAttributeModifier(Set<AttributeModifier> modifiers, AttributeModifier target) {
-        for (AttributeModifier modifier : modifiers) {
-            if (modifier.getId() == target.getId()) {
-                return modifier;
-            }
+    public void setProfane(boolean turnsPlayerProfane, boolean isRelic) {
+        setProfane(turnsPlayerProfane);
+
+    }
+
+    public void setProfane(boolean turnsPlayerProfane, boolean isRelic, Player player) {
+        setProfane(turnsPlayerProfane);
+        if (isRelic) {
+
+            player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.going_to_madness_item"), true);
+        } else {
+            player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.back_from_madness"), true);
         }
-        return null;
     }
-
-    public static void addModifiers(Player player) {
-        Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_MANA_BOOST.get())).addPermanentModifier(getFlatManaBoostAttributeModifier(0));
-        Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_REGEN_BOOST.get())).addPermanentModifier(getRegenManaBoostAttributeModifier(0));
-        Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.SPELL_DAMAGE_PCT.get())).addPermanentModifier(getSpellDamageImprovmentAttributeModifier(0));
-        Objects.requireNonNull(player.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).addPermanentModifier(getPhysDamageImprovmentAttributeModifier(0));
-        Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.ALL_DAMAGE_REDUCTION.get())).addPermanentModifier(getDamageReducAttributeModifier(0));
-    }
-
-//    public static void updateModifiers(Player player) {
-//        System.out.println("attempting to update modifiers");
-//        final int[] reg = {0};
-//        final int[] cap = {0};
-//        final double[] dmg_reduc = {0};
-//        final double[] attck_dmg = {0};
-//        final double[] spell_dmg = {0};
-//
-//        player.getCapability(ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-//            reg[0] = a.getPlayerRegenBonus();
-//            cap[0] = a.getPlayerManaBonus();
-//            dmg_reduc[0] = a.getPlayerDefense();
-//            attck_dmg[0] = a.getPhysDmg();
-//            spell_dmg[0] = a.getSpellDmg();
-//        });
-//
-//        // The modifiers that will be appended.
-//
-//        final AttributeModifier mana_capacity_attr = getFlatManaBoostAttributeModifier(cap[0]);
-//        final AttributeModifier mana_regen_attr = getRegenManaBoostAttributeModifier(reg[0]);
-//        final AttributeModifier dmg_reduc_attr = getDamageReducAttributeModifier(dmg_reduc[0]);
-//        final AttributeModifier spell_dmg_attr = getSpellDamageImprovmentAttributeModifier(spell_dmg[0]);
-//        final AttributeModifier attck_dmg_attr = getPhysDamageImprovmentAttributeModifier(attck_dmg[0]);
-//
-//        Set<AttributeModifier> modifiers_flat_list = Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_MANA_BOOST.get())).getModifiers();
-//        Set<AttributeModifier> modifiers_regen_list = Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_REGEN_BOOST.get())).getModifiers();
-//        Set<AttributeModifier> damage_reduc_list = Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.ALL_DAMAGE_REDUCTION.get())).getModifiers();
-//        Set<AttributeModifier> spell_damage_list = Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.SPELL_DAMAGE_PCT.get())).getModifiers();
-//        Set<AttributeModifier> attack_damage_list = Objects.requireNonNull(player.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).getModifiers();
-//
-//        AttributeModifier modif_flat = searchAttributeModifier(modifiers_flat_list, mana_capacity_attr);
-//        AttributeModifier modif_regen = searchAttributeModifier(modifiers_regen_list, mana_regen_attr);
-//        AttributeModifier modif_reduc = searchAttributeModifier(damage_reduc_list, dmg_reduc_attr);
-//        AttributeModifier modif_spell_dmg = searchAttributeModifier(spell_damage_list, spell_dmg_attr);
-//        AttributeModifier modif_attck_dmg = searchAttributeModifier(attack_damage_list, dmg_reduc_attr);
-//
-//
-//        if (modif_flat != null) {
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_MANA_BOOST.get())).removePermanentModifier(UUID.fromString("2a947a4e-01dc-42d8-8cf3-fd971bf723a6"));
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_MANA_BOOST.get())).addPermanentModifier(mana_capacity_attr);
-//        } else {
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_MANA_BOOST.get())).addPermanentModifier(mana_capacity_attr);
-//        }
-//
-//
-//        if (modif_regen != null) {
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_REGEN_BOOST.get())).removePermanentModifier(UUID.fromString("ee141509-487f-4d09-adde-234ca9d58911"));
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_REGEN_BOOST.get())).addPermanentModifier(mana_regen_attr);
-//        } else {
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.FLAT_REGEN_BOOST.get())).addPermanentModifier(mana_regen_attr);
-//        }
-//        if (modif_reduc != null) {
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.ALL_DAMAGE_REDUCTION.get())).removePermanentModifier(UUID.fromString("683b68a8-5f25-41dc-a90c-764e61e4082c"));
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.ALL_DAMAGE_REDUCTION.get())).addPermanentModifier(dmg_reduc_attr);
-//        } else {
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.ALL_DAMAGE_REDUCTION.get())).addPermanentModifier(dmg_reduc_attr);
-//        }if (modif_spell_dmg != null) {
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.SPELL_DAMAGE_PCT.get())).removePermanentModifier(UUID.fromString("520626e0-ed4a-43cd-973a-934e29f7baac"));
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.SPELL_DAMAGE_PCT.get())).addPermanentModifier(spell_dmg_attr);
-//        } else {
-//            Objects.requireNonNull(player.getAttributes().getInstance(PerkAttributes.SPELL_DAMAGE_PCT.get())).addPermanentModifier(spell_dmg_attr);
-//        }if (modif_attck_dmg != null) {
-//            Objects.requireNonNull(player.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).removePermanentModifier(UUID.fromString("7267ff97-e2d8-43f8-b7ce-efde6a1c361a"));
-//            Objects.requireNonNull(player.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).addPermanentModifier(attck_dmg_attr);
-//        } else {
-//            Objects.requireNonNull(player.getAttributes().getInstance(Attributes.ATTACK_DAMAGE)).addPermanentModifier(attck_dmg_attr);
-//        }
-//    }
-
-
 }
+
+

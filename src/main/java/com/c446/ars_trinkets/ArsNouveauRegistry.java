@@ -33,7 +33,7 @@ public class ArsNouveauRegistry {
         register(DevourSoul.INSTANCE);
         register(WitherShield.INSTANCE);
         register(GiantStrength.INSTANCE);
-
+        register(BlackFlame.INSTANCE);
         // register omega glyphs
         register(FormMissile.INSTANCE);
         register(FormOverhead.INSTANCE);

@@ -13,11 +13,11 @@ import java.util.Collections;
 import java.util.Set;
 
 public class FilterIsShifting extends AbstractEffect {
+    public static final FilterIsShifting INSTANCE = new FilterIsShifting(new ResourceLocation(ArsTrinkets.MOD_ID, "glyph_filter_shift"), "Filter Shifting");
+
     public FilterIsShifting(ResourceLocation tag, String description) {
         super(tag, description);
     }
-
-    public static final FilterIsShifting INSTANCE = new FilterIsShifting(new ResourceLocation(ArsTrinkets.MOD_ID, "glyph_filter_shift"), "Filter Shifting");
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {

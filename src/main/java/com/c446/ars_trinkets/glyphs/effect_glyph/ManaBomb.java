@@ -1,6 +1,7 @@
 package com.c446.ars_trinkets.glyphs.effect_glyph;
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
@@ -62,6 +63,10 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         int range = 2 + (int) (2 * spellStats.getAoeMultiplier());
         Entity entity = rayTraceResult.getEntity();
+        if (resolver.hasFocus(ModRegistry.UNHOLY_FOCUS.get())) {
+            spellStats.setAmpMultiplier(spellStats.getAmpMultiplier() + 2);
+            spellStats.setDurationMultiplier(spellStats.getDurationMultiplier() + 2);
+        }
         if ((entity instanceof LivingEntity living && world instanceof ServerLevel level)) {
             shooter.getCapability(CapabilityRegistry.MANA_CAPABILITY).ifPresent(a ->
             {
@@ -115,7 +120,7 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
-        return this.setOf(SpellSchools.CONJURATION);
+        return this.setOf(SpellSchools.CONJURATION, ModRegistry.UNHOLY);
     }
     @Override
     public void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {

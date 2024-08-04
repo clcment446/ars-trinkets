@@ -1,6 +1,7 @@
 package com.c446.ars_trinkets.glyphs.effect_glyph;
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
@@ -53,13 +54,18 @@ public class SonicBoom extends AbstractEffect implements IDamageEffect {
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {
-        return this.setOf(SpellSchools.ELEMENTAL_AIR);
+        return this.setOf(ModRegistry.UNHOLY);
     }
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+
         Entity entity = rayTraceResult.getEntity();
         if (world instanceof ServerLevel level && entity instanceof LivingEntity living) {
+            if (resolver.hasFocus(ModRegistry.UNHOLY_FOCUS.get())){
+                spellStats.setAmpMultiplier(spellStats.getAmpMultiplier()+2);
+                spellStats.setDurationMultiplier(spellStats.getDurationMultiplier()+2);
+            }
             int range = (int) (3+2 * spellStats.getAoeMultiplier());
             damage = 1+DAMAGE.get() + spellStats.getAmpMultiplier() * this.AMP_DAMAGE;
             Vec3 eyesPosTar = living.getEyePosition();

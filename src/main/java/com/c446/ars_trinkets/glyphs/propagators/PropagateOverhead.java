@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class PropagateOverhead extends AbstractEffect implements IPropagator {
-    public static PropagateOverhead INSTANCE = new PropagateOverhead(new ResourceLocation(ArsTrinkets.MOD_ID+"propagate_overhead"),"Propagate Overhead");
+    public static PropagateOverhead INSTANCE = new PropagateOverhead(new ResourceLocation(ArsTrinkets.MOD_ID,"glyph_propagate_overhead"),"Propagate Overhead");
     private PropagateOverhead(String tag, String description) {
         super(ModRegistry.getGlyphName(tag),description);
     }

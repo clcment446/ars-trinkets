@@ -1,6 +1,7 @@
 package com.c446.ars_trinkets.glyphs.effect_glyph;
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraftforge.common.ForgeConfigSpec;
 import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
@@ -37,17 +39,23 @@ public class WitherShield extends AbstractEffect {
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (world instanceof ServerLevel level && rayTraceResult.getEntity() instanceof LivingEntity living) {
-            shooter.addEffect(new MobEffectInstance(MobEffects.ABSORPTION, (int) (400 + 20 * (spellStats.getDurationMultiplier() * 5)), (int) (spellStats.getAmpMultiplier() * 2.5)));
-            shooter.addEffect(new MobEffectInstance(MobEffects.REGENERATION, (int) (400 + 20 * (spellStats.getDurationMultiplier() * 5)), (int) (spellStats.getAmpMultiplier() * 2)));
-            shooter.addEffect(new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, (int) (400 + 20 * (spellStats.getDurationMultiplier() * 5)), (int) (spellStats.getAmpMultiplier() * 1.5)));
+            if (resolver.hasFocus(ModRegistry.UNHOLY_FOCUS.get())){
+                spellStats.setAmpMultiplier(spellStats.getAmpMultiplier()+2);
+                spellStats.setDurationMultiplier(spellStats.getDurationMultiplier()+2);
+            }
 
-            shooter.addEffect(new MobEffectInstance(MobEffects.WITHER, (int) (100 + 5 * (spellStats.getDurationMultiplier() * 5)), (int) (spellStats.getAmpMultiplier())));
+            shooter.addEffect(new MobEffectInstance(ModRegistry.WITHER_SHIELD_EFFECT.get(), (int) (this.EXTEND_TIME.get() * spellStats.getDurationMultiplier()), (int) (spellStats.getAmpMultiplier())));
+            shooter.addEffect(new MobEffectInstance(MobEffects.WITHER, (int) (this.EXTEND_TIME.get() * spellStats.getDurationMultiplier()/4), 1));
 
             ((ServerLevel) world).sendParticles(ParticleTypes.SOUL, shooter.getX(), shooter.getY(), shooter.getZ(), (int) (5 * spellStats.getAmpMultiplier()), 0, 1, 0, 1);
 
 
 
         }
+    }
+    @Override
+    protected @NotNull Set<SpellSchool> getSchools() {
+        return this.setOf(ModRegistry.UNHOLY);
     }
 
     @Override
@@ -57,7 +65,14 @@ public class WitherShield extends AbstractEffect {
 
     @Override
     public void addDefaultAugmentLimits(Map<ResourceLocation, Integer> defaults) {
-        defaults.put(AugmentAmplify.INSTANCE.getRegistryName(), 10);
-        defaults.put(AugmentAOE.INSTANCE.getRegistryName(), 10);
+        defaults.put(AugmentAmplify.INSTANCE.getRegistryName(), 4);
+        defaults.put(AugmentAOE.INSTANCE.getRegistryName(), 4);
+    }
+
+    @Override
+    public void buildConfig(ForgeConfigSpec.Builder builder) {
+        super.buildConfig(builder);
+        addAmpConfig(builder, 1);
+        addExtendTimeTicksConfig(builder, 100);
     }
 }

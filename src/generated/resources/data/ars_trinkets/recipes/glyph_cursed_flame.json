@@ -5,12 +5,32 @@
   "inputItems": [
     {
       "item": {
-        "item": "ars_nouveau:air_essence"
+        "item": "ars_trinkets:purple_essence"
       }
     },
     {
       "item": {
-        "item": "ars_nouveau:air_essence"
+        "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:purple_essence"
+      }
+    },
+    {
+      "item": {
+        "item": "ars_trinkets:mana_core_3"
       }
     },
     {
@@ -20,24 +40,9 @@
     },
     {
       "item": {
-        "item": "ars_trinkets:purple_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_trinkets:purple_essence"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_trinkets:mana_core_1"
-      }
-    },
-    {
-      "item": {
-        "item": "ars_trinkets:mana_core_1"
+        "item": "ars_trinkets:glyph_sun_flare"
       }
     }
   ],
-  "output": "ars_trinkets:glyph_sound_boom"
+  "output": "ars_trinkets:glyph_cursed_flame"
 }

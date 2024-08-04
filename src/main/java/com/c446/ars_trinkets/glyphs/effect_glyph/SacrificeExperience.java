@@ -3,6 +3,7 @@ package com.c446.ars_trinkets.glyphs.effect_glyph;
 
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
@@ -41,6 +42,11 @@ public class SacrificeExperience extends AbstractEffect implements IDamageEffect
 
     @Override
     public void onResolveEntity(@NotNull EntityHitResult rayTraceResult, Level world, @NotNull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        if (resolver.hasFocus(ModRegistry.UNHOLY_FOCUS.get())) {
+            spellStats.setAmpMultiplier(spellStats.getAmpMultiplier() + 2);
+            spellStats.setDurationMultiplier(spellStats.getDurationMultiplier() + 2);
+        }
+
         Entity entity = rayTraceResult.getEntity();
         if (world instanceof ServerLevel level && entity instanceof LivingEntity living && shooter instanceof Player player) {
 

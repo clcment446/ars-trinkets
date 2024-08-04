@@ -101,7 +101,7 @@ public class PerkAttributes {
         );
         ALL_DAMAGE_REDUCTION = registerAttribute("ars_trinkets.perk.damage_reduction_global", (id) ->
                 {
-                    return (new RangedAttribute(id, 0, 0, 100)).setSyncable(true);
+                    return (new RangedAttribute(id, 0, 0, 1)).setSyncable(true);
                 },
                 "a73e41ae-2a90-4e44-84e5-1abba980ce11"
         );

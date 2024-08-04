@@ -41,7 +41,7 @@ public class SunFlare extends AbstractEffect implements IDamageEffect {
         if (world instanceof ServerLevel level && rayTraceResult.getEntity() instanceof LivingEntity living) {
             double range = 1 + 1.7 * spellStats.getAoeMultiplier();
             int bonus = 1;
-            DamageSource source = DamageUtil.source(level, DamageTypes.FIREBALL, shooter);
+            DamageSource source = DamageUtil.source(level, DamageTypes.IN_FIRE, shooter);
 
             if (living.isOnFire()) {
                 bonus += 3;
