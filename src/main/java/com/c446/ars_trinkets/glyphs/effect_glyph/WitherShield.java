@@ -1,6 +1,7 @@
 package com.c446.ars_trinkets.glyphs.effect_glyph;
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
@@ -9,12 +10,14 @@ import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtendTime;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentExtract;
 import net.minecraft.core.particles.DustParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -23,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class WitherShield extends AbstractEffect {
     public WitherShield(ResourceLocation tag, String description) {
@@ -39,6 +43,16 @@ public class WitherShield extends AbstractEffect {
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
         if (world instanceof ServerLevel level && rayTraceResult.getEntity() instanceof LivingEntity living) {
+            AtomicBoolean is_profane = new AtomicBoolean(false);
+            shooter.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a->{
+                is_profane.set(a.getProfane());
+            });
+
+            if (!(is_profane.get()) && shooter instanceof Player player){
+                player.displayClientMessage(Component.translatable("player_not_cursed.glyph_stopped"), true);
+                return;
+            }
+
             if (resolver.hasFocus(ModRegistry.UNHOLY_FOCUS.get())){
                 spellStats.setAmpMultiplier(spellStats.getAmpMultiplier()+2);
                 spellStats.setDurationMultiplier(spellStats.getDurationMultiplier()+2);

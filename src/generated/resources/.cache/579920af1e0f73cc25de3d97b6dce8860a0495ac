@@ -1,4 +1,4 @@
-// 1.20.1	2024-07-27T11:21:13.9697434	Example Apparatus
+// 1.20.1	2024-08-09T23:54:38.7918832	Example Apparatus
 3663132a8a40d6dd7da8b123e9f23691ff1c0177 data/ars_trinkets/recipes/death_rune.json
 347556c2909cdce75e5e96136b820b525daeedec data/ars_trinkets/recipes/death_rune_greater.json
 7f343c97493d7ade812c6b153d09a432a32300c2 data/ars_trinkets/recipes/death_rune_lesser.json
@@ -11,7 +11,7 @@ f0b6e0fe1f8529394d73fcf09d1c03720eeb3588 data/ars_trinkets/recipes/essence_lotus
 0ae29e3f8ad8a3d2e147eed82901c43ce7a78a11 data/ars_trinkets/recipes/essence_lotus_8.json
 f8f584182931a48a46a0e1d3ff0ade47b7c1dac9 data/ars_trinkets/recipes/essence_lotus_9.json
 1d538cebf001e3e966cbb997dcdce0790f805fb6 data/ars_trinkets/recipes/eternal_rune.json
-08f5dbc9f810cff5a4229158fab3062330e9839d data/ars_trinkets/recipes/holy_heart.json
+ffd89b11bb3e1931c823ba8915cdffe63c5353a6 data/ars_trinkets/recipes/holy_heart.json
 e16d7fbf49b5e36c530d7d8b3240dac2006e77b3 data/ars_trinkets/recipes/life_rune.json
 c3cd59431984f7e22e8c375c91b37b4ef920b0be data/ars_trinkets/recipes/life_rune_greater.json
 5b82652f4d7389a4a64b3d1cd625c701d0f0b22b data/ars_trinkets/recipes/life_rune_lesser.json
@@ -39,7 +39,7 @@ d68e8b47780b4590685ff7b3c51c17692e1fa75f data/ars_trinkets/recipes/monocle_6.jso
 c4fcbc4b78e6953610d532caa2902cde8bd53ff4 data/ars_trinkets/recipes/monocle_7.json
 e854d55b376fca67c272c63da2c6f0b279d245c2 data/ars_trinkets/recipes/monocle_8.json
 c3b6b2b0f4e059cb54b75c7d2e469099aac533c1 data/ars_trinkets/recipes/monocle_9.json
-c72fc8d803ef82a201c8ef818f775250ee733fb2 data/ars_trinkets/recipes/putrid_heart.json
+33006552c26f67b6e98723945252f71c70075b66 data/ars_trinkets/recipes/putrid_heart.json
 99021623849bcee314223d147c37367c07c99c2a data/ars_trinkets/recipes/unholy_focus.json
 673e6375222089fd3e1138dcd10a722cf2074b7b data/ars_trinkets/recipes/warrior_rune.json
 53e10422b70e853fcec55f2534b3c88009c0666f data/ars_trinkets/recipes/warrior_rune_greater.json

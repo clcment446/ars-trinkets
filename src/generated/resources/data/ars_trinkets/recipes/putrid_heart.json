@@ -6,14 +6,13 @@
   },
   "pedestalItems": [
     {
-      "item": "ars_trinkets:mana_core_1"
-    },
-    {
       "item": "minecraft:wither_skeleton_skull"
     }
   ],
   "reagent": [
-    []
+    {
+      "item": "ars_trinkets:mana_core_1"
+    }
   ],
   "sourceCost": 0
 }

@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class DevourSoul extends AbstractEffect implements IDamageEffect {
     public static final DevourSoul INSTANCE = new DevourSoul(new ResourceLocation(ArsTrinkets.MOD_ID, "glyph_devour_soul"), "Devour Soul");
@@ -39,30 +40,35 @@ public class DevourSoul extends AbstractEffect implements IDamageEffect {
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
-        if (rayTraceResult.getEntity() instanceof LivingEntity living && world instanceof ServerLevel level) {
+        if (rayTraceResult.getEntity() instanceof LivingEntity living && world instanceof ServerLevel level && shooter instanceof Player player) {
 
-            if (resolver.hasFocus(ModRegistry.UNHOLY_FOCUS.get())){
-                spellStats.setAmpMultiplier(spellStats.getAmpMultiplier()+2);
-                spellStats.setDurationMultiplier(spellStats.getDurationMultiplier()+2);
+            if (resolver.hasFocus(ModRegistry.UNHOLY_FOCUS.get())) {
+                spellStats.setAmpMultiplier(spellStats.getAmpMultiplier() + 2);
+                spellStats.setDurationMultiplier(spellStats.getDurationMultiplier() + 2);
+            }
+            AtomicBoolean isProfane = new AtomicBoolean();
+            player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+                isProfane.set(a.getProfane());
+            });
+            if (!isProfane.get()) {
+                player.displayClientMessage(Component.translatable("player_not_cursed.glyph_stopped"), true);
+                return;
             }
             if (living != shooter) {
-                float health = living.getHealth();
-                Player player = (Player) shooter;
                 player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> soulRef = a.getPlayerSoulRefinement());
-                if (soulRef > health * health * health*5) {
+                if (soulRef > Math.pow(living.getHealth(), 3)) {
                     Vec3 pos = living.getEyePosition();
-                    attemptDamage(level, shooter, spellStats, spellContext, resolver, living, DamageUtil.source(level, DamageTypes.MAGIC, shooter), (health));
+                    attemptDamage(level, shooter, spellStats, spellContext, resolver, living, DamageUtil.source(level, DamageTypes.MAGIC, shooter), living.getHealth());
                     level.sendParticles(ParticleTypes.SCULK_SOUL, pos.x, pos.y, pos.z, 100, 0, 0, 0, 2);
-                    player.setHealth(player.getHealth()/5+1);
-                    player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.devour"), true);
-                    player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-                        a.setPlayerSoulRefinement((int) (a.getPlayerSoulRefinement() + 20 * health));
-                        a.setCollectedSouls((int) (a.getPlayerCollectedSouls() + 20 * health));
-                    });
+                    player.setHealth(player.getHealth() / 5 + 1);
+                    if (living.getHealth() < 0) {
+                        player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.devour"), true);
+                        player.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
+                            a.setPlayerSoulRefinement((int) (a.getPlayerSoulRefinement() + 20 * living.getHealth()));
+                            a.setCollectedSouls((int) (a.getPlayerCollectedSouls() + 20 * living.getHealth()));
+                        });
+                    }
                 }
-//                else {
-//                    attemptDamage(level, player, spellStats, spellContext, resolver, player, DamageUtil.source(level, DamageTypes.GENERIC), player.getHealth() / 2);
-//                }
             }
         }
     }
@@ -71,9 +77,11 @@ public class DevourSoul extends AbstractEffect implements IDamageEffect {
     protected @NotNull Set<AbstractAugment> getCompatibleAugments() {
         return setOf();
     }
+
     @Override
     public SpellTier defaultTier() {
-        return SpellTier.THREE;}
+        return SpellTier.THREE;
+    }
 
     @Override
     protected @NotNull Set<SpellSchool> getSchools() {

@@ -255,7 +255,7 @@ public class Config {
 
 
 
-        COMMON_BUILDER.comment("SERVER CONFIGURATION");
+        COMMON_BUILDER.comment("COMMON CONFIGURATION");
 
         WITHER_SHIELD_TOUGHNESS = SERVER_BUILDER.comment("HOW MUCH EACH LEVEL OF WITHER SHIELD INCREASE TOUGHNESS  ").defineInRange("WITHER_SHIELD_TOUGHNESS_PER_AMP", 5,1,100);
         WITHER_SHIELD_ARMOR = SERVER_BUILDER.comment("HOW MUCH EACH LEVEL OF WITHER SHIELD INCREASE ARMOR").defineInRange("WITHER_SHIELD_ARMOR_PER_AMP", 5,1,100);
@@ -278,16 +278,16 @@ public class Config {
         EXP_TO_LEVEL_8 = SERVER_BUILDER.comment("Souls to get to level 8").defineInRange("SOUL_QTY_LEVEL_8", 10000000, 1, 1000000000);
         EXP_TO_LEVEL_9 = SERVER_BUILDER.comment("Souls to get to level 9").defineInRange("SOUL_QTY_LEVEL_9", 25000000, 1, 1000000000);
 
-        MANA_BONUS_FLAT_LEVEL_0 = SERVER_BUILDER.comment("The mana bonus that being to level 0 brings.").defineInRange("MANA_FLAT_BONUS_0", 0, 1, 1000000000);
-        MANA_BONUS_FLAT_LEVEL_1 = SERVER_BUILDER.comment("The mana bonus that being to level 1 brings.").defineInRange("MANA_FLAT_BONUS_1", 1000, 1, 1000000000);
-        MANA_BONUS_FLAT_LEVEL_2 = SERVER_BUILDER.comment("The mana bonus that being to level 2 brings.").defineInRange("MANA_FLAT_BONUS_2", 2500, 1, 1000000000);
-        MANA_BONUS_FLAT_LEVEL_3 = SERVER_BUILDER.comment("The mana bonus that being to level 3 brings.").defineInRange("MANA_FLAT_BONUS_3", 5000, 1, 1000000000);
-        MANA_BONUS_FLAT_LEVEL_4 = SERVER_BUILDER.comment("The mana bonus that being to level 4 brings.").defineInRange("MANA_FLAT_BONUS_4", 12500, 1, 1000000000);
-        MANA_BONUS_FLAT_LEVEL_5 = SERVER_BUILDER.comment("The mana bonus that being to level 5 brings.").defineInRange("MANA_FLAT_BONUS_5", 18750, 1, 1000000000);
-        MANA_BONUS_FLAT_LEVEL_6 = SERVER_BUILDER.comment("The mana bonus that being to level 6 brings.").defineInRange("MANA_FLAT_BONUS_6", 25000, 1, 1000000000);
-        MANA_BONUS_FLAT_LEVEL_7 = SERVER_BUILDER.comment("The mana bonus that being to level 7 brings.").defineInRange("MANA_FLAT_BONUS_7", 50000, 1, 1000000000);
-        MANA_BONUS_FLAT_LEVEL_8 = SERVER_BUILDER.comment("The mana bonus that being to level 8 brings.").defineInRange("MANA_FLAT_BONUS_8", 125000, 1, 1000000000);
-        MANA_BONUS_FLAT_LEVEL_9 = SERVER_BUILDER.comment("The mana bonus that being to level 9 brings.").defineInRange("MANA_FLAT_BONUS_9", 250000, 1, 1000000000);
+        MANA_BONUS_FLAT_LEVEL_0 = SERVER_BUILDER.comment("The mana bonus that being to level 0 brings.").defineInRange("MANA_FLAT_BONUS_0", 0, 0, 1000000000);
+        MANA_BONUS_FLAT_LEVEL_1 = SERVER_BUILDER.comment("The mana bonus that being to level 1 brings.").defineInRange("MANA_FLAT_BONUS_1", 100, 0, 1000000000);
+        MANA_BONUS_FLAT_LEVEL_2 = SERVER_BUILDER.comment("The mana bonus that being to level 2 brings.").defineInRange("MANA_FLAT_BONUS_2", 150, 0, 1000000000);
+        MANA_BONUS_FLAT_LEVEL_3 = SERVER_BUILDER.comment("The mana bonus that being to level 3 brings.").defineInRange("MANA_FLAT_BONUS_3", 250, 0, 1000000000);
+        MANA_BONUS_FLAT_LEVEL_4 = SERVER_BUILDER.comment("The mana bonus that being to level 4 brings.").defineInRange("MANA_FLAT_BONUS_4", 350, 0, 1000000000);
+        MANA_BONUS_FLAT_LEVEL_5 = SERVER_BUILDER.comment("The mana bonus that being to level 5 brings.").defineInRange("MANA_FLAT_BONUS_5", 500, 0, 1000000000);
+        MANA_BONUS_FLAT_LEVEL_6 = SERVER_BUILDER.comment("The mana bonus that being to level 6 brings.").defineInRange("MANA_FLAT_BONUS_6", 750, 0, 1000000000);
+        MANA_BONUS_FLAT_LEVEL_7 = SERVER_BUILDER.comment("The mana bonus that being to level 7 brings.").defineInRange("MANA_FLAT_BONUS_7", 1000, 0, 1000000000);
+        MANA_BONUS_FLAT_LEVEL_8 = SERVER_BUILDER.comment("The mana bonus that being to level 8 brings.").defineInRange("MANA_FLAT_BONUS_8", 1500, 0, 1000000000);
+        MANA_BONUS_FLAT_LEVEL_9 = SERVER_BUILDER.comment("The mana bonus that being to level 9 brings.").defineInRange("MANA_FLAT_BONUS_9", 2000, 0, 1000000000);
 
         MANA_REGEN_BONUS_LVL_0 = SERVER_BUILDER.comment("The mana regen bonus that being to level 0 brings.").defineInRange("MANA_REGEN_BONUS_0", 0, 1, 1000000000);
         MANA_REGEN_BONUS_LVL_1 = SERVER_BUILDER.comment("The mana regen bonus that being to level 1 brings.").defineInRange("MANA_REGEN_BONUS_1", 20, 1, 1000000000);
@@ -311,16 +311,16 @@ public class Config {
         SPELL_DMG_8 = SERVER_BUILDER.comment("The total % of bonus spell damage that being at level 8 brings.").defineInRange("SPELL_DMG_8", 50, 0, 10000000);
         SPELL_DMG_9 = SERVER_BUILDER.comment("The total % of bonus spell damage that being at level 9 brings.").defineInRange("SPELL_DMG_9", 70, 0, 10000000);
 
-        PHYS_DAMAGE_0 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 0 brings.").defineInRange("DEFENSE_PCT_0", 0, 0, 10000000);
-        PHYS_DAMAGE_1 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 1 brings.").defineInRange("DEFENSE_PCT_1",0 , 0, 10000000);
-        PHYS_DAMAGE_2 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 2 brings.").defineInRange("DEFENSE_PCT_2",0 , 0, 10000000);
-        PHYS_DAMAGE_3 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 3 brings.").defineInRange("DEFENSE_PCT_3",5 , 0, 10000000);
-        PHYS_DAMAGE_4 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 4 brings.").defineInRange("DEFENSE_PCT_4",10 , 0, 10000000);
-        PHYS_DAMAGE_5 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 5 brings.").defineInRange("DEFENSE_PCT_5",15 , 0, 10000000);
-        PHYS_DAMAGE_6 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 6 brings.").defineInRange("DEFENSE_PCT_6", 20, 0, 10000000);
-        PHYS_DAMAGE_7 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 7 brings.").defineInRange("DEFENSE_PCT_7", 30, 0, 10000000);
-        PHYS_DAMAGE_8 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 8 brings.").defineInRange("DEFENSE_PCT_8", 40, 0, 10000000);
-        PHYS_DAMAGE_9 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 9 brings.").defineInRange("DEFENSE_PCT_9", 50, 0, 10000000);
+        DEFENSE_0 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 0 brings.").defineInRange("DEFENSE_PCT_0", 0, 0, 10000000);
+        DEFENSE_1 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 1 brings.").defineInRange("DEFENSE_PCT_1",0 , 0, 10000000);
+        DEFENSE_2 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 3 brings.").defineInRange("DEFENSE_PCT_3",5 , 0, 10000000);
+        DEFENSE_3 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 4 brings.").defineInRange("DEFENSE_PCT_4",10 , 0, 10000000);
+        DEFENSE_4 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 5 brings.").defineInRange("DEFENSE_PCT_5",15 , 0, 10000000);
+        DEFENSE_5 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 6 brings.").defineInRange("DEFENSE_PCT_6", 20, 0, 10000000);
+        DEFENSE_6 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 7 brings.").defineInRange("DEFENSE_PCT_7", 30, 0, 10000000);
+        DEFENSE_7 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 8 brings.").defineInRange("DEFENSE_PCT_8", 40, 0, 10000000);
+        DEFENSE_8 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 9 brings.").defineInRange("DEFENSE_PCT_9", 50, 0, 10000000);
+        DEFENSE_9 = SERVER_BUILDER.comment("The total % of bonus physical damage that being at level 9 brings.").defineInRange("DEFENSE_PCT_9", 50, 0, 10000000);
 
         CORE_FLAT_BONUS = SERVER_BUILDER.comment("How much each core increases your flat mana stat.").defineInRange("CORE_FLAT", 1, 0, 1000000000);
         CORE_REGEN_BONUS = SERVER_BUILDER.comment("How much each core increases your mana regen stat.").defineInRange("CORE_REGEN", 1, 0, 1000000000);

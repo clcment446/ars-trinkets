@@ -35,6 +35,7 @@ import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.UUID;
 
@@ -136,9 +137,9 @@ public class ModRegistry {
     static {
         WITHER_SHIELD_EFFECT = EFFECTS.register("glyph_wither_shield", () -> {
             return new PublicEffect(MobEffectCategory.BENEFICIAL, ParticleUtil.createIntColor(10, 30, 70)) {
-                public void addAttributeModifiers(LivingEntity pLivingEntity, AttributeMap pAttributeMap, int pAmplifier) {
-                    AttributeModifier toughnessMod = new AttributeModifier(UUID.fromString("ad9665ac-3a34-49e4-a7d7-795b6639ecd2"), this::getDescriptionId, (double) ((Integer) Config.WITHER_SHIELD_TOUGHNESS.get() * (0.2 + pAmplifier)), AttributeModifier.Operation.MULTIPLY_TOTAL);
-                    AttributeModifier armorMod = new AttributeModifier(UUID.fromString("fe256933-d73d-4947-a911-4d4cb3eac81c"), this::getDescriptionId, (double) ((Integer) Config.WITHER_SHIELD_ARMOR.get() * (0.2 + pAmplifier)), AttributeModifier.Operation.MULTIPLY_TOTAL);
+                public void addAttributeModifiers(@NotNull LivingEntity pLivingEntity, @NotNull AttributeMap pAttributeMap, int pAmplifier) {
+                    AttributeModifier toughnessMod = new AttributeModifier(UUID.fromString("ad9665ac-3a34-49e4-a7d7-795b6639ecd2"), this::getDescriptionId, (double) ((Integer) Config.WITHER_SHIELD_TOUGHNESS.get() * (0.2 + pAmplifier))/100, AttributeModifier.Operation.MULTIPLY_TOTAL);
+                    AttributeModifier armorMod = new AttributeModifier(UUID.fromString("fe256933-d73d-4947-a911-4d4cb3eac81c"), this::getDescriptionId, (double) ((Integer) Config.WITHER_SHIELD_ARMOR.get() * (0.2 + pAmplifier))/100, AttributeModifier.Operation.MULTIPLY_TOTAL);
                     this.getAttributeModifiers().put((Attribute) Attributes.ARMOR_TOUGHNESS, toughnessMod);
                     this.getAttributeModifiers().put((Attribute) Attributes.ARMOR, armorMod);
                     super.addAttributeModifiers(pLivingEntity, pAttributeMap, pAmplifier);

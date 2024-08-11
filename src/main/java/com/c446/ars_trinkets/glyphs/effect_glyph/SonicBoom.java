@@ -1,18 +1,21 @@
 package com.c446.ars_trinkets.glyphs.effect_glyph;
 
 import com.c446.ars_trinkets.ArsTrinkets;
+import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher;
 import com.c446.ars_trinkets.registry.ModRegistry;
 import com.hollingsworth.arsnouveau.api.spell.*;
 import com.hollingsworth.arsnouveau.api.util.DamageUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -23,6 +26,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.c446.ars_trinkets.util.Util.CreateParticleBeam;
 
@@ -59,7 +63,15 @@ public class SonicBoom extends AbstractEffect implements IDamageEffect {
 
     @Override
     public void onResolveEntity(EntityHitResult rayTraceResult, Level world, @Nonnull LivingEntity shooter, SpellStats spellStats, SpellContext spellContext, SpellResolver resolver) {
+        AtomicBoolean is_profane = new AtomicBoolean(false);
+        shooter.getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a->{
+            is_profane.set(a.getProfane());
+        });
 
+        if (!(is_profane.get()) && shooter instanceof Player player){
+            player.displayClientMessage(Component.translatable("player_not_cursed.glyph_stopped"), true);
+            return;
+        }
         Entity entity = rayTraceResult.getEntity();
         if (world instanceof ServerLevel level && entity instanceof LivingEntity living) {
             if (resolver.hasFocus(ModRegistry.UNHOLY_FOCUS.get())){

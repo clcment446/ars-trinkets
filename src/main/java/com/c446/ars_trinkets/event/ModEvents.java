@@ -7,41 +7,27 @@ import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvider;
 import com.c446.ars_trinkets.commands.BECOME_GOD;
 import com.c446.ars_trinkets.commands.CommandResetArcaneProgression;
-import com.c446.ars_trinkets.commands.SetArcaneProgression;
-import com.c446.ars_trinkets.glyphs.effect_glyph.GiantStrength;
+import com.c446.ars_trinkets.commands.FixArcaneLevels;
 import com.c446.ars_trinkets.item.EssenceItem;
 import com.c446.ars_trinkets.item.ManaCore;
 import com.c446.ars_trinkets.item.ThatItemToChangeClassLol;
 import com.c446.ars_trinkets.perks.PerkAttributes;
-import com.c446.ars_trinkets.registry.ModRegistry;
-import com.github.jarva.arsadditions.setup.config.CommonConfig;
 import com.hollingsworth.arsnouveau.api.event.*;
-import com.hollingsworth.arsnouveau.common.capability.ManaCap;
-import com.hollingsworth.arsnouveau.common.capability.ManaCapAttacher;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
-import net.minecraft.advancements.critereon.PlayerHurtEntityTrigger;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.damagesource.DamageTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
 import net.minecraftforge.event.entity.living.LivingEntityUseItemEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerXpEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.config.ModConfig;
-import net.minecraftforge.fml.event.config.ModConfigEvent;
-import net.minecraftforge.fml.loading.FMLConfig;
-import top.theillusivec4.curios.api.CuriosApi;
 
 import java.util.Objects;
 
@@ -58,7 +44,7 @@ public class ModEvents {
     public static void commandRegister(RegisterCommandsEvent event) {
         CommandResetArcaneProgression.register(event.getDispatcher());
         BECOME_GOD.register(event.getDispatcher());
-        SetArcaneProgression.register(event.getDispatcher());
+        FixArcaneLevels.register(event.getDispatcher());
     }
 
     @SubscribeEvent
@@ -86,7 +72,7 @@ public class ModEvents {
             newArcaneLevels.setPlayerArcaneLevel(oldArcane.getPlayerArcaneLevel());
             newArcaneLevels.setProfane(oldArcane.getProfane(), false);
             newArcaneLevels.setCollectedSouls(oldArcane.getPlayerCollectedSouls());
-            newArcaneLevels.setCores(oldArcane.getPlayerCollectedSouls());
+            newArcaneLevels.setCores(oldArcane.getCores());
         }));
         event.getOriginal().invalidateCaps();
 //        System.out.println("Arcane Cap Cloned");

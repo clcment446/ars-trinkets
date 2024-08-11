@@ -144,12 +144,12 @@ public class ArsProviders {
         @Override
         public void collectJsons(CachedOutput cache) {
             recipes.add(builder()
-                            .withPedestalItem(MANA_CORE_1)
+                            .withReagent(MANA_CORE_1)
                             .withPedestalItem(ENCHANTED_GOLDEN_APPLE)
                     .withResult(HOLY_HEART).build()
             );
             recipes.add(builder()
-                    .withPedestalItem(MANA_CORE_1)
+                    .withReagent(MANA_CORE_1)
                     .withPedestalItem(WITHER_SKELETON_SKULL)
                     .withResult(PUTRID_HEART).build()
             );

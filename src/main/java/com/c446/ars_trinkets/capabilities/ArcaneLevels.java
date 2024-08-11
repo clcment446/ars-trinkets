@@ -9,6 +9,7 @@ import com.hollingsworth.arsnouveau.common.items.SpellBook;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
@@ -20,6 +21,7 @@ import java.util.Objects;
 import java.util.Random;
 import java.util.Set;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class ArcaneLevels implements IArcaneLevels {
     private static boolean firstLogin = false;
@@ -117,6 +119,9 @@ public class ArcaneLevels implements IArcaneLevels {
             }
         }
         return severity;
+    }
+
+    public void cancelCursedGlyph(Player player){
     }
 
     @Override
@@ -484,11 +489,20 @@ public class ArcaneLevels implements IArcaneLevels {
 
     public void setProfane(boolean turnsPlayerProfane, boolean isRelic, Player player) {
         setProfane(turnsPlayerProfane);
-        if (isRelic) {
+        if (turnsPlayerProfane) {
 
             player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.going_to_madness_item"), true);
         } else {
             player.displayClientMessage(Component.translatable("text.ars_trinkets.souls.back_from_madness"), true);
+        }
+    }
+
+    public void fixArcaneLevels() {
+        if (this.player_cores > Config.MAX_PLAYER_CORE.get()){
+            this.player_cores = Config.MAX_PLAYER_CORE.get();
+        }
+        if (this.player_arcane_level > Config.MAX_PLAYER_LEVEL.get()){
+            this.player_arcane_level = Config.MAX_PLAYER_LEVEL.get();
         }
     }
 }
