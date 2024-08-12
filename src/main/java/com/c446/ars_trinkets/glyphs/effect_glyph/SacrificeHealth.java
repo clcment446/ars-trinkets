@@ -65,7 +65,7 @@ public class SacrificeHealth extends AbstractEffect implements IDamageEffect {
         }
         Entity entity = rayTraceResult.getEntity();
         if (entity instanceof LivingEntity living && world instanceof ServerLevel level && shooter instanceof Player player) {
-            DamageSource source = DamageUtil.source(level, DamageTypes.IN_FIRE, shooter);;
+            DamageSource source = DamageUtil.source(level, DamageTypes.IN_FIRE, shooter);
             Vec3 pos = living.getEyePosition();
             float health = (float) (0.11* spellStats.getAmpMultiplier() * player.getMaxHealth());
             player.setHealth((player.getMaxHealth() - health)+1);

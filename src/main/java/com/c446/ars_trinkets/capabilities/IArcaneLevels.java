@@ -16,34 +16,34 @@ public interface IArcaneLevels {
     boolean profane = false;
 
 
-    public default int getPlayerArcaneLevel() {
+    default int getPlayerArcaneLevel() {
         return 0;
     }
 
-    public default void setPlayerArcaneLevel(int level) {
+    default void setPlayerArcaneLevel(int level) {
     }
 
 
-    public default int getPlayerSoulRefinement() {
+    default int getPlayerSoulRefinement() {
         return 0;
     }
 
 
-    public default void setPlayerSoulRefinement(int refinement) {
+    default void setPlayerSoulRefinement(int refinement) {
     }
 
-    public default int getPlayerCollectedSouls() {
+    default int getPlayerCollectedSouls() {
         return 0;
     }
 
-    public default void setCollectedSouls(int i) {
+    default void setCollectedSouls(int i) {
     }
 
-    public default boolean getProfane() {
+    default boolean getProfane() {
         return false;
     }
 
-    public default void setProfane(Boolean pr) {
+    default void setProfane(Boolean pr) {
     }
 
     default int calcProfane(Player player) {
@@ -51,15 +51,15 @@ public interface IArcaneLevels {
     }
 
 
-    public default MutableComponent getPlayerTitle() {
+    default MutableComponent getPlayerTitle() {
         return (MutableComponent) MutableComponent.EMPTY;
     }
 
-    public default int getPlayerManaBonus() {
+    default int getPlayerManaBonus() {
         return 0;
     }
 
-    public default int getPlayerRegenBonus() {
+    default int getPlayerRegenBonus() {
 
         return 0;
     }
@@ -71,32 +71,32 @@ public interface IArcaneLevels {
 
     double getPhysDmg();
 
-    public default int checkRefinement(Player player) {
+    default int checkRefinement(Player player) {
 
         return 0;
     }
 
     @Deprecated
-    public default void sendPlayerRefinement(Player player) {
+    default void sendPlayerRefinement(Player player) {
     }
 
-    public default void triggerPlayerBreakthrough(Player player) {
+    default void triggerPlayerBreakthrough(Player player) {
 
     }
 
-    public default void updateSoulEssence(int quantity, boolean slain, Player player) {
+    default void updateSoulEssence(int quantity, boolean slain, Player player) {
     }
 
-    public default void playerMain(Player player) {
+    default void playerMain(Player player) {
     }
 
-    public default void CopyFrom(com.c446.ars_trinkets.capabilities.ArcaneLevels source) {
+    default void CopyFrom(com.c446.ars_trinkets.capabilities.ArcaneLevels source) {
     }
 
-    public default void saveNBTData(CompoundTag nbt) {
+    default void saveNBTData(CompoundTag nbt) {
     }
 
-    public default void loadNBTData(CompoundTag nbt) {
+    default void loadNBTData(CompoundTag nbt) {
     }
 }
 

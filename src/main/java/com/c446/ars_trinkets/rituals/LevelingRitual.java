@@ -20,7 +20,7 @@ import java.util.Objects;
 
 public class LevelingRitual extends AbstractRitual {
 
-    private String name = "Ascension Ritual";
+    private final String name = "Ascension Ritual";
     public static final String ID = "ritual_leveling";
     private final int source = 2000;
     boolean profane;
@@ -97,6 +97,6 @@ public class LevelingRitual extends AbstractRitual {
 
     @Override
     public ResourceLocation getRegistryName() {
-        return ArsTrinkets.prefix(this.ID);
+        return ArsTrinkets.prefix(ID);
     }
 }

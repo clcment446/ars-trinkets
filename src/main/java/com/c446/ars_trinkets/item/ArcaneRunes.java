@@ -99,21 +99,21 @@ public class ArcaneRunes extends RegularItems implements ICurioItem, IManaEquipm
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> attributes = ICurioItem.super.getAttributeModifiers(slotContext, uuid, stack);
 //        attributes.put((Attribute) PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "flat_max_mana_modifier_curio", (double) this.getMaxManaBoost(stack), AttributeModifier.Operation.ADDITION));
-        attributes.put((Attribute) Attributes.ATTACK_SPEED, new AttributeModifier(uuid, "runestone_speed_curio", (double) this.getAttackSpeed(stack),AttributeModifier.Operation.MULTIPLY_TOTAL));
-        attributes.put((Attribute) Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "runestone_damage_curio", (double) this.getBonusDamage(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(Attributes.ATTACK_SPEED, new AttributeModifier(uuid, "runestone_speed_curio", this.getAttackSpeed(stack),AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(uuid, "runestone_damage_curio", this.getBonusDamage(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
 
-        attributes.put((Attribute) Attributes.MAX_HEALTH, new AttributeModifier(uuid, "runestone_health_curio", (double) this.getHealth(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
-        attributes.put((Attribute) Attributes.LUCK, new AttributeModifier(uuid, "runestone_luck_curio", (double) this.getLuck(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(Attributes.MAX_HEALTH, new AttributeModifier(uuid, "runestone_health_curio", this.getHealth(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(Attributes.LUCK, new AttributeModifier(uuid, "runestone_luck_curio", this.getLuck(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
 
-        attributes.put((Attribute)  Attributes.ARMOR, new AttributeModifier(uuid, "runestone_armor_curio", (double) this.getArmor(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
-        attributes.put((Attribute) Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "runestone_toughness_curio", (double) this.getToighness(stack), AttributeModifier.Operation.ADDITION));
-        attributes.put((Attribute) Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "runestone_toughness_curio", (double) this.getToighness(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
-        attributes.put((Attribute) PerkAttributes.SOUL_STEALER.get(), new AttributeModifier(uuid, "runestone_soul_stealer_curio", (double) this.getSoulsteal(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(Attributes.ARMOR, new AttributeModifier(uuid, "runestone_armor_curio", this.getArmor(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "runestone_toughness_curio", this.getToighness(stack), AttributeModifier.Operation.ADDITION));
+        attributes.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(uuid, "runestone_toughness_curio", this.getToighness(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(PerkAttributes.SOUL_STEALER.get(), new AttributeModifier(uuid, "runestone_soul_stealer_curio", this.getSoulsteal(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
 
 
-        attributes.put((Attribute) PerkAttributes.SPELL_DAMAGE_PCT.get(), new AttributeModifier(uuid, "runestone_spell_damage_pct_curio", (double) this.getDamage_boost(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
-        attributes.put((Attribute) PerkAttributes.TOTAL_MANA_BOOST.get(), new AttributeModifier(uuid, "runestone_mana_boost_curio", (double) this.getTotalManaBoostPCT(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
-        attributes.put((Attribute) PerkAttributes.TOTAL_MANA_REGEN_BOOST.get(), new AttributeModifier(uuid, "runestone_mana_regen_boost_curio", (double) this.getTotalManaRegenBoostPCT(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(PerkAttributes.SPELL_DAMAGE_PCT.get(), new AttributeModifier(uuid, "runestone_spell_damage_pct_curio", this.getDamage_boost(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(PerkAttributes.TOTAL_MANA_BOOST.get(), new AttributeModifier(uuid, "runestone_mana_boost_curio", this.getTotalManaBoostPCT(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(PerkAttributes.TOTAL_MANA_REGEN_BOOST.get(), new AttributeModifier(uuid, "runestone_mana_regen_boost_curio", this.getTotalManaRegenBoostPCT(stack), AttributeModifier.Operation.MULTIPLY_TOTAL));
         return attributes;
     }
 }

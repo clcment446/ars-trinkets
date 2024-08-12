@@ -44,7 +44,7 @@ public class PerkAttributes {
 
     public static RegistryObject<Attribute> registerAttribute(String name, Function<String, Attribute> attribute, UUID uuid) {
         RegistryObject<Attribute> registryObject = ATTRIBUTES.register(name, () -> {
-            return (Attribute) attribute.apply(name);
+            return attribute.apply(name);
         });
         UUIDS.put(registryObject, uuid);
         return registryObject;
@@ -56,7 +56,7 @@ public class PerkAttributes {
             return e == EntityType.PLAYER;
         }).forEach((e) -> {
             ATTRIBUTES.getEntries().forEach((v) -> {
-                event.add(e, (Attribute) v.get());
+                event.add(e, v.get());
             });
         });
     }

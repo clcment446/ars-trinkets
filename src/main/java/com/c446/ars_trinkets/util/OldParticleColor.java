@@ -30,7 +30,7 @@ public class OldParticleColor {
 
         private final float r;
         private final float g;
-        private float b;
+        private final float b;
         private final int color;
 
         public ParticleColor(int r, int g, int b) {
@@ -100,7 +100,7 @@ public class OldParticleColor {
         }
 
         public String toString() {
-            return "" + this.r + "," + this.g + "," + this.b;
+            return this.r + "," + this.g + "," + this.b;
         }
 
         public IntWrapper toWrapper() {

@@ -36,7 +36,7 @@ public class PropagateProjectile extends AbstractEffect implements IPropagator {
     public void summonProjectiles(Level world, Vec3 pos, LivingEntity shooter, SpellStats stats, SpellResolver resolver) {
         ArrayList<EntityProjectileSpell> projectiles = new ArrayList<>();
         EntityProjectileSpell projectileSpell = new EntityProjectileSpell(world, resolver);
-        projectileSpell.setPos((double)pos.x, (double)(pos.y + 1), (double)pos.z);
+        projectileSpell.setPos(pos.x, pos.y + 1, pos.z);
         projectiles.add(projectileSpell);
         int numSplits = stats.getBuffCount(AugmentSplit.INSTANCE);
 
@@ -49,7 +49,7 @@ public class PropagateProjectile extends AbstractEffect implements IPropagator {
             BlockPos projPos = new BlockPos((int) pos.x, (int) (pos.y + 1), (int) pos.z).relative(offset, i);
             projPos = projPos.offset(0, (int) 1.5D, 0);
             EntityProjectileSpell spell = new EntityProjectileSpell(world, resolver);
-            spell.setPos((double)projPos.getX(), (double)projPos.getY(), (double)projPos.getZ());
+            spell.setPos(projPos.getX(), projPos.getY(), projPos.getZ());
             projectiles.add(spell);
         }
 

@@ -43,10 +43,10 @@ public class MagicItems extends RegularItems implements ICurioItem, IManaEquipme
     }
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(SlotContext slotContext, UUID uuid, ItemStack stack) {
         Multimap<Attribute, AttributeModifier> attributes = ICurioItem.super.getAttributeModifiers(slotContext, uuid, stack);
-        attributes.put((Attribute) PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "flat_max_mana_modifier_curio", (double)this.getMaxManaBoost(stack), AttributeModifier.Operation.ADDITION));
-        attributes.put((Attribute) PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_modifier_curio", (double)this.getManaRegenBonus(stack), AttributeModifier.Operation.ADDITION));
-        attributes.put((Attribute) com.c446.ars_trinkets.perks.PerkAttributes.SPELL_DAMAGE_PCT.get(), new AttributeModifier(uuid, "spell_damage_bonus_modifier_curio", (double) this.getSpellDamageBoost(stack)/100, AttributeModifier.Operation.ADDITION));
-        attributes.put((Attribute) PerkAttributes.MAX_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_bonus_modifier_curio", (double) this.getMaxManaBoostPct(stack),AttributeModifier.Operation.MULTIPLY_TOTAL));
+        attributes.put(PerkAttributes.FLAT_MANA_BONUS.get(), new AttributeModifier(uuid, "flat_max_mana_modifier_curio", this.getMaxManaBoost(stack), AttributeModifier.Operation.ADDITION));
+        attributes.put(PerkAttributes.MANA_REGEN_BONUS.get(), new AttributeModifier(uuid, "mana_regen_modifier_curio", this.getManaRegenBonus(stack), AttributeModifier.Operation.ADDITION));
+        attributes.put(com.c446.ars_trinkets.perks.PerkAttributes.SPELL_DAMAGE_PCT.get(), new AttributeModifier(uuid, "spell_damage_bonus_modifier_curio", (double) this.getSpellDamageBoost(stack)/100, AttributeModifier.Operation.ADDITION));
+        attributes.put(PerkAttributes.MAX_MANA_BONUS.get(), new AttributeModifier(uuid, "max_mana_bonus_modifier_curio", this.getMaxManaBoostPct(stack),AttributeModifier.Operation.MULTIPLY_TOTAL));
 
         return attributes;
     }

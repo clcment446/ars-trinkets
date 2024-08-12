@@ -88,7 +88,7 @@ public class SunFlare extends AbstractEffect implements IDamageEffect {
                         if (a.getProfane()) {
                             attemptDamage(level, shooter, spellStats, spellContext, resolver, player, source, (float) ((float) damage * 1.5));
                         } else {
-                            attemptDamage(level, shooter, spellStats, spellContext, resolver, player, source, (float) ((float) damage));
+                            attemptDamage(level, shooter, spellStats, spellContext, resolver, player, source, (float) damage);
                         }
                     });
                 }

@@ -104,8 +104,8 @@ public class EntityMissileSpell extends EntityProjectileSpell {
             Vec3 vector3d2 = this.position();
             Vec3 vector3d3 = vector3d2.add(vector3d);
             HitResult raytraceresult = this.level().clip(new ClipContext(vector3d2, vector3d3, this.numSensitive > 0 ? Block.OUTLINE : Block.COLLIDER, Fluid.NONE, this));
-            if (((HitResult) raytraceresult).getType() != Type.MISS) {
-                vector3d3 = ((HitResult) raytraceresult).getLocation();
+            if (raytraceresult.getType() != Type.MISS) {
+                vector3d3 = raytraceresult.getLocation();
             }
 
             EntityHitResult entityraytraceresult = this.findHitEntity(vector3d2, vector3d3);
@@ -124,8 +124,8 @@ public class EntityMissileSpell extends EntityProjectileSpell {
                 ExplodeMissile();
             }
 
-            if (raytraceresult != null && ((HitResult) raytraceresult).getType() != Type.MISS && !ForgeEventFactory.onProjectileImpact(this, (HitResult) raytraceresult)) {
-                this.onHit((HitResult) raytraceresult);
+            if (raytraceresult != null && raytraceresult.getType() != Type.MISS && !ForgeEventFactory.onProjectileImpact(this, raytraceresult)) {
+                this.onHit(raytraceresult);
                 this.hasImpulse = true;
             }
 
@@ -153,7 +153,7 @@ public class EntityMissileSpell extends EntityProjectileSpell {
 
                     for (double j = 0.0D; j < dist; ++j) {
                         double coeff = j / dist;
-                        this.level().addParticle(ParticleUtil.GlowParticleData.createData(this.getParticleColor()), (double) ((float) (this.xo + deltaX * coeff)), (double) ((float) (this.yo + deltaY * coeff)), (double) ((float) (this.zo + deltaZ * coeff)), (double) (0.0125F * (this.random.nextFloat() - 0.5F)), (double) (0.0125F * (this.random.nextFloat() - 0.5F)), (double) (0.0125F * (this.random.nextFloat() - 0.5F)));
+                        this.level().addParticle(ParticleUtil.GlowParticleData.createData(this.getParticleColor()), (float) (this.xo + deltaX * coeff), (float) (this.yo + deltaY * coeff), (float) (this.zo + deltaZ * coeff), 0.0125F * (this.random.nextFloat() - 0.5F), 0.0125F * (this.random.nextFloat() - 0.5F), 0.0125F * (this.random.nextFloat() - 0.5F));
                     }
                 }
             }

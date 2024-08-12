@@ -21,7 +21,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class FormOverhead extends AbstractCastMethod {
-    public static FormOverhead INSTANCE = new FormOverhead(new ResourceLocation(ArsTrinkets.MOD_ID,"glyph_overhead"),"Overhead");;
+    public static FormOverhead INSTANCE = new FormOverhead(new ResourceLocation(ArsTrinkets.MOD_ID,"glyph_overhead"),"Overhead");
 
     public FormOverhead(String tag, String description) {
         super(ModRegistry.getGlyphName(tag),description);
@@ -61,7 +61,7 @@ public class FormOverhead extends AbstractCastMethod {
 
     @Nonnull
     public Set<AbstractAugment> getCompatibleAugments() {
-        return this.augmentSetOf(new AbstractAugment[0]);
+        return this.augmentSetOf();
     }
 
     public String getBookDescription() {
