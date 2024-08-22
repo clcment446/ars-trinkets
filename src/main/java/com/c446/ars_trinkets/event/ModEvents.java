@@ -5,7 +5,7 @@ import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.capabilities.ArcaneLevels;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher;
 import com.c446.ars_trinkets.capabilities.ArcaneLevelsAttacher.ArcaneLevelsProvider;
-import com.c446.ars_trinkets.commands.BECOME_GOD;
+import com.c446.ars_trinkets.commands.cmd;
 import com.c446.ars_trinkets.commands.CommandResetArcaneProgression;
 import com.c446.ars_trinkets.commands.FixArcaneLevels;
 import com.c446.ars_trinkets.item.EssenceItem;
@@ -38,12 +38,10 @@ import static com.c446.ars_trinkets.perks.PerkAttributes.SPELL_DAMAGE_PCT;
 
 @Mod.EventBusSubscriber(modid = ArsTrinkets.MOD_ID)
 public class ModEvents {
-
-
     @SubscribeEvent
     public static void commandRegister(RegisterCommandsEvent event) {
         CommandResetArcaneProgression.register(event.getDispatcher());
-        BECOME_GOD.register(event.getDispatcher());
+        cmd.register(event.getDispatcher());
         FixArcaneLevels.register(event.getDispatcher());
     }
 

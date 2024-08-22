@@ -8,9 +8,11 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +24,13 @@ import static com.c446.ars_trinkets.registry.ModRegistry.PURPLE_ESSENCE;
 public class Util {
     ArrayList<Item> focus = new ArrayList<>();
 
+    public static HashMap<Attribute, Long> fromConfigToLong(HashMap<Attribute, ForgeConfigSpec.IntValue> attributeIntValueHashMap) {
+        HashMap<Attribute, Long> convertedMap = new HashMap<>();
+        for (Attribute a : attributeIntValueHashMap.keySet()) {
+            convertedMap.put(a, attributeIntValueHashMap.get(a).get().longValue());
+        }
+        return convertedMap;
+    }
 
     public static void CreateParticleBeam(Vec3 start, Vec3 end, ServerLevel level, ParticleColor color) {
         /**

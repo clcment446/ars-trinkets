@@ -54,6 +54,7 @@ public class ArsProviders {
 
     static String root = ArsTrinkets.MOD_ID;
 
+
     public static class CraftingTableProvider extends RecipeProvider {
         public CraftingTableProvider(DataGenerator pGenerator) {
             super(pGenerator.getPackOutput());

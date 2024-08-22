@@ -9,6 +9,7 @@ import com.hollingsworth.arsnouveau.client.particle.ParticleUtil;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAOE;
 import com.hollingsworth.arsnouveau.common.spell.augment.AugmentAmplify;
 import com.hollingsworth.arsnouveau.setup.registry.CapabilityRegistry;
+import com.hollingsworth.arsnouveau.setup.registry.ModPotions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -37,20 +38,7 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
     }
 
     private int getAmps(int i) {
-        switch (i) {
-            case 0 -> {
-                return 1;
-            }
-            case 1 -> {
-                return 2;
-            }
-            case 2 -> {
-                return 3;
-            }
-            default -> {
-                return 4;
-            }
-        }
+        return i++;
     }
     /*
     damage = (this.DAMAGE.get() * ((this.AMP_VALUE.get())/1.5 * (spellStats.getAmpMultiplier())))*(1 + bonus)/ 1.5;
@@ -84,6 +72,7 @@ public class ManaBomb extends AbstractEffect implements IDamageEffect {
                 a.setMana(0);});
             bonus = (float) ((float) mana/2.0+Math.log(mana));
             damage = (float) ((this.DAMAGE.get() + ((this.AMP_VALUE.get()) * (spellStats.getAmpMultiplier())))+(1 + bonus));
+
 
             for (Entity e : world.getEntities(shooter, new AABB(
                     living.position().add(range, range, range), living.position().subtract(range, range, range)))) {

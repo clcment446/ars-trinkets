@@ -8,12 +8,10 @@ import com.mojang.brigadier.CommandDispatcher;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraftforge.common.ForgeConfig;
 
 import java.util.Objects;
 
-public class BECOME_GOD {
+public class cmd {
     public static void register(CommandDispatcher<CommandSourceStack> dispatcher) {
         dispatcher.register(Commands.literal("dummy_command").
                 requires(sender -> sender.hasPermission(0))
@@ -25,8 +23,8 @@ public class BECOME_GOD {
             ItemStack crown = new ItemStack(ModRegistry.THEARCH_CROWN.get());
             source.getPlayer().getInventory().setItem(source.getPlayer().getInventory().getFreeSlot(), crown);
             source.getPlayer().getCapability(ArcaneLevelsAttacher.ArcaneLevelsProvider.PLAYER_LEVEL).ifPresent(a -> {
-                a.player_arcane_level = Config.MAX_PLAYER_LEVEL.get();
-                a.player_cores = Config.MAX_PLAYER_CORE.get();
+                a.player_arcane_level = Math.toIntExact(Config.MAX_PLAYER_LEVEL.get());
+                a.player_cores = Math.toIntExact(Config.MAX_PLAYER_CORE.get());
                 source.getPlayer().getInventory().setItem(source.getPlayer().getInventory().getFreeSlot(), new ItemStack(AddonItemRegistry.CODEX_ENTRY.get(), 64));
                 source.getPlayer().getInventory().setItem(source.getPlayer().getInventory().getFreeSlot(), new ItemStack(AddonItemRegistry.CODEX_ENTRY_LOST.get(), 64));
                 source.getPlayer().getInventory().setItem(source.getPlayer().getInventory().getFreeSlot(), new ItemStack(AddonItemRegistry.CODEX_ENTRY_ANCIENT.get(), 64));

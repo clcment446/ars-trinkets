@@ -135,7 +135,7 @@ public class ArcaneLevels implements IArcaneLevels {
     @Override
     public int getPlayerManaBonus() {
         //        System.out.println("Max Mana bonus questioned");
-        int bonus = 0;
+        Integer bonus = 0;
         switch (player_arcane_level) {
             case 0 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_0.get();
             case 1 -> bonus = Config.MANA_BONUS_FLAT_LEVEL_1.get();
@@ -153,7 +153,7 @@ public class ArcaneLevels implements IArcaneLevels {
 
     @Override
     public int getPlayerRegenBonus() {
-        int bonus = 0;
+        Integer bonus = 0;
         switch (player_arcane_level) {
             case 0 -> bonus = Config.MANA_REGEN_BONUS_LVL_0.get();
             case 1 -> bonus = Config.MANA_REGEN_BONUS_LVL_1.get();
@@ -171,7 +171,7 @@ public class ArcaneLevels implements IArcaneLevels {
 
     @Override
     public float getPlayerDefense() {
-        int bonus = 0;
+        Integer bonus = 0;
         switch (player_arcane_level) {
             case 0 -> bonus = Config.DEFENSE_0.get();
             case 1 -> bonus = Config.DEFENSE_1.get();
@@ -190,7 +190,7 @@ public class ArcaneLevels implements IArcaneLevels {
 
     @Override
     public double getSpellDmg() {
-        int bonus = 0;
+        Integer bonus = 0;
         switch (player_arcane_level) {
             case 0 -> bonus = Config.SPELL_DMG_0.get();
             case 1 -> bonus = Config.SPELL_DMG_1.get();
@@ -208,7 +208,7 @@ public class ArcaneLevels implements IArcaneLevels {
 
     @Override
     public double getPhysDmg() {
-        int bonus = 0;
+        float bonus = 0;
         switch (player_arcane_level) {
             case 0 -> bonus = Config.PHYS_DAMAGE_0.get();
             case 1 -> bonus = Config.PHYS_DAMAGE_1.get();
@@ -499,10 +499,10 @@ public class ArcaneLevels implements IArcaneLevels {
 
     public void fixArcaneLevels() {
         if (this.player_cores > Config.MAX_PLAYER_CORE.get()){
-            this.player_cores = Config.MAX_PLAYER_CORE.get();
+            this.player_cores = Math.toIntExact(Config.MAX_PLAYER_CORE.get());
         }
         if (this.player_arcane_level > Config.MAX_PLAYER_LEVEL.get()){
-            this.player_arcane_level = Config.MAX_PLAYER_LEVEL.get();
+            this.player_arcane_level = Math.toIntExact(Config.MAX_PLAYER_LEVEL.get());
         }
     }
 }
