@@ -18,6 +18,9 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import java.util.HashMap;
 import java.util.UUID;
 
+import static com.c446.ars_trinkets.registry.CurioConfigManager.defaultLotusMana;
+import static com.c446.ars_trinkets.registry.CurioConfigManager.defaultLotusRegen;
+
 public class GenericLotusTrinkets extends RegularItems implements ICurioItem, IManaEquipment {
 
     protected int level;
@@ -39,8 +42,8 @@ public class GenericLotusTrinkets extends RegularItems implements ICurioItem, IM
         }
         else {
             HashMap<Attribute, Long> map = new HashMap<Attribute, Long>();
-            map.put(PerkAttributes.MAX_MANA.get(), (long) ModRegistry.defaultLotusMana[level]);
-            map.put(PerkAttributes.MANA_REGEN_BONUS.get(), (long) ModRegistry.defaultLotusRegen[level]);
+            map.put(PerkAttributes.MAX_MANA.get(), (long) defaultLotusMana[level]);
+            map.put(PerkAttributes.MANA_REGEN_BONUS.get(), (long) defaultLotusRegen[level]);
             return map;
         }
     }

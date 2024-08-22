@@ -18,6 +18,9 @@ import top.theillusivec4.curios.api.type.capability.ICurioItem;
 import java.util.HashMap;
 import java.util.UUID;
 
+import static com.c446.ars_trinkets.registry.CurioConfigManager.defaultRingMana;
+import static com.c446.ars_trinkets.registry.CurioConfigManager.defaultRingRegen;
+
 public class GenericManaRing extends RegularItems implements ICurioItem, IManaEquipment {
 
     protected int level;
@@ -39,8 +42,8 @@ public class GenericManaRing extends RegularItems implements ICurioItem, IManaEq
         }
         else {
             HashMap<Attribute, Long> map = new HashMap<Attribute, Long>();
-            map.put(PerkAttributes.MAX_MANA.get(), (long) ModRegistry.defaultRingMana[level]);
-            map.put(PerkAttributes.MANA_REGEN_BONUS.get(), (long) ModRegistry.defaultRingRegen[level]);
+            map.put(PerkAttributes.MAX_MANA.get(), (long) defaultRingMana[level]);
+            map.put(PerkAttributes.MANA_REGEN_BONUS.get(), (long) defaultRingRegen[level]);
             return map;
         }
     }
