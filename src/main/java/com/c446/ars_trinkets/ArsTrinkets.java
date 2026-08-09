@@ -3,6 +3,12 @@ package com.c446.ars_trinkets;
 import com.c446.ars_trinkets.brigadier.ArsTrinketsLevelCommand;
 import com.c446.ars_trinkets.datagen.ComponentRegistry;
 import com.c446.ars_trinkets.registry.*;
+import com.c446.ars_trinkets.registry.TribulationTypeRegistry;
+import com.c446.ars_trinkets.tribulations.TribulationInstance;
+import com.c446.ars_trinkets.tribulations.TribulationManager;
+import com.c446.ars_trinkets.tribulations.TribulationType;
+import net.neoforged.neoforge.registries.NewRegistryEvent;
+import net.neoforged.neoforge.registries.RegistryBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.IEventBus;
@@ -16,6 +22,9 @@ import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
+import com.c446.ars_trinkets.network.CrownLivesPayload;
+import com.c446.ars_trinkets.network.MobSoulVisionPayload;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,7 +40,7 @@ public class ArsTrinkets {
 
     public static final Logger LOGGER = LogManager.getLogger();
     public static Set<UUID> OMNIPOTENT_PLAYER = new HashSet<>();
-    public static Set<UUID> SOURCE_ORB_CHECK = new HashSet<>();
+    //public static Set<UUID> SOURCE_ORB_CHECK = new HashSet<>();
 
     public ArsTrinkets(IEventBus modEventBus, ModContainer modContainer) {
         ArsNouveauRegistry.registerGlyphs();
@@ -44,12 +53,16 @@ public class ArsTrinkets {
         ItemRegistry.ITEMS.register(modEventBus);
         ModRegistry.SOUNDS.register(modEventBus);
         EntityRegistry.ENTITIES.register(modEventBus);
+      //  TribulationTypeRegistry.class.getSimpleName(); // Trigger static initialization of tribulation types BEFORE registering DeferredRegister
+        TribulationTypeRegistry.TRIBULATION_TYPES.register(modEventBus);
 
         modEventBus.addListener(this::setup);
         modEventBus.addListener(this::doClientStuff);
+        modEventBus.addListener(this::registerTribulationTypeRegistry);
+        modEventBus.addListener(this::registerPayloads);
+
 //        modEventBus.addListener(this::onRegisterCommands);
 //        NeoForge.EVENT_BUS.register(this);
-
         modContainer.registerConfig(ModConfig.Type.COMMON, Config.COMMON);
     }
 
@@ -59,13 +72,30 @@ public class ArsTrinkets {
 
     private void setup(final FMLCommonSetupEvent event) {
         ArsNouveauRegistry.registerSounds();
+        new TribulationManager();
+        LOGGER.info("[ArsTrinkets] TribulationManager initialized during FMLCommonSetupEvent");
     }
 
     private void doClientStuff(final FMLClientSetupEvent event) {
 
     }
 
+    private void registerTribulationTypeRegistry(NewRegistryEvent event) {
+        event.create(new RegistryBuilder<>(TribulationTypeRegistry.REGISTRY_KEY));
+    }
 
+    private void registerPayloads(RegisterPayloadHandlersEvent event) {
+        event.registrar("1").playToClient(CrownLivesPayload.TYPE, CrownLivesPayload.STREAM_CODEC, CrownLivesPayload::handle);
+        event.registrar("1").playToClient(MobSoulVisionPayload.TYPE, MobSoulVisionPayload.STREAM_CODEC, MobSoulVisionPayload::handle);
+    }
+
+    @SubscribeEvent
+    public static void onServerStarting(ServerStartingEvent event) {
+        var registry = event.getServer().registryAccess().registryOrThrow(TribulationTypeRegistry.REGISTRY_KEY);
+        int count = registry.size();
+        LOGGER.info("[ArsTrinkets] Registered tribulation types: {}", count);
+        registry.forEach(type -> LOGGER.debug("[ArsTrinkets] - {}", registry.getKey(type)));
+    }
 
     public static void setInterval(Runnable method, int tickInterval, int timeToLive) {
         NeoForge.EVENT_BUS.register(new SetInterval(method, tickInterval, timeToLive));

@@ -23,6 +23,24 @@ public class LevelingCapability implements INBTSerializable<CompoundTag> {
     public long souls; //
     public boolean cursed = false;
 
+    public float getWorldDifficultyIncrease(){
+        switch (this.level){
+            default: return 1f;
+            case 1 : return 1.5f;
+            case 2 : return 2.5f;
+            case 3 : return 3f;
+            case 4 : return 4f;
+            case 5 : return 6f;
+            case 6 : return 8f;
+            case 7 : return 10f;
+            case 8 : return 15f;
+            case 9 : return 25f;
+            case 10: return 40f;
+        }
+
+
+    }
+
     @Override
     public @UnknownNullability CompoundTag serializeNBT(HolderLookup.Provider provider) {
         var cTag = new CompoundTag();
@@ -41,8 +59,9 @@ public class LevelingCapability implements INBTSerializable<CompoundTag> {
         this.cursed = cTag.getBoolean("cursed");
     }
 
-    public static LevelingCapability get(Player p) {
-        return p.getData(CapabilityRegistry.LEVEL_CAP);
+    public static LevelingCapability get(Player p) throws NullPointerException {
+        if (!p.hasData(CapabilityRegistry.LEVEL_CAP)) throw new NullPointerException("player capability is null");
+        else return p.getData(CapabilityRegistry.LEVEL_CAP);
     }
 
     public void addSoul(int soulsToAdd, Player player) {
@@ -55,7 +74,7 @@ public class LevelingCapability implements INBTSerializable<CompoundTag> {
             NeoForge.EVENT_BUS.post(pre);
 
             if (pre.isCanceled() || pre.newLevel > Config.Common.MAX_LEVEL_ALLOWED.getAsInt()) {
-                ArsTrinkets.LOGGER.debug("level-up event cancelled !\nnew level : {}\nold level : {}", pre.getNewLevel(), this.level);
+                ArsTrinkets.LOGGER.debug("level-up event cancelled ! -- new level : {} -- old level : {}", pre.getNewLevel(), this.level);
             } else{
                 level = pre.newLevel;
 
@@ -91,13 +110,26 @@ public class LevelingCapability implements INBTSerializable<CompoundTag> {
     }
 
     public double getDamageMult() {
-        return this.level == 0 ? 1d : Config.Common.DAMAGE_BONUS_PER_LEVEL.get().get(this.level - 1);
+        return this.level == 0 ? 1d : damageMultiplierValue(
+                Config.Common.DAMAGE_BONUS_PER_LEVEL.get().get(this.level - 1));
+    }
+
+    static double damageMultiplierValue(Object configuredValue) {
+        return ((Number) configuredValue).doubleValue();
+    }
+
+    public double getMobDamageMult() {
+        return getDamageMult() * Math.max(1, this.cores);
     }
 
     public Component getTitle() {
         if (this.level == 0) return Component.translatable("text.ars_trinkets.titles.asc0");
 
         return Component.translatable("text.ars_trinkets.titles." + (this.cursed ? "dsc" + (this.level): "asc" + (this.level )));
+    }
+
+    public void unsafeSetLevel(int newLevelForced) {
+        this.level = (short) newLevelForced;
     }
 
     public void reset() {
