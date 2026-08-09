@@ -18,4 +18,3 @@ public abstract class GuiSpellBookMixin {
         cir.setReturnValue(BonusGlyphSlotsResolver.resolveGuiExtraSlots(cir.getReturnValue(), player));
     }
 }
-

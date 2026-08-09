@@ -15,4 +15,3 @@ public abstract class AbstractCasterBonusSlotsMixin {
         cir.setReturnValue(BonusGlyphSlotsResolver.resolveCasterBonus(cir.getReturnValue()));
     }
 }
-
