@@ -249,5 +249,21 @@
   "message.ars_trinkets.essence.souls": "+%s souls (%s total)",
   "message.ars_trinkets.essence.level_up": "You ascended to level %s!",
   "gamerule.arsTrinketsEssenceDrops": "Mobs drop essence",
-  "gamerule.arsTrinketsEssenceDrops.description": "Whether mobs killed by players drop Ars Trinkets essence."
+  "gamerule.arsTrinketsEssenceDrops.description": "Whether mobs killed by players drop Ars Trinkets essence.",
+  "message.ars_trinkets.changelog.header": "Ars Trinkets %s - what's new",
+  "message.ars_trinkets.changelog.footer": "Full history: Ars Nouveau book > Ars Trinkets Changelog.",
+  "ars_trinkets.section.changelog": "Ars Trinkets Changelog",
+  "ars_trinkets.page.changelog_3_1_0": "3.1.0",
+  "ars_trinkets.page.changelog_3_0_0": "3.0.0",
+  "ars_trinkets.changelog.3_1_0.line1": "Essences are easier to use: always edible, eaten fast, never wasted when too weak for you, and sneaking eats the whole stack.",
+  "ars_trinkets.changelog.3_1_0.line2": "Killing hostile mobs drops essence matching the mob's level, with extras per core. Toggle with the config option or /gamerule arsTrinketsEssenceDrops.",
+  "ars_trinkets.changelog.3_1_0.line3": "Devour Soul multiplies the essence from mobs it hits and you then kill, and now works even with 0 souls.",
+  "ars_trinkets.changelog.3_1_0.line4": "Essence Cores are craftable again in the Enchanting Apparatus.",
+  "ars_trinkets.changelog.3_1_0.line5": "Every trinket is configurable through the auto-generated config/ars_trinkets/curios_config.json, reloaded when you edit it.",
+  "ars_trinkets.changelog.3_1_0.line6": "Fixed the Air Sword glyph sharing its recipe with Sonic Boom: it now needs a netherite sword and 3 air essence.",
+  "ars_trinkets.changelog.3_1_0.line7": "Fixed souls being lost on level-up, a duplicated soul_quantity config key, and swapped ring/lotus amplification lists.",
+  "ars_trinkets.changelog.3_0_0.line1": "Added the Devour Soul glyph: spends souls for damage.",
+  "ars_trinkets.changelog.3_0_0.line2": "Mobs now have levels and cores that scale their health, damage and armor.",
+  "ars_trinkets.changelog.3_0_0.line3": "Inspect Soul reveals mob progression, shown on name tags.",
+  "ars_trinkets.changelog.3_0_0.line4": "Bonus glyph slots can be configured per player level."
 }

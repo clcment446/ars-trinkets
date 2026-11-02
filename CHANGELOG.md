@@ -1,4 +1,4 @@
-# Unreleased
+# Ars Trinkets 3.1.0
 
 - Essence drop balance: gated by the `essence_drops_enabled` config AND the new `arsTrinketsEssenceDrops` gamerule; never drops an essence the killer cannot use (`essence_drop_only_usable`); capped per kill (`essence_drop_max_count`); default chance lowered to 35% and extras to 0.1 per core.
 - Killing mobs now awards essence: hostile mobs killed by a player (or their spells) drop the essence matching the mob's level, plus extra per core. Configurable (`essence_drops_enabled`, `essence_drops_hostile_only`, `essence_drop_chance`, `essence_drop_extra_per_core`).
