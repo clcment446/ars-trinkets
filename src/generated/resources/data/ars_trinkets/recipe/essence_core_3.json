@@ -1,0 +1,26 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "pedestalItems": [
+    {
+      "item": "ars_trinkets:essence_core_1"
+    },
+    {
+      "item": "ars_trinkets:essence_core_1"
+    },
+    {
+      "item": "ars_trinkets:essence_core_1"
+    },
+    {
+      "item": "ars_trinkets:essence_core_1"
+    }
+  ],
+  "reagent": {
+    "item": "ars_trinkets:essence_core_2"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_trinkets:essence_core_3"
+  },
+  "sourceCost": 0
+}

@@ -1,3 +1,11 @@
+# Unreleased
+
+- Essences are no longer a pain to use: always edible, eaten fast, never wasted when too weak for you, sneak to eat the whole stack, action-bar feedback. Level-ups now carry overflow souls and no longer index out of bounds.
+- Every trinket (runes, crown, rings, lotuses) is now configurable through `config/ars_trinkets/curios_config.json`, which is auto-generated on server start (new trinkets are appended, edits are kept) and hot-reloaded when edited. Supports `enabled`, `mode` (MERGE/OVERRIDE), single-object modifiers, operation aliases, deterministic `auto` ids and per-entry error tolerance.
+- Essence cores are craftable again (Enchanting Apparatus, ported from 1.20.x).
+- Fixed the Air Sword glyph sharing its recipe with Sonic Boom (now netherite sword + 3 air essence).
+- Fixed duplicate `soul_quantity` config key (essence one is now `essence_soul_quantity`) and swapped ring/lotus amplification lists.
+
 # Ars Trinkets 3.0.0
 
 A major progression, combat, and spell-system update.

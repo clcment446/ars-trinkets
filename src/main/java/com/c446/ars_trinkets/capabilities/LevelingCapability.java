@@ -65,26 +65,31 @@ public class LevelingCapability implements INBTSerializable<CompoundTag> {
     }
 
     public void addSoul(int soulsToAdd, Player player) {
-        var soulQuantityNeeded = Config.Common.SOUL_QUANTITY_FOR_LEVEL.get().get(this.level);
+        var thresholds = Config.Common.SOUL_QUANTITY_FOR_LEVEL.get();
+        if (this.level < 0 || this.level >= thresholds.size()) {
+            // Past the last configured threshold: nothing left to level into.
+            return;
+        }
+
+        long soulQuantityNeeded = thresholds.get(this.level);
         ArsTrinkets.LOGGER.debug("souls for level-up : {}", soulQuantityNeeded);
         if (souls + soulsToAdd >= soulQuantityNeeded) {
-            ArsTrinkets.LOGGER.debug("attempting to level up");
-
             var pre = new LevelModifiedEvent.Pre(player, (short) (this.level + 1), (int) this.level);
             NeoForge.EVENT_BUS.post(pre);
 
             if (pre.isCanceled() || pre.newLevel > Config.Common.MAX_LEVEL_ALLOWED.getAsInt()) {
                 ArsTrinkets.LOGGER.debug("level-up event cancelled ! -- new level : {} -- old level : {}", pre.getNewLevel(), this.level);
-            } else{
+                // Keep the souls so the player is not punished for hitting a cap.
+                this.souls = Math.min(soulQuantityNeeded - 1, this.souls + soulsToAdd);
+            } else {
+                // Carry the overflow into the next level instead of dropping it.
+                this.souls = souls + soulsToAdd - soulQuantityNeeded;
                 level = pre.newLevel;
 
                 var post = new LevelModifiedEvent.Post(player, (int) this.level);
                 NeoForge.EVENT_BUS.post(post);
             }
-
-
         } else {
-
             //TODO: implement soul-steal
             this.souls += soulsToAdd;//* player.getAttributeValue();
         }

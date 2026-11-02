@@ -17,14 +17,10 @@ public class LifeRune extends AbstractRune {
     }
 
     @Override
-    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
-        var map = super.getAttributeModifiers(slotContext, id, stack);
-        if (this.wasOverridden)return map;
+    public void addDefaultModifiers(ResourceLocation id, Multimap<Holder<Attribute>, AttributeModifier> map) {
 
         //TODO : add apoth bonus regen
         map.put(Attributes.MAX_HEALTH, new AttributeModifier(id, getMult(), ADD_MULTIPLIED_TOTAL));
         map.put(Attributes.MOVEMENT_EFFICIENCY, new AttributeModifier(id, getMult()/2f, ADD_MULTIPLIED_TOTAL));
-
-        return map;
     }
 }

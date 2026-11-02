@@ -244,5 +244,8 @@
   "text.ars_trinkets.level_up_7": "You have built the 7th circle.",
   "text.ars_trinkets.level_up_8": "You have built the 8th circle.",
   "text.ars_trinkets.level_up_9": "You have built the 9th circle.",
-  "text.ars_trinkets.level_up_10": "You have built the 10th circle."
+  "text.ars_trinkets.level_up_10": "You have built the 10th circle.",
+  "message.ars_trinkets.essence.too_weak": "This essence is too weak for you (needs level %s or below).",
+  "message.ars_trinkets.essence.souls": "+%s souls (%s total)",
+  "message.ars_trinkets.essence.level_up": "You ascended to level %s!"
 }

@@ -66,8 +66,7 @@ public class OmnipotenceRune extends AbstractRune {
     }
 
     @Override
-    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
-        var map = super.getAttributeModifiers(slotContext, id, stack);
+    public void addDefaultModifiers(ResourceLocation id, Multimap<Holder<Attribute>, AttributeModifier> map) {
 
         map.put(AttributeRegistry.ALL, new AttributeModifier(id, 1.5, AttributeModifier.Operation.ADD_MULTIPLIED_BASE));
         map.put(
@@ -78,8 +77,6 @@ public class OmnipotenceRune extends AbstractRune {
                 CaelusApi.getInstance().getFallFlyingAttribute(),
                 new AttributeModifier(id.withSuffix("_fall_flying"), 1.0D, AttributeModifier.Operation.ADD_VALUE)
         );*/
-
-        return map;
     }
 
     @Override

@@ -17,14 +17,10 @@ public class DeathRune extends AbstractRune {
     }
 
     @Override
-    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
-        var map = super.getAttributeModifiers(slotContext, id, stack);
-        if (super.wasOverridden)return map;
+    public void addDefaultModifiers(ResourceLocation id, Multimap<Holder<Attribute>, AttributeModifier> map) {
 
         //TODO : add apoth life steal
         map.put(Attributes.ATTACK_SPEED, new AttributeModifier(id, getMult(), ADD_MULTIPLIED_TOTAL));
         map.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(id, getMult(), ADD_MULTIPLIED_TOTAL));
-
-        return map;
     }
 }

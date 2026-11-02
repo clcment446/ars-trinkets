@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import top.theillusivec4.curios.api.SlotContext;
 import top.theillusivec4.curios.api.type.capability.ICurioItem;
 
-public class EssenceRing extends Item implements ICurioItem, IManaBonusItem {
+public class EssenceRing extends Item implements ITrinket, IManaBonusItem {
     final float manaBonus ;
     final float manaRegen;
     final int id;
@@ -24,23 +24,18 @@ public class EssenceRing extends Item implements ICurioItem, IManaBonusItem {
     }
 
     @Override
-    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
-        var map = ICurioItem.super.getAttributeModifiers(slotContext, id, stack);
+    public void addDefaultModifiers(ResourceLocation id, Multimap<Holder<Attribute>, AttributeModifier> map) {
         doManaOp(id, map);
-        return map;
     }
 
-    public double getMult(){
-        double mult = 0f;
-
+    public double getMult() {
         try {
-            Config.Common.LOTUS_VALUES.get();
-            mult = Config.Common.LOTUS_VALUES.get().get(this.id);
-        } catch (ArrayIndexOutOfBoundsException ex) {
-            mult = 1f;
+            var values = Config.Common.RING_VALUES.get();
+            if (this.id >= 0 && this.id < values.size()) return values.get(this.id);
+        } catch (IllegalStateException ignored) {
+            // config not loaded yet
         }
-
-        return mult;
+        return 1d;
     }
 
     @Override

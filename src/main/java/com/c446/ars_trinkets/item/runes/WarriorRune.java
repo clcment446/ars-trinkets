@@ -17,14 +17,10 @@ public class WarriorRune extends AbstractRune {
     }
 
     @Override
-    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
-        var map = super.getAttributeModifiers(slotContext, id, stack);
-        if (this.wasOverridden)return map;
+    public void addDefaultModifiers(ResourceLocation id, Multimap<Holder<Attribute>, AttributeModifier> map) {
 
         map.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(id, getMult(), ADD_MULTIPLIED_TOTAL));
         map.put(Attributes.ARMOR, new AttributeModifier(id, getMult(), ADD_MULTIPLIED_TOTAL));
         map.put(Attributes.KNOCKBACK_RESISTANCE, new AttributeModifier(id, getMult(), ADD_MULTIPLIED_TOTAL));
-
-        return map;
     }
 }

@@ -1,0 +1,26 @@
+{
+  "type": "ars_nouveau:enchanting_apparatus",
+  "keepNbtOfReagent": false,
+  "pedestalItems": [
+    {
+      "item": "ars_trinkets:essence_9"
+    },
+    {
+      "item": "ars_trinkets:essence_9"
+    },
+    {
+      "item": "ars_trinkets:essence_9"
+    },
+    {
+      "item": "ars_trinkets:essence_9"
+    }
+  ],
+  "reagent": {
+    "item": "minecraft:nether_star"
+  },
+  "result": {
+    "count": 1,
+    "id": "ars_trinkets:essence_core_1"
+  },
+  "sourceCost": 0
+}

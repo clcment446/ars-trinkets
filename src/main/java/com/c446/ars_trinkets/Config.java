@@ -402,7 +402,7 @@ public class Config {
             MONOCLE_VALUES = builder.defineList("monocle_curios_amplifications", List.of(1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d, 1d), element -> true);
 
             SOUL_QUANTITY_FOR_LEVEL = builder.defineList("soul_quantity", List.of(500, 1000, 2500, 5000, 10000, 25000, 50000, 100000, 250000), e -> true);
-            SOUL_QUANTITY_FOR_ESSENCE_LEVEL = builder.defineList("soul_quantity", List.of(25, 50, 125, 250, 500, 1500, 3000, 6000, 15000), e -> true);
+            SOUL_QUANTITY_FOR_ESSENCE_LEVEL = builder.defineList("essence_soul_quantity", List.of(25, 50, 125, 250, 500, 1500, 3000, 6000, 15000), e -> true);
 
             DAMAGE_BONUS_PER_LEVEL = builder.defineList("damage_bonus", List.of(1.1d, 1.15d, 1.2d, 1.3d, 1.5d, 2d, 4d, 8d, 15d), e -> true);
             MANA_BONUS_PER_LEVEL = builder.defineList("mana_bonus", List.of(25 * 3, 50 * 3, 125 * 3, 250 * 3, 500 * 3, 1500 * 3, 3000 * 3, 6000 * 3, 15000 * 3), e -> true);

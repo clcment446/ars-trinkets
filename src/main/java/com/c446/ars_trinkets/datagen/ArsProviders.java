@@ -52,7 +52,7 @@ public class ArsProviders {
 
             Path output = this.generator.getPackOutput().getOutputFolder();
 
-            recipes.add(get(EffectAirSword.INSTANCE).withItem(NETHERITE_INGOT, 3).withItem(ItemsRegistry.AIR_ESSENCE, 3));
+            recipes.add(get(EffectAirSword.INSTANCE).withItem(NETHERITE_SWORD).withItem(ItemsRegistry.AIR_ESSENCE, 3)); // was identical to sonic boom
             recipes.add(get(EffectWaterSpear.INSTANCE).withItem(NETHERITE_INGOT, 3).withItem(ItemsRegistry.WATER_ESSENCE, 3));
             recipes.add(get(EffectSonicBoom.INSTANCE).withItem(NETHERITE_INGOT, 3).withItem(ItemsRegistry.AIR_ESSENCE, 3));
             recipes.add(get(EffectSunFlare.INSTANCE).withItem(NETHERITE_INGOT, 3).withItem(ItemsRegistry.FIRE_ESSENCE, 3));
@@ -190,6 +190,33 @@ public class ArsProviders {
                         .build()
                 );
             }*/
+
+            // ESSENCE CORES (recipes ported from 1.20.x; yellow = essence_9, purple = essence_10)
+            {
+                recipes.add(builder()
+                        .withReagent(Items.NETHER_STAR)
+                        .withPedestalItem(4, ItemRegistry.Essence9.get())
+                        .withResult(ItemRegistry.CORE_1.get())
+                        .withSourceCost(0)
+                        .build()
+                );
+
+                recipes.add(builder()
+                        .withReagent(ItemRegistry.CORE_1.get())
+                        .withPedestalItem(8, ItemRegistry.Essence10.get())
+                        .withResult(ItemRegistry.CORE_2.get())
+                        .withSourceCost(0)
+                        .build()
+                );
+
+                recipes.add(builder()
+                        .withReagent(ItemRegistry.CORE_2.get())
+                        .withPedestalItem(4, ItemRegistry.CORE_1.get())
+                        .withResult(ItemRegistry.CORE_3.get())
+                        .withSourceCost(0)
+                        .build()
+                );
+            }
 
             // CURIOS
             {

@@ -1,30 +1,20 @@
 {
+  "_readme": [
+    "This file is generated automatically in config/ars_trinkets/curios_config.json the first time a world/server starts.",
+    "Every trinket gets an entry; existing entries are never overwritten. Delete an entry to restore the built-in stats."
+  ],
   "ars_trinkets:death_rune": {
-    // as of now, only the "RUNE" items support this. in the future, more will do like Lotuses and others, but for now this will do.
-    //TODO: make lotuses/rings supported.
-    "mode": "OVERRIDE", // should always be in [MERGE, OVERRIDE]. default is MERGE if this line is missing.
-    "attributes": { //very important put the attributes in a dictionnary/block in the config file.
-      "minecraft:generic.attack_damage": [
-        {
-          "id": "auto",
-          "amount": 2.0,
-          "operation": "add_multiplied_base"
-        }
+    "enabled": true,
+    "mode": "OVERRIDE",
+    "attributes": {
+      "minecraft:generic.attack_speed": [
+        { "id": "auto", "amount": 1.0, "operation": "add_multiplied_total" }
       ],
-      "minecraft:generic.armor": [
-        {
-          "id": "auto",
-          "amount": 2.0,
-          "operation": "add_multiplied_total"
-        }
-      ],
-      "minecraft:generic.knockback_resistance": [ // put the complete attribute registered name here.
-        {
-          "id": "ars_trinkets:death_rune_kb_res", // put a specific ID to prevent the same item from having stackable buffs.
-          "amount": 2.0, // this should always be a boolean/double value.
-          "operation": "add_value" // should always be in [add_value, add_multiplied_base, add_multiplied_total]
-        }
-      ]
+      "minecraft:generic.knockback_resistance": {
+        "id": "ars_trinkets:death_rune_kb_res",
+        "amount": 2.0,
+        "operation": "add_value"
+      }
     }
   }
 }

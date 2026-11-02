@@ -18,20 +18,12 @@ public class EternityRune extends AbstractRune {
     }
 
     @Override
-    public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
-        var map = super.getAttributeModifiers(slotContext, id, stack);
-
-        var map_life = ItemRegistry.LIFE_RUNE_2.get().getAttributeModifiers(slotContext, id, stack);
-        var map_mage = ItemRegistry.MAGE_RUNE_2.get().getAttributeModifiers(slotContext, id, stack);
-        var map_death = ItemRegistry.DEATH_RUNE_2.get().getAttributeModifiers(slotContext, id, stack);
-        var map_warrior = ItemRegistry.WARRIOR_RUNE_2.get().getAttributeModifiers(slotContext, id, stack);
-
-        map.putAll(map_life);
-        map.putAll(map_mage);
-        map.putAll(map_death);
-        map.putAll(map_warrior);
-
-        return map;
+    public void addDefaultModifiers(ResourceLocation id, Multimap<Holder<Attribute>, AttributeModifier> map) {
+        // Built-in stats only (not the sub-runes' JSON overrides): Eternity has its own config entry.
+        map.putAll(ItemRegistry.LIFE_RUNE_2.get().defaultModifiers(id));
+        map.putAll(ItemRegistry.MAGE_RUNE_2.get().defaultModifiers(id));
+        map.putAll(ItemRegistry.DEATH_RUNE_2.get().defaultModifiers(id));
+        map.putAll(ItemRegistry.WARRIOR_RUNE_2.get().defaultModifiers(id));
     }
 
     @Override
