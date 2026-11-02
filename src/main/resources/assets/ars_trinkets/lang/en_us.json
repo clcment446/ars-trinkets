@@ -247,5 +247,7 @@
   "text.ars_trinkets.level_up_10": "You have built the 10th circle.",
   "message.ars_trinkets.essence.too_weak": "This essence is too weak for you (needs level %s or below).",
   "message.ars_trinkets.essence.souls": "+%s souls (%s total)",
-  "message.ars_trinkets.essence.level_up": "You ascended to level %s!"
+  "message.ars_trinkets.essence.level_up": "You ascended to level %s!",
+  "gamerule.arsTrinketsEssenceDrops": "Mobs drop essence",
+  "gamerule.arsTrinketsEssenceDrops.description": "Whether mobs killed by players drop Ars Trinkets essence."
 }

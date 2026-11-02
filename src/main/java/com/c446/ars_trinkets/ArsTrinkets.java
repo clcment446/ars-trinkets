@@ -44,6 +44,7 @@ public class ArsTrinkets {
 
     public ArsTrinkets(IEventBus modEventBus, ModContainer modContainer) {
         ArsNouveauRegistry.registerGlyphs();
+        ModGameRules.init();
         AttributeRegistry.ATTRIBUTES.register(modEventBus);
         BlockRegistry.BLOCKS.register(modEventBus);
         CapabilityRegistry.ATTACHMENT_TYPES.register(modEventBus);

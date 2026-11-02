@@ -45,6 +45,8 @@ public class Config {
         public static ModConfigSpec.BooleanValue ESSENCE_DROPS_HOSTILE_ONLY;
         public static ModConfigSpec.DoubleValue ESSENCE_DROP_CHANCE;
         public static ModConfigSpec.DoubleValue ESSENCE_DROP_EXTRA_PER_CORE;
+        public static ModConfigSpec.BooleanValue ESSENCE_DROP_ONLY_USABLE;
+        public static ModConfigSpec.IntValue ESSENCE_DROP_MAX_COUNT;
 
         // Mob scaling config
         public static ModConfigSpec.BooleanValue MOB_SCALING_ENABLED;
@@ -240,17 +242,23 @@ public class Config {
                     .comment("Essence yield multiplier for a mob hit by Devour Soul that is then killed by the caster (also guarantees the drop). Scales with Amplify.")
                     .defineInRange("devour_soul_essence_yield_multiplier", 3.0, 1.0, 1000.0);
             ESSENCE_DROPS_ENABLED = builder
-                    .comment("Mobs killed by a player (or their spells) drop an essence matching the mob's level.")
+                    .comment("Master switch: mobs killed by a player (or their spells) drop an essence matching the mob's level. The arsTrinketsEssenceDrops gamerule must also be true.")
                     .define("essence_drops_enabled", true);
             ESSENCE_DROPS_HOSTILE_ONLY = builder
                     .comment("Only hostile mobs drop essence.")
                     .define("essence_drops_hostile_only", true);
             ESSENCE_DROP_CHANCE = builder
                     .comment("Chance (0-1) that a kill drops essence.")
-                    .defineInRange("essence_drop_chance", 0.5, 0.0, 1.0);
+                    .defineInRange("essence_drop_chance", 0.35, 0.0, 1.0);
             ESSENCE_DROP_EXTRA_PER_CORE = builder
                     .comment("Average extra essences dropped per mob core.")
-                    .defineInRange("essence_drop_extra_per_core", 0.25, 0.0, 1000.0);
+                    .defineInRange("essence_drop_extra_per_core", 0.1, 0.0, 1000.0);
+            ESSENCE_DROP_ONLY_USABLE = builder
+                    .comment("Never drop an essence the killer cannot use (essence tier below the killer's level). Stops farming trivial mobs for junk.")
+                    .define("essence_drop_only_usable", true);
+            ESSENCE_DROP_MAX_COUNT = builder
+                    .comment("Maximum essences dropped by a single kill (after core and Devour Soul bonuses).")
+                    .defineInRange("essence_drop_max_count", 8, 1, 1000);
             builder.pop();
 
             builder.push("mob_scaling");

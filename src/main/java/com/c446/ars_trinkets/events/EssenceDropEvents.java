@@ -4,6 +4,7 @@ import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.capabilities.LevelingCapability;
 import com.c446.ars_trinkets.registry.CapabilityRegistry;
 import com.c446.ars_trinkets.registry.ItemRegistry;
+import com.c446.ars_trinkets.registry.ModGameRules;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
@@ -60,12 +61,14 @@ public final class EssenceDropEvents {
     @SubscribeEvent
     public static void onDrops(LivingDropsEvent event) {
         LivingEntity mob = event.getEntity();
-        if (mob.level().isClientSide() || mob instanceof Player || !Config.Common.ESSENCE_DROPS_ENABLED.get()) return;
+        if (mob.level().isClientSide() || mob instanceof Player || !Config.Common.ESSENCE_DROPS_ENABLED.get()
+                || !mob.level().getGameRules().getBoolean(ModGameRules.ESSENCE_DROPS)) return;
         if (Config.Common.ESSENCE_DROPS_HOSTILE_ONLY.get() && !(mob instanceof Enemy)) return;
 
         Entity killer = event.getSource().getEntity();
         if (!(killer instanceof ServerPlayer player) || killer == mob) return;
 
+        int killerLevel = player.hasData(CapabilityRegistry.LEVEL_CAP) ? LevelingCapability.get(player).level : 0;
         double devour = devourMultiplier(mob, player.getUUID());
         if (devour <= 1.0 && mob.getRandom().nextDouble() >= Config.Common.ESSENCE_DROP_CHANCE.get()) return;
 
@@ -77,7 +80,11 @@ public final class EssenceDropEvents {
             cores = cap.cores;
         }
 
+        // An essence only works while player level <= tier, so anything weaker is dead weight.
+        if (Config.Common.ESSENCE_DROP_ONLY_USABLE.get() && killerLevel > Math.clamp(level, 1, 10)) return;
+
         int count = dropCount(cores, Config.Common.ESSENCE_DROP_EXTRA_PER_CORE.get(), devour, mob.getRandom().nextDouble());
+        count = Math.min(count, Config.Common.ESSENCE_DROP_MAX_COUNT.get());
         if (count <= 0) return;
 
         ItemStack stack = new ItemStack(ItemRegistry.essenceForLevel(level), count);
