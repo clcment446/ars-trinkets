@@ -1,5 +1,7 @@
 # Unreleased
 
+- Killing mobs now awards essence: hostile mobs killed by a player (or their spells) drop the essence matching the mob's level, plus extra per core. Configurable (`essence_drops_enabled`, `essence_drops_hostile_only`, `essence_drop_chance`, `essence_drop_extra_per_core`).
+- Devour Soul now boosts essence yield: a mob hit by it and killed by the caster within a minute drops a guaranteed, multiplied (`devour_soul_essence_yield_multiplier`, scales with Amplify) amount. It also no longer silently does nothing when the caster has 0 souls.
 - Essences are no longer a pain to use: always edible, eaten fast, never wasted when too weak for you, sneak to eat the whole stack, action-bar feedback. Level-ups now carry overflow souls and no longer index out of bounds.
 - Every trinket (runes, crown, rings, lotuses) is now configurable through `config/ars_trinkets/curios_config.json`, which is auto-generated on server start (new trinkets are appended, edits are kept) and hot-reloaded when edited. Supports `enabled`, `mode` (MERGE/OVERRIDE), single-object modifiers, operation aliases, deterministic `auto` ids and per-entry error tolerance.
 - Essence cores are craftable again (Enchanting Apparatus, ported from 1.20.x).

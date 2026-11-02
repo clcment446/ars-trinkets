@@ -84,4 +84,20 @@ public class ItemRegistry {
     static final public DeferredHolder<Item, EternityRune> ETERNITY_RUNE = ITEMS.register("eternity_rune", (location) -> new EternityRune(tierEpicCurioProperties, 0, location));
 
     static final public DeferredHolder<Item, OmnipotenceRune> DIVINITY = ITEMS.register("omnipotence_crown", (loc) -> new OmnipotenceRune(tierEpicCurioProperties, 5, loc));
+
+    /** Essence item for a level in [1, 10] (values outside are clamped). */
+    public static Item essenceForLevel(int level) {
+        return switch (Math.clamp(level, 1, 10)) {
+            case 1 -> Essence1.get();
+            case 2 -> Essence2.get();
+            case 3 -> Essence3.get();
+            case 4 -> Essence4.get();
+            case 5 -> Essence5.get();
+            case 6 -> Essence6.get();
+            case 7 -> Essence7.get();
+            case 8 -> Essence8.get();
+            case 9 -> Essence9.get();
+            default -> Essence10.get();
+        };
+    }
 }

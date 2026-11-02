@@ -55,9 +55,9 @@ public class EffectDevourSoul extends AbstractEffect implements IDamageEffect {
         long consumedSouls = DevourSoulMath.consumedSouls(soulsBeforeCast,
                 Config.Common.DEVOUR_SOUL_CONSUMPTION_PERCENT.get() / 100.0
                         * Math.max(1.0, spellStats.getAmpMultiplier()));
-        if (consumedSouls == 0L) return;
-
+        // Even with no souls to spend the glyph still hits and marks the target for the essence bonus.
         casterSoul.souls = soulsBeforeCast - consumedSouls;
+        com.c446.ars_trinkets.events.EssenceDropEvents.markDevoured(target, serverPlayer, Math.max(1.0, spellStats.getAmpMultiplier()));
         double damage = 1.0 + DevourSoulMath.bonusDamage(consumedSouls,
                 Config.Common.DEVOUR_SOUL_DAMAGE_PER_SQRT_SOUL.get());
         attemptDamage(serverLevel, serverPlayer, spellStats, spellContext, resolver, target,
