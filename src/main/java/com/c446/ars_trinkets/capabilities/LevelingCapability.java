@@ -3,19 +3,15 @@ package com.c446.ars_trinkets.capabilities;
 import com.c446.ars_trinkets.ArsTrinkets;
 import com.c446.ars_trinkets.Config;
 import com.c446.ars_trinkets.events.LevelModifiedEvent;
-import com.c446.ars_trinkets.registry.AttributeRegistry;
 import com.c446.ars_trinkets.registry.CapabilityRegistry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.UnknownNullability;
-import top.theillusivec4.curios.platform.NeoForgeCurios;
 
 public class LevelingCapability implements INBTSerializable<CompoundTag> {
     public short level; // in range of 0-10 ; 10: divine 0: NONE

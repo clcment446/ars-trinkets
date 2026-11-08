@@ -1,6 +1,5 @@
 package com.c446.ars_trinkets.item.runes;
 
-import com.c446.ars_trinkets.registry.AttributeRegistry;
 import com.google.common.collect.Multimap;
 import com.hollingsworth.arsnouveau.api.perk.PerkAttributes;
 import net.minecraft.core.Holder;
@@ -9,14 +8,8 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
-import top.theillusivec4.curios.Curios;
 import top.theillusivec4.curios.api.CuriosApi;
-import top.theillusivec4.curios.api.CuriosCapability;
 import top.theillusivec4.curios.api.SlotContext;
-import top.theillusivec4.curios.api.type.capability.ICurioItem;
-import top.theillusivec4.curios.common.CuriosHelper;
-import top.theillusivec4.curios.common.CuriosRegistry;
-import top.theillusivec4.curios.platform.services.ICuriosPlatform;
 
 import static net.minecraft.world.entity.ai.attributes.AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL;
 

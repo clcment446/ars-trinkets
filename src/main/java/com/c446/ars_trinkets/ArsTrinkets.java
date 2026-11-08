@@ -1,16 +1,12 @@
 package com.c446.ars_trinkets;
 
-import com.c446.ars_trinkets.brigadier.ArsTrinketsLevelCommand;
 import com.c446.ars_trinkets.datagen.ComponentRegistry;
 import com.c446.ars_trinkets.registry.*;
 import com.c446.ars_trinkets.registry.TribulationTypeRegistry;
-import com.c446.ars_trinkets.tribulations.TribulationInstance;
 import com.c446.ars_trinkets.tribulations.TribulationManager;
-import com.c446.ars_trinkets.tribulations.TribulationType;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.RegistryBuilder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
@@ -19,7 +15,6 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
 import net.neoforged.neoforge.event.server.ServerStartingEvent;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
@@ -28,7 +23,6 @@ import com.c446.ars_trinkets.network.MobSoulVisionPayload;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;

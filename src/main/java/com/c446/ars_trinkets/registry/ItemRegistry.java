@@ -1,6 +1,5 @@
 package com.c446.ars_trinkets.registry;
 
-import com.c446.ars_trinkets.ArsTrinkets;
 import com.c446.ars_trinkets.item.*;
 import com.c446.ars_trinkets.item.runes.*;
 import net.minecraft.world.food.FoodProperties;

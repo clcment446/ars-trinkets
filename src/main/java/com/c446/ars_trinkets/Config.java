@@ -1,7 +1,6 @@
 package com.c446.ars_trinkets;
 
 
-import mezz.jei.neoforge.config.ServerConfig;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.config.ModConfigEvent;
