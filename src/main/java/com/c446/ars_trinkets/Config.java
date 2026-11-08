@@ -52,6 +52,8 @@ public class Config {
         public static ModConfigSpec.IntValue MOB_LEVEL_MIN;
         public static ModConfigSpec.IntValue MOB_LEVEL_MAX;
         public static ModConfigSpec.IntValue MOB_PLAYER_LEVEL_OFFSET;
+        public static ModConfigSpec.DoubleValue MOB_PLAYER_CAP_RADIUS;
+        public static ModConfigSpec.EnumValue<com.c446.ars_trinkets.capabilities.MobLevelHandling.PlayerCapMode> MOB_PLAYER_CAP_MODE;
         public static ModConfigSpec.DoubleValue MOB_LEVEL_SCORE_FLOOR;
         public static ModConfigSpec.DoubleValue MOB_LEVEL_SCORE_BASE;
         public static ModConfigSpec.IntValue MOB_CORE_MIN;
@@ -157,8 +159,6 @@ public class Config {
         public static ModConfigSpec.ConfigValue<List<? extends Double>> DAMAGE_BONUS_PER_LEVEL;
         public static ModConfigSpec.ConfigValue<List<? extends Integer>> MANA_REGEN_BONUS_PER_LEVEL;
         public static ModConfigSpec.ConfigValue<List<? extends Integer>> SOUL_QUANTITY_FOR_ESSENCE_LEVEL;
-        public static ModConfigSpec.ConfigValue<List<? extends Float>> WORLD_DIFFICULTY_PER_LEVEL;
-
         public static ModConfigSpec.ConfigValue<List<List<? extends String>>> LEVEL_BONUSES_RAW;
 
         public Common(ModConfigSpec.Builder builder) {
@@ -274,6 +274,12 @@ public class Config {
             MOB_PLAYER_LEVEL_OFFSET = builder
                     .comment("Mob levels allowed above the player's level. Formula: max_mob_level = min(level_max, player_level + player_level_offset).")
                     .defineInRange("player_level_offset", 1, 0, 100);
+            MOB_PLAYER_CAP_RADIUS = builder
+                    .comment("Only players within this many blocks of a spawning mob affect its level/core cap and roaming difficulty. Players farther away are ignored.")
+                    .defineInRange("player_cap_radius", 128.0, 1.0, 30000000.0);
+            MOB_PLAYER_CAP_MODE = builder
+                    .comment("Which player in range caps a spawning mob: NEAREST (closest player), LOWEST (weakest player in range, protects low-level players), HIGHEST (strongest player in range).")
+                    .defineEnum("player_cap_mode", com.c446.ars_trinkets.capabilities.MobLevelHandling.PlayerCapMode.NEAREST);
             MOB_LEVEL_SCORE_FLOOR = builder
                     .comment("Minimum score used by level calculation. Formula: score = max(level_score_floor, health + attack + armor).")
                     .defineInRange("level_score_floor", 1.0, 0.0001, 100000.0);
@@ -435,19 +441,6 @@ public class Config {
             MANA_BONUS_PER_LEVEL = builder.defineList("mana_bonus", List.of(25 * 3, 50 * 3, 125 * 3, 250 * 3, 500 * 3, 1500 * 3, 3000 * 3, 6000 * 3, 15000 * 3), e -> true);
             MANA_REGEN_BONUS_PER_LEVEL = builder.defineList("regen_bonus", List.of(25 * 3, 50 * 3, 125 * 3, 250 * 3, 500 * 3, 1500 * 3, 3000 * 3, 6000 * 3, 15000 * 3), e -> true);
 
-            WORLD_DIFFICULTY_PER_LEVEL = builder.defineList("world_difficulty_per_level",
-                    List.of(
-                            1f,
-                            2.5f,
-                            5.0f,
-                            7.5f,
-                            10.0f,
-                            12.5f,
-                            15.0f,
-                            20.0f,
-                            25.0f,
-                            30.0f
-                    ), e-> true);
         }
 
         private static boolean isBonusGlyphSlotsEntry(Object value) {

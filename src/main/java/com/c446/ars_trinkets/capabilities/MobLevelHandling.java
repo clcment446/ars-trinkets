@@ -38,8 +38,9 @@ public final class MobLevelHandling {
         int maximumLevel = Math.max(minimumLevel, Config.Common.MOB_LEVEL_MAX.get());
         int minimumCores = Config.Common.MOB_CORE_MIN.get();
         int maximumCores = Math.max(minimumCores, Config.Common.MOB_CORE_MAX.get());
-        Player nearbyPlayer = mob.level().getNearestPlayer(mob.getX(), mob.getY(), mob.getZ(), 128.0, false);
-        if (nearbyPlayer != null && nearbyPlayer.hasData(CapabilityRegistry.LEVEL_CAP)) {
+        Player nearbyPlayer = referencePlayer(mob);
+        if (nearbyPlayer != null) {
+            // getData attaches a level-0 default, so players who never levelled still cap nearby mobs.
             LevelingCapability playerCapability = nearbyPlayer.getData(CapabilityRegistry.LEVEL_CAP);
             maximumLevel = MobScalingMath.mobLevelCapForPlayer(
                     playerCapability.level, maximumLevel, minimumLevel,
@@ -61,6 +62,38 @@ public final class MobLevelHandling {
 
         applyScaling(mob, capability.level, capability.cores, baseHealth, baseAttack, baseArmor,
                 minimumLevel, maximumLevel, minimumCores, maximumCores);
+    }
+
+    /** Which nearby player's level caps a spawning mob. */
+    public enum PlayerCapMode { NEAREST, LOWEST, HIGHEST }
+
+    /**
+     * Picks the player whose level caps this mob, among players within {@code player_cap_radius} blocks
+     * (spectators ignored), per {@code player_cap_mode}. Null when nobody is in range.
+     */
+    public static Player referencePlayer(Mob mob) {
+        double radius = Config.Common.MOB_PLAYER_CAP_RADIUS.get();
+        PlayerCapMode mode = Config.Common.MOB_PLAYER_CAP_MODE.get();
+        Player best = null;
+        double bestDistance = Double.MAX_VALUE;
+        int bestLevel = 0;
+        for (Player player : mob.level().players()) {
+            if (player.isSpectator()) continue;
+            double distance = player.distanceToSqr(mob);
+            if (distance > radius * radius) continue;
+            int level = player.getData(CapabilityRegistry.LEVEL_CAP).level;
+            boolean better = best == null || switch (mode) {
+                case NEAREST -> distance < bestDistance;
+                case LOWEST -> level < bestLevel || (level == bestLevel && distance < bestDistance);
+                case HIGHEST -> level > bestLevel || (level == bestLevel && distance < bestDistance);
+            };
+            if (better) {
+                best = player;
+                bestDistance = distance;
+                bestLevel = level;
+            }
+        }
+        return best;
     }
 
     public static int calculateLevel(LivingEntity mob) {

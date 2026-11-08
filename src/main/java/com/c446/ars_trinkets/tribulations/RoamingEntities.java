@@ -20,7 +20,7 @@ public class RoamingEntities {
         if (mob.level().isClientSide) return;
 
         // Find the nearest player to determine karma scaling
-        var nearestPlayer = mob.level().getNearestPlayer(mob.getX(), mob.getY(), mob.getZ(), 128.0, false);
+        var nearestPlayer = com.c446.ars_trinkets.capabilities.MobLevelHandling.referencePlayer(mob);
         if (nearestPlayer == null) return;
 
         float karmaMultiplier = KarmaCalculator.calculateKarmaMultiplier(nearestPlayer);

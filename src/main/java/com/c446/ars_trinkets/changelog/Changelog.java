@@ -21,6 +21,7 @@ public final class Changelog {
 
     /** Newest first. */
     public static final List<Release> RELEASES = List.of(
+            new Release("3.1.1", 4),
             new Release("3.1.0", 7),
             new Release("3.0.0", 4)
     );

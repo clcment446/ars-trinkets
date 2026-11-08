@@ -1,3 +1,10 @@
+# Ars Trinkets 3.1.1
+
+- Fixed mobs spawning near a player who never levelled skipping the level/core cap (they spawned at full natural strength). Players now always count, as level 0.
+- New `mob_scaling.player_cap_radius` (default 128): only players within this distance affect a spawning mob's cap and roaming difficulty.
+- New `mob_scaling.player_cap_mode` (`NEAREST` default, `LOWEST`, `HIGHEST`): choose which player in range caps the mob. `LOWEST` protects low-level players sharing a server with a high-level one.
+- Removed the unused `world_difficulty_per_level` config option (it never affected anything).
+
 # Ars Trinkets 3.1.0
 
 - Essence drop balance: gated by the `essence_drops_enabled` config AND the new `arsTrinketsEssenceDrops` gamerule; never drops an essence the killer cannot use (`essence_drop_only_usable`); capped per kill (`essence_drop_max_count`); default chance lowered to 35% and extras to 0.1 per core.
