@@ -58,7 +58,7 @@ Releases are cut from the `1.21.x` branch. Do not tag from a dirty tree, and do 
      "Ars Trinkets Changelog" section of the Ars Nouveau book. The version string must match `mod_version`
      exactly or the login message is skipped.
 4. **Regenerate data** if recipes, models or tags changed (`bash gradlew runData`), and commit `src/generated`.
-5. **Build and test**: `bash gradlew build` must pass. The jar is `build/libs/ars_trinkets-X.Y.Z.jar`.
+5. **Build and test**: `bash gradlew build` must pass. The jar is `build/libs/ars_trinkets-1.21.1-X.Y.Z.jar`.
    Smoke-test it with `bash gradlew runPrismClient` when the change touches items, recipes or the config.
 6. **Commit** everything with a message like `chore: release X.Y.Z`, then push `1.21.x`.
 7. **Tag and publish**: `git tag -a vX.Y.Z -m "Ars Trinkets X.Y.Z"` and `git push origin vX.Y.Z`. Create the GitHub
