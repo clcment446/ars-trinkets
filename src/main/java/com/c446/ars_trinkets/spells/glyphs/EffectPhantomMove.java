@@ -14,7 +14,7 @@ import java.util.Set;
 public class EffectPhantomMove extends AbstractEffect {
     public static final String ID = "phantom_move";
 
-    public static final EffectPhantomMove INSTANCE = new EffectPhantomMove("shadow_move", "Fakes the caster's position for the next resolve.");
+    public static final EffectPhantomMove INSTANCE = new EffectPhantomMove("shadow_move", "Shadow Move");
 
     public EffectPhantomMove(String tag, String description) {
         super(tag, description);

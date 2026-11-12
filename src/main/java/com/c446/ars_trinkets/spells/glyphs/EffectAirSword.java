@@ -22,7 +22,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public class EffectAirSword extends AbstractEffect implements IDamageEffect {
-    public static EffectAirSword INSTANCE = new EffectAirSword(ArsTrinkets.prefix("glyph_sword"), "conjures a blade of wind that pierces the enemy, negating invulnerability");
+    public static EffectAirSword INSTANCE = new EffectAirSword(ArsTrinkets.prefix("glyph_sword"), "Air Sword");
 
     public EffectAirSword(ResourceLocation tag, String description) {
         super(tag, description);

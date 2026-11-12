@@ -25,7 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class EffectAttack extends AbstractEffect implements IDamageEffect {
 
-    public static final EffectAttack INSTANCE = new EffectAttack(ArsTrinkets.prefix("glyph_attack"), "Simulates a player's left-click attack, adding spell damage. Cast from offhand with a sword in hand for maximum damage.");
+    public static final EffectAttack INSTANCE = new EffectAttack(ArsTrinkets.prefix("glyph_attack"), "Attack");
 
     public EffectAttack(ResourceLocation tag, String description) {
         super(tag, description);

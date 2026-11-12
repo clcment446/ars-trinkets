@@ -15,7 +15,7 @@ public class Inversion extends AbstractEffect {
         super(tag, description);
     }
 
-    public static final Inversion INSTANCE = new Inversion(ArsTrinkets.prefix("glyph_inversion"), "Inverts Caster and Targeted.");
+    public static final Inversion INSTANCE = new Inversion(ArsTrinkets.prefix("glyph_inversion"), "Inversion");
 
     @Override
     protected int getDefaultManaCost() {

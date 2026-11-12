@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class EffectDevourSoul extends AbstractEffect implements IDamageEffect {
-    public static final EffectDevourSoul INSTANCE = new EffectDevourSoul(ArsTrinkets.prefix("glyph_devour_soul"), "Devour the soul of the target.");
+    public static final EffectDevourSoul INSTANCE = new EffectDevourSoul(ArsTrinkets.prefix("glyph_devour_soul"), "Devour Soul");
 
     public EffectDevourSoul(ResourceLocation tag, String description) {
         super(tag, description);

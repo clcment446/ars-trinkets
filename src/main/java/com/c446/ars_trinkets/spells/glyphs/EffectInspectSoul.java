@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class EffectInspectSoul extends AbstractEffect {
-    public static final EffectInspectSoul INSTANCE = new EffectInspectSoul(ArsTrinkets.prefix("glyph_soul_inspector"), "Peers at the soul of the target, giving you how many circles it has created, and how many cores they have.");
+    public static final EffectInspectSoul INSTANCE = new EffectInspectSoul(ArsTrinkets.prefix("glyph_soul_inspector"), "Inspect Soul");
 
     private EffectInspectSoul(String tag, String description) {
         super(tag, description);

@@ -15,7 +15,7 @@ import java.util.Set;
 public class EffectPhantomLook extends AbstractEffect {
     public static final String ID = "phantom_look";
 
-    public static final EffectPhantomLook INSTANCE = new EffectPhantomLook("shadow_look", "Fakes the caster's position for the next resolve.");
+    public static final EffectPhantomLook INSTANCE = new EffectPhantomLook("shadow_look", "Shadow Look");
 
     public EffectPhantomLook(String tag, String description) {
         super(tag, description);
