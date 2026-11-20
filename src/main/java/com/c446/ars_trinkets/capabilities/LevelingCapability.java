@@ -56,8 +56,9 @@ public class LevelingCapability implements INBTSerializable<CompoundTag> {
     }
 
     public static LevelingCapability get(Player p) throws NullPointerException {
-        if (!p.hasData(CapabilityRegistry.LEVEL_CAP)) throw new NullPointerException("player capability is null");
-        else return p.getData(CapabilityRegistry.LEVEL_CAP);
+        // getData lazily creates the attachment from its default supplier, so this
+        // never fails; hasData() is false until the first access (and on the client).
+        return p.getData(CapabilityRegistry.LEVEL_CAP);
     }
 
     public void addSoul(int soulsToAdd, Player player) {

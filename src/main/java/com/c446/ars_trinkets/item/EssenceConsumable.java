@@ -45,10 +45,9 @@ public class EssenceConsumable extends Item {
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
-        if (!isUseful(player)) {
-            if (!level.isClientSide) {
-                player.displayClientMessage(Component.translatable("message.ars_trinkets.essence.too_weak", this.level), true);
-            }
+        // The level attachment is not synced to the client, so only check server-side.
+        if (!level.isClientSide && !isUseful(player)) {
+            player.displayClientMessage(Component.translatable("message.ars_trinkets.essence.too_weak", this.level), true);
             return InteractionResultHolder.fail(player.getItemInHand(hand));
         }
         return super.use(level, player, hand);
